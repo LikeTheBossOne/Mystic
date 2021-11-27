@@ -39,6 +39,12 @@
     <ClCompile Include="src\Mystic\Application.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\SFML\SFMLRenderer2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\GFX\Renderer2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Mystic\GFX\Camera.h">
@@ -80,10 +86,21 @@
     <ClInclude Include="src\Mystic\EntryPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\SFML\SFMLRenderer2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\GFX\Renderer2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mystic.rc">
       <Filter>Resource Files</Filter>
     </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="postbuild.bat">
+      <Filter>Source Files</Filter>
+    </None>
   </ItemGroup>
 </Project>
