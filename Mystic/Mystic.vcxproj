@@ -84,14 +84,14 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>$(SolutionDir)includes;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VcpkgRoot)\installed\x86-windows\include</IncludePath>
-    <LibraryPath>E:\vsdev\SFML-2.5.1\lib;$(VSDev)\glfw-3.3.4.bin.WIN64\lib-vc2019;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>$(SolutionDir)libs\SFML-2.5.1\lib;$(SolutionDir)libs\glfw-3.3.4.bin.WIN64\lib-vc2019;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
     <IncludePath>$(SolutionDir)includes;$(VC_IncludePath);$(WindowsSDK_IncludePath);$(VcpkgRoot)\installed\x86-windows\include</IncludePath>
-    <LibraryPath>E:\vsdev\SFML-2.5.1\lib;$(VSDev)\glfw-3.3.4.bin.WIN64\lib-vc2019;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
+    <LibraryPath>$(SolutionDir)libs\SFML-2.5.1\lib;$(SolutionDir)libs\glfw-3.3.4.bin.WIN64\lib-vc2019;$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64)</LibraryPath>
     <OutDir>$(SolutionDir)bin\$(Configuration)-$(Platform)\$(ProjectName)\</OutDir>
     <IntDir>$(SolutionDir)bin-int\$(Configuration)-$(Platform)\$(ProjectName)\</IntDir>
   </PropertyGroup>
@@ -127,7 +127,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_USE_GLFW;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -146,7 +146,7 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;_CONSOLE;MYST_USE_GLFW;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
@@ -162,16 +162,41 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp" />
+    <ClCompile Include="src\Mystic\Editor\Editor.cpp" />
+    <ClCompile Include="ImGui\imgui.cpp" />
+    <ClCompile Include="ImGui\imgui_demo.cpp" />
+    <ClCompile Include="ImGui\imgui_draw.cpp" />
+    <ClCompile Include="ImGui\imgui_impl_glfw.cpp" />
+    <ClCompile Include="ImGui\imgui_impl_opengl3.cpp" />
+    <ClCompile Include="ImGui\imgui_stdlib.cpp" />
+    <ClCompile Include="ImGui\imgui_tables.cpp" />
+    <ClCompile Include="ImGui\imgui_widgets.cpp" />
+    <ClCompile Include="src\Mystic\Events\EventSystem.cpp" />
     <ClCompile Include="src\Mystic\GFX\Renderer2D.cpp" />
     <ClCompile Include="src\Platform\SFML\SFMLRenderer2D.cpp" />
     <ClCompile Include="src\Mystic\Application.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp" />
     <ClCompile Include="src\Mystic\GFX\Camera.cpp" />
     <ClCompile Include="src\Platform\OpenGL\glad.c" />
-    <ClCompile Include="src\Mystic\Mystic.cpp" />
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h" />
+    <ClInclude Include="src\Mystic\Editor\Editor.h" />
+    <ClInclude Include="ImGui\imconfig.h" />
+    <ClInclude Include="ImGui\imgui.h" />
+    <ClInclude Include="ImGui\imgui_impl_glfw.h" />
+    <ClInclude Include="ImGui\imgui_impl_opengl3.h" />
+    <ClInclude Include="ImGui\imgui_impl_opengl3_loader.h" />
+    <ClInclude Include="ImGui\imgui_internal.h" />
+    <ClInclude Include="ImGui\imgui_stdlib.h" />
+    <ClInclude Include="ImGui\imstb_rectpack.h" />
+    <ClInclude Include="ImGui\imstb_textedit.h" />
+    <ClInclude Include="ImGui\imstb_truetype.h" />
+    <ClInclude Include="src\Mystic\Events\Event.h" />
+    <ClInclude Include="src\Mystic\Events\EventSystem.h" />
+    <ClInclude Include="src\Mystic\Events\IEventHandler.h" />
     <ClInclude Include="src\Mystic\GFX\Renderer2D.h" />
     <ClInclude Include="src\Platform\SFML\SFMLRenderer2D.h" />
     <ClInclude Include="src\Mystic.h" />
@@ -191,6 +216,7 @@
     <ResourceCompile Include="Mystic.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="ImGui\imgui.ini" />
     <None Include="postbuild.bat" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

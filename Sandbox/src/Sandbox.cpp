@@ -1,5 +1,6 @@
 #include <Mystic.h>
 
+#include "Mystic/Editor/Editor.h"
 #include "Mystic/GFX/Renderer2D.h"
 
 class Sandbox : public Mystic::Application
@@ -17,7 +18,7 @@ public:
 
 	inline void Run() override
 	{
-		Mystic::Renderer2D::Init();
+		/*Mystic::Renderer2D::Init();
 		Mystic::Renderer2D::OpenScene(1000, 1000, "SFML WINDOW");
 		Mystic::Renderer2D::SetFramerateLimit(60);
 		
@@ -35,7 +36,10 @@ public:
 			Mystic::Renderer2D::SwapBuffers();
 
 			rotation++;
-		}
+		}*/
+
+		Mystic::Editor::Init(1000, 1000, "Editor Window");
+		Mystic::Editor::Start();
 	}
 };
 

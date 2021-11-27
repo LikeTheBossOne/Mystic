@@ -46,6 +46,11 @@ namespace Mystic
 		s_renderer->SetFramerateLimit(limit);
 	}
 
+	uint32_t Renderer2D::GetTextureHandle()
+	{
+		return s_renderer->GetTextureHandle();
+	}
+
 	void Renderer2D::RenderQuad(glm::vec2 location, glm::vec2 size, float rotationDegs, glm::vec4 color)
 	{
 		s_renderer->RenderQuad(location, size, rotationDegs, color);

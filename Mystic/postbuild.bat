@@ -1,2 +1,1 @@
 xcopy /d/y E:\source\repos\Mystic\bin\Debug-x64\Mystic\*.dll E:\source\repos\Mystic\bin\Debug-x64\Sandbox\
-xcopy /d/y E:\source\repos\Mystic\bin\Debug-x64\Mystic\*.dll E:\source\repos\Mystic\bin\Debug-x64\MysticEditor\
