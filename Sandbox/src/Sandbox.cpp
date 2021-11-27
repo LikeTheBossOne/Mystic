@@ -25,7 +25,7 @@ public:
 		while (true)
 		{
 			Mystic::Renderer2D::ClearScreen();
-			Mystic::Renderer2D::RenderQuad(glm::vec2(100, 500), glm::vec2(40, 40), rotation % 360, glm::vec4(255, 0, 0, 255));
+			Mystic::Renderer2D::RenderQuad(glm::vec2(100, 500), glm::vec2(80, 40), rotation % 360, glm::vec4(255, 0, 0, 255));
 			Mystic::Renderer2D::RenderQuad(glm::vec2(200, 500), glm::vec2(40, 40), rotation % 360, glm::vec4(255, 0, 0, 255));
 			Mystic::Renderer2D::RenderQuad(glm::vec2(300, 500), glm::vec2(40, 40), rotation % 360, glm::vec4(255, 0, 0, 255));
 			Mystic::Renderer2D::RenderQuad(glm::vec2(400, 500), glm::vec2(40, 40), rotation % 360, glm::vec4(255, 0, 0, 255));
