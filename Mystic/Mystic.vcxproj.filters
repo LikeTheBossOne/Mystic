@@ -75,6 +75,9 @@
     <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Mystic\GFX\Camera.h">
@@ -167,6 +170,9 @@
     <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mystic.rc">
@@ -178,5 +184,7 @@
       <Filter>Source Files</Filter>
     </None>
     <None Include="ImGui\imgui.ini" />
+    <None Include="assets\shaders\quadVertex.vs" />
+    <None Include="assets\shaders\quadFragment.fs" />
   </ItemGroup>
 </Project>

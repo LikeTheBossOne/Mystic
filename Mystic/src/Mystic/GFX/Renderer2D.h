@@ -13,7 +13,7 @@ namespace Mystic
 		virtual ~InstRenderer2D() = default;
 
 		virtual bool CreateWindow(uint32_t width, uint32_t height, std::string title) = 0;
-		virtual void RenderQuad(glm::vec2 location, glm::vec2 size, float rotationDegs, glm::vec4 color) = 0;
+		virtual void RenderTriangle() = 0;
 		virtual void ClearScreen() = 0;
 		virtual bool GetKeyState(int16_t key) const = 0;
 		virtual bool GetMouseButtonState(int8_t button) const = 0;
@@ -41,7 +41,7 @@ namespace Mystic
 		static uint32_t GetTextureHandle();
 
 		// RENDER METHODS //
-		static void RenderQuad(glm::vec2 location, glm::vec2 size, float rotationDegs, glm::vec4 color);
+		static void RenderTriangle();
 
 	private:
 		static InstRenderer2D* s_renderer;

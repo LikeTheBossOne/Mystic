@@ -1,6 +1,7 @@
 #include "Renderer2D.h"
 
 #include "../../Platform/SFML/SFMLRenderer2D.h"
+#include "../../Platform/OpenGL//OpenGLRenderer2D.h"
 
 namespace Mystic
 {
@@ -8,7 +9,7 @@ namespace Mystic
 
 	void Renderer2D::Init()
 	{
-		s_renderer = new SFMLRenderer2D();
+		s_renderer = new OpenGLRenderer2D();
 	}
 
 	void Renderer2D::OpenScene(uint32_t width, uint32_t height, std::string title)
@@ -51,9 +52,9 @@ namespace Mystic
 		return s_renderer->GetTextureHandle();
 	}
 
-	void Renderer2D::RenderQuad(glm::vec2 location, glm::vec2 size, float rotationDegs, glm::vec4 color)
+	void Renderer2D::RenderTriangle()
 	{
-		s_renderer->RenderQuad(location, size, rotationDegs, color);
+		s_renderer->RenderTriangle();
 	}
 
 }

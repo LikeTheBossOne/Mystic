@@ -1,5 +1,7 @@
 #include "Editor.h"
 
+#include <iostream>
+
 #include "../../Platform/OpenGL/GLFWEditor.h"
 #include "../GFX/Renderer2D.h"
 
@@ -11,14 +13,17 @@ namespace Mystic
 	{
 		s_editor = std::make_unique<GLFWEditor>();
 		
-		Renderer2D::Init();
-		Renderer2D::OpenScene(windowWidth, windowHeight, title);
-		
 		s_editor->Init(windowWidth, windowHeight, title);
+
+		Renderer2D::Init();
 	}
+
+    
 
 	void Editor::Start()
 	{
+
+        
 		s_editor->OnStart();
 
 		while (!s_editor->ShouldClose())

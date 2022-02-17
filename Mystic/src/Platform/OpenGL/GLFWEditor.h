@@ -1,6 +1,7 @@
 #pragma once
+#include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "../ImGui/imgui.h"
+#include "../../../ImGui/imgui.h"
 
 #include "../../Mystic/Editor/Editor.h"
 
@@ -29,5 +30,9 @@ namespace Mystic
 		bool _show_demo_window;
 		bool _show_another_window;
 		ImVec4 _clear_color;
+
+
+		int32_t _width;
+		int32_t _height;
 	};
 }

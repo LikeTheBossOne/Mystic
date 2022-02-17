@@ -6,6 +6,7 @@
 #include <sstream>
 #include <glad/glad.h>
 #include <glm/gtc/type_ptr.hpp>
+#include <filesystem>
 
 namespace Mystic
 {
@@ -31,6 +32,7 @@ namespace Mystic
 			fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 			try
 			{
+				std::cout << std::filesystem::current_path() << std::endl;
 				// open files
 				vShaderFile.open(vertexPath);
 				fShaderFile.open(fragmentPath);
@@ -47,7 +49,7 @@ namespace Mystic
 			}
 			catch (std::ifstream::failure e)
 			{
-				std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << std::endl;
+				std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << e.what() << std::endl;
 			}
 
 			const char* vShaderCode = vertexCode.c_str();

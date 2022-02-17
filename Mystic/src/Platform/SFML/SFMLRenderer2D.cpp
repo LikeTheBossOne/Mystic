@@ -19,16 +19,9 @@ namespace Mystic
 		return true;
 	}
 
-	void SFMLRenderer2D::RenderQuad(glm::vec2 location, glm::vec2 size, float rotationDegs, glm::vec4 color)
+	void SFMLRenderer2D::RenderTriangle()
 	{
-		float originOffsetX = size.x / 2;
-		float originOffsetY = size.y / 2;
-		sf::RectangleShape rect(sf::Vector2f(size.x, size.y));
-		rect.setOrigin(originOffsetX, originOffsetY);
-		rect.setPosition(location.x + originOffsetX, location.y + originOffsetY);
-		rect.setRotation(rotationDegs);
-		rect.setFillColor(sf::Color(color.r, color.g, color.b, color.a));
-		_renderTarget->draw(rect);
+		
 	}
 
 	void SFMLRenderer2D::ClearScreen()

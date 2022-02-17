@@ -1,97 +1,90 @@
 #include "GLFWEditor.h"
 
-#include "../ImGui/imgui.h"
-#include "../ImGui/imgui_impl_glfw.h"
-#include "../ImGui/imgui_impl_opengl3.h"
+#include "../../../ImGui/imgui.h"
+#include "../../../ImGui/imgui_impl_glfw.h"
+#include "../../../ImGui/imgui_impl_opengl3.h"
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif
 #include <cstdio>
+#include <iostream>
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 #include <glm/vec2.hpp>
 #include <glm/vec4.hpp>
 
+#include "../../Mystic/GFX/Renderer2D.h"
+
 namespace Mystic
 {
-	static void glfw_error_callback(int error, const char* description)
-	{
-		fprintf(stderr, "Glfw Error %d: %s\n", error, description);
-	}
-
 	GLFWEditor::GLFWEditor()
 	{
         _window = nullptr;
+		_width = 800;
+		_height = 600;
 	}
 
 	GLFWEditor::~GLFWEditor()
 	{
 	}
-
 	void GLFWEditor::Init(int windowWidth, int windowHeight, std::string windowTitle)
 	{
-		glfwSetErrorCallback(glfw_error_callback);
-		if (!glfwInit())
-			return;
+		_width = windowWidth;
+		_height = windowHeight;
+	}
 
-		// Decide GL+GLSL versions
-#if defined(IMGUI_IMPL_OPENGL_ES2)
-	// GL ES 2.0 + GLSL 100
-	const char* glsl_version = "#version 100";
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 2);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-	glfwWindowHint(GLFW_CLIENT_API, GLFW_OPENGL_ES_API);
-#elif defined(__APPLE__)
-	// GL 3.2 + GLSL 150
-	const char* glsl_version = "#version 150";
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // Required on Mac
-#else
-		// GL 3.0 + GLSL 130
-		const char* glsl_version = "#version 130";
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
-		//glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);  // 3.2+ only
-		//glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);            // 3.0+ only
-#endif
-
-		// Create window with graphics context
-		_window = glfwCreateWindow(windowWidth, windowHeight, windowTitle.c_str(), NULL, NULL);
-		if (_window == NULL)
-			return;
-		glfwMakeContextCurrent(_window);
-		glfwSwapInterval(1); // Enable vsync
-
-		// Setup Dear ImGui context
-		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
-		ImGuiIO& io = ImGui::GetIO(); (void)io;
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;     // Enable Keyboard Controls
-		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
-
-		// Setup Dear ImGui style
-		ImGui::StyleColorsDark();
-		//ImGui::StyleColorsClassic();
-
-		// Setup Platform/Renderer backends
-		ImGui_ImplGlfw_InitForOpenGL(_window, true);
-		ImGui_ImplOpenGL3_Init(glsl_version);
+	static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
+	{
+		// make sure the viewport matches the new window dimensions; note that width and 
+		// height will be significantly larger than specified on retina displays.
+		glViewport(0, 0, width, height);
 	}
 
 	void GLFWEditor::OnStart()
 	{
-        _show_demo_window = true;
+		// glfw: initialize and configure
+		glfwInit();
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+#ifdef __APPLE__
+		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+#endif
+
+		// glfw window creation
+		_window = glfwCreateWindow(_width, _height, "LearnOpenGL", NULL, NULL);
+		if (_window == NULL)
+		{
+			std::cout << "Failed to create GLFW window" << std::endl;
+			glfwTerminate();
+			return;
+		}
+		glfwMakeContextCurrent(_window);
+		glfwSetFramebufferSizeCallback(_window, framebuffer_size_callback);
+
+		// glad: load all OpenGL function pointers
+		if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+		{
+			std::cout << "Failed to initialize GLAD" << std::endl;
+			return;
+		}
+
+
+        Renderer2D::OpenScene(1, 1, "");
+
+        _show_demo_window = false;
         _show_another_window = false;
         _clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+
+        return;
 	}
 
 	void GLFWEditor::OnEnd()
 	{
 		// Cleanup
-		ImGui_ImplOpenGL3_Shutdown();
-		ImGui_ImplGlfw_Shutdown();
-		ImGui::DestroyContext();
+		//ImGui_ImplOpenGL3_Shutdown();
+		//ImGui_ImplGlfw_Shutdown();
+		//ImGui::DestroyContext();
 
 		glfwDestroyWindow(_window);
 		glfwTerminate();
@@ -99,66 +92,17 @@ namespace Mystic
 
 	void GLFWEditor::PreRender()
 	{
-		ImGui_ImplOpenGL3_NewFrame();
-		ImGui_ImplGlfw_NewFrame();
-		ImGui::NewFrame();
+		//ImGui_ImplOpenGL3_NewFrame();
+		//ImGui_ImplGlfw_NewFrame();
+		//ImGui::NewFrame();
 	}
 
 	void GLFWEditor::Render()
 	{
-        // 1. Show the big demo window (Most of the sample code is in ImGui::ShowDemoWindow()! You can browse its code to learn more about Dear ImGui!).
-        if (_show_demo_window)
-            ImGui::ShowDemoWindow(&_show_demo_window);
+		Mystic::Renderer2D::ClearScreen();
+		Mystic::Renderer2D::RenderTriangle();
 
-        // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-        {
-            static float f = 0.0f;
-            static int counter = 0;
-
-            ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-
-            ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-            ImGui::Checkbox("Demo Window", &_show_demo_window);      // Edit bools storing our window open/close state
-            ImGui::Checkbox("Another Window", &_show_another_window);
-
-            ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-            ImGui::ColorEdit3("clear color", (float*)&_clear_color); // Edit 3 floats representing a color
-
-            if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-                counter++;
-            ImGui::SameLine();
-            ImGui::Text("counter = %d", counter);
-
-            ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-
-            /*Mystic::Renderer2D::ClearScreen();
-            Mystic::Renderer2D::RenderQuad(glm::vec2(20, 20), glm::vec2(40, 40), 0, glm::vec4(255, 0, 0, 255));
-
-            ImGui::Image((void*)Mystic::Renderer2D::GetTextureHandle(), ImVec2(200, 200));
-			*/
-            ImGui::End();
-        }
-
-        // 3. Show another simple window.
-        if (_show_another_window)
-        {
-            ImGui::Begin("Another Window", &_show_another_window);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
-            ImGui::Text("Hello from another window!");
-            if (ImGui::Button("Close Me"))
-                _show_another_window = false;
-            ImGui::End();
-        }
-
-        // Rendering
-        ImGui::Render();
-        int display_w, display_h;
-        glfwGetFramebufferSize(_window, &display_w, &display_h);
-        glViewport(0, 0, display_w, display_h);
-        glClearColor(_clear_color.x * _clear_color.w, _clear_color.y * _clear_color.w, _clear_color.z * _clear_color.w, _clear_color.w);
-        glClear(GL_COLOR_BUFFER_BIT);
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-        glfwSwapBuffers(_window);
+		glfwSwapBuffers(_window);
 	}
 
 	void GLFWEditor::PostRender()

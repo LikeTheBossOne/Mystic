@@ -30,26 +30,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -162,6 +162,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp" />
     <ClCompile Include="src\Mystic\Editor\Editor.cpp" />
     <ClCompile Include="ImGui\imgui.cpp" />
@@ -182,6 +183,7 @@
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
     <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h" />
     <ClInclude Include="src\Mystic\Editor\Editor.h" />
     <ClInclude Include="ImGui\imconfig.h" />
@@ -216,6 +218,8 @@
     <ResourceCompile Include="Mystic.rc" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="assets\shaders\quadFragment.fs" />
+    <None Include="assets\shaders\quadVertex.vs" />
     <None Include="ImGui\imgui.ini" />
     <None Include="postbuild.bat" />
   </ItemGroup>
