@@ -3,13 +3,14 @@
 #include <memory>
 #include <unordered_map>
 
+#include "../Core.h"
 #include "Event.h"
 
 namespace Mystic
 {
 	class IEventHandler;
 
-	class EventSystem
+	class MYSTIC_API EventSystem
 	{
 	public:
 		static void Init();

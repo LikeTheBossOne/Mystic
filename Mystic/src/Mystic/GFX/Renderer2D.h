@@ -21,6 +21,8 @@ namespace Mystic
 		virtual void PollEvents() = 0;
 		virtual void SetFramerateLimit(uint32_t limit) = 0;
 
+		virtual void HandleJobs() = 0;
+
 		virtual uint32_t GetTextureHandle() const = 0;
 	};
 
@@ -42,6 +44,8 @@ namespace Mystic
 
 		// RENDER METHODS //
 		static void RenderTriangle();
+
+		static void HandleJobs();
 
 	private:
 		static InstRenderer2D* s_renderer;

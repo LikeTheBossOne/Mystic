@@ -25,6 +25,8 @@ namespace Mystic
 		void PollEvents() override;
 		void SetFramerateLimit(uint32_t limit) override;
 
+		void HandleJobs() override;
+
 		uint32_t GetTextureHandle() const override;
 
 		private:

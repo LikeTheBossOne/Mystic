@@ -9,7 +9,7 @@ namespace Mystic
 {
 	std::unique_ptr<InstEditor> Editor::s_editor = nullptr;
 	
-	void Editor::Init(int windowWidth, int windowHeight, std::string title)
+	void Editor::Init( int windowWidth, int windowHeight, std::string title)
 	{
 		s_editor = std::make_unique<GLFWEditor>();
 		
@@ -22,20 +22,38 @@ namespace Mystic
 
 	void Editor::Start()
 	{
-
-        
 		s_editor->OnStart();
+	}
 
-		while (!s_editor->ShouldClose())
-		{
-			s_editor->PollEvents();
-			
-			PreRender();
+	bool Editor::ShouldClose()
+	{
+		return s_editor->ShouldClose();
+	}
 
-			Render();
+	void Editor::Update()
+	{
+		s_editor->PollEvents();
 
-			PostRender();
-		}
+		PreRender();
+
+		Render();
+
+		PostRender();
+	}
+
+	void Editor::ShowGameWindow()
+	{
+		s_editor->ShowGameWindow();
+	}
+
+	void Editor::BindFramebuffer()
+	{
+		s_editor->BindFramebuffer();
+	}
+
+	void Editor::UnbindFrameBuffer()
+	{
+		s_editor->UnbindFramebuffer();
 	}
 
 	void Editor::PreRender()

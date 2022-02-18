@@ -5,6 +5,8 @@
 
 namespace Mystic
 {
+	class Application;
+
 	class InstEditor
 	{
 	public:
@@ -18,7 +20,11 @@ namespace Mystic
 		virtual void PreRender() = 0;
 		virtual void Render() = 0;
 		virtual void PostRender() = 0;
-		
+
+		virtual void ShowGameWindow() = 0;
+		virtual void BindFramebuffer() = 0;
+		virtual void UnbindFramebuffer() = 0;
+
 		virtual bool ShouldClose() = 0;
 		virtual bool PollEvents() = 0;
 	};
@@ -28,6 +34,12 @@ namespace Mystic
 	public:
 		static void Init(int windowWidth, int windowHeight, std::string title);
 		static void Start();
+		static bool ShouldClose();
+		static void Update();
+
+		static void ShowGameWindow();
+		static void BindFramebuffer();
+		static void UnbindFrameBuffer();
 
 	private:
 		static void PreRender();

@@ -57,4 +57,8 @@ namespace Mystic
 		s_renderer->RenderTriangle();
 	}
 
+	void Renderer2D::HandleJobs()
+	{
+		s_renderer->HandleJobs();
+	}
 }

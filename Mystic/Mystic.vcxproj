@@ -162,6 +162,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Mystic\EditorLayer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLWindow.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp" />
     <ClCompile Include="src\Mystic\Editor\Editor.cpp" />
@@ -183,6 +185,12 @@
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Mystic\EditorLayer.h" />
+    <ClInclude Include="src\Platform\OpenGL\Model.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h" />
+    <ClInclude Include="src\Platform\OpenGL\RenderJob.h" />
+    <ClInclude Include="src\Mystic\GFX\Window.h" />
+    <ClInclude Include="src\Mystic\Layer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
     <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h" />
     <ClInclude Include="src\Mystic\Editor\Editor.h" />

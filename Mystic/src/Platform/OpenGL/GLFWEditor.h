@@ -21,6 +21,11 @@ namespace Mystic
 		void PreRender() override;
 		void Render() override;
 		void PostRender() override;
+
+		void ShowGameWindow() override;
+		void BindFramebuffer() override;
+		void UnbindFramebuffer() override;
+
 		bool ShouldClose() override;
 		bool PollEvents() override;
 
@@ -31,6 +36,8 @@ namespace Mystic
 		bool _show_another_window;
 		ImVec4 _clear_color;
 
+		uint32_t _FBO;
+		uint32_t _texture;
 
 		int32_t _width;
 		int32_t _height;

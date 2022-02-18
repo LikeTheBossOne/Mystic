@@ -58,6 +58,11 @@ namespace Mystic
 		//_renderTarget->setFramerateLimit(limit);
 	}
 
+	void SFMLRenderer2D::HandleJobs()
+	{
+		
+	}
+
 	uint32_t SFMLRenderer2D::GetTextureHandle() const
 	{
 		assert(_renderTarget, "RenderTexture target is null");

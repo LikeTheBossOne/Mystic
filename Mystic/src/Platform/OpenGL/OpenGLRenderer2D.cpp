@@ -4,20 +4,25 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "stb_image.h"
-#include "../../Mystic/GFX/Camera.h"
+#include "Model.h"
+#include "RenderJob.h"
 
 namespace Mystic
 {
 	Mystic::OpenGLRenderer2D::OpenGLRenderer2D()
 	{
-		
+        _jobs = std::vector<RenderJob>();
+        _models = std::unordered_map<std::string, std::shared_ptr<Model>>();
 	}
 
 	Mystic::OpenGLRenderer2D::~OpenGLRenderer2D()
 	{
-        glDeleteVertexArrays(1, &_VAO);
-        glDeleteBuffers(1, &_VBO);
+        for (std::pair<std::string, std::shared_ptr<Model>> pair : _models)
+        {
+            glDeleteVertexArrays(1, &pair.second->VAO);
+            glDeleteBuffers(1, &pair.second->VBO);
+        }
+        
         glDeleteProgram(_shaderProgram);
 	}
 
@@ -90,20 +95,21 @@ namespace Mystic
         glDeleteShader(vertexShader);
         glDeleteShader(fragmentShader);
 
-        // set up vertex data (and buffer(s)) and configure vertex attributes
-        // ------------------------------------------------------------------
+
+        const std::shared_ptr<Model> model = std::make_shared<Model>();
+
         float vertices[] = {
             -0.5f, -0.5f, 0.0f, // left  
              0.5f, -0.5f, 0.0f, // right 
              0.0f,  0.5f, 0.0f  // top   
         };
-        
-        glGenVertexArrays(1, &_VAO);
-        glGenBuffers(1, &_VBO);
-        // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-        glBindVertexArray(_VAO);
 
-        glBindBuffer(GL_ARRAY_BUFFER, _VBO);
+        glGenVertexArrays(1, &model->VAO);
+        glGenBuffers(1, &model->VBO);
+        // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+        glBindVertexArray(model->VAO);
+        
+        glBindBuffer(GL_ARRAY_BUFFER, model->VBO);
         glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
 
         glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
@@ -115,6 +121,7 @@ namespace Mystic
         // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
         // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
         glBindVertexArray(0);
+        _models["triangle"] = model;
 
 
 		return true;
@@ -122,9 +129,7 @@ namespace Mystic
 
 	void Mystic::OpenGLRenderer2D::RenderTriangle()
 	{
-        glUseProgram(_shaderProgram);
-        glBindVertexArray(_VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
-        glDrawArrays(GL_TRIANGLES, 0, 3);
+        _jobs.emplace_back(_models["triangle"]);
 	}
 
 	void Mystic::OpenGLRenderer2D::ClearScreen()
@@ -154,6 +159,18 @@ namespace Mystic
 
 	void Mystic::OpenGLRenderer2D::SetFramerateLimit(uint32_t limit)
 	{
+	}
+
+	void OpenGLRenderer2D::HandleJobs()
+	{
+        for (RenderJob job : _jobs)
+        {
+            glUseProgram(_shaderProgram);
+            glBindVertexArray(job.GetModel()->VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+            glDrawArrays(GL_TRIANGLES, 0, 3);
+        }
+
+        _jobs.clear();
 	}
 
 	uint32_t Mystic::OpenGLRenderer2D::GetTextureHandle() const

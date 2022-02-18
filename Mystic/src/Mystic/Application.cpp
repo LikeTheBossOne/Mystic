@@ -4,8 +4,16 @@
 
 namespace Mystic
 {
-	void Application::Run()
+	void Application::Start()
 	{
 
+	}
+
+	void Application::Update()
+	{
+	}
+
+	void Application::Render()
+	{
 	}
 }

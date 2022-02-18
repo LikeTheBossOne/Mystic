@@ -1,5 +1,8 @@
 #pragma once
 
+#include <string>
+#include <vector>
+
 #include "Core.h"
 
 namespace Mystic
@@ -11,7 +14,9 @@ namespace Mystic
 		Application() {}
 		virtual ~Application() {}
 
-	virtual void Run();
+		virtual void Start();
+		virtual void Update();
+		virtual void Render();
 	};
 
 	// To be defined in client
