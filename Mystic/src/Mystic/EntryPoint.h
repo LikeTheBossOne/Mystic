@@ -43,6 +43,8 @@ int main(int argc, char* argv[])
 		Mystic::Ref<Mystic::Game> game = std::make_shared<Mystic::Game>(app);
 		game->Start();
 	}
+
+	return 0;
 }
 
 #endif

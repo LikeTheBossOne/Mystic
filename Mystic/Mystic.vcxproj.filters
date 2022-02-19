@@ -185,9 +185,6 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Layer.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\RenderJob.h">
       <Filter>Header Files</Filter>
     </ClInclude>

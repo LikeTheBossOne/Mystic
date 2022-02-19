@@ -192,7 +192,6 @@
     <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h" />
     <ClInclude Include="src\Platform\OpenGL\RenderJob.h" />
     <ClInclude Include="src\Mystic\GFX\Window.h" />
-    <ClInclude Include="src\Mystic\Layer.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer2D.h" />
     <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h" />
     <ClInclude Include="src\Mystic\Editor\Editor.h" />

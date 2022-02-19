@@ -3,16 +3,15 @@
 #include <memory>
 #include <string>
 #include "../Core.h"
-#include "../../Mystic/Layer.h"
 
 namespace Mystic
 {
 	class Application;
 
-	class EditorLayer : public Layer
+	class InstEditor
 	{
 	public:
-		virtual ~EditorLayer() = default;
+		virtual ~InstEditor() = default;
 		
 		virtual void Init(int windowWidth, int windowHeight, std::string windowTitle, std::function<Application*()> applicationCreater) = 0;
 
@@ -29,8 +28,6 @@ namespace Mystic
 
 		virtual bool ShouldClose() = 0;
 		virtual bool PollEvents() = 0;
-
-		virtual void OnEvent(Event& e) override = 0;
 	};
 	
 	class MYSTIC_API Editor
@@ -51,6 +48,6 @@ namespace Mystic
 		static void PostRender();
 
 	private:
-		static std::unique_ptr<EditorLayer> s_editor;
+		static std::unique_ptr<InstEditor> s_editor;
 	};
 }

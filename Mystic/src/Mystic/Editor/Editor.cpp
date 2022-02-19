@@ -7,7 +7,7 @@
 
 namespace Mystic
 {
-	std::unique_ptr<EditorLayer> Editor::s_editor = nullptr;
+	std::unique_ptr<InstEditor> Editor::s_editor = nullptr;
 	
 	void Editor::Init( int windowWidth, int windowHeight, std::string title, std::function<Application*()> applicationCreater)
 	{

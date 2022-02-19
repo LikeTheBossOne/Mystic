@@ -9,7 +9,7 @@ namespace Mystic
 {
 	class Game;
 
-	class GLFWEditor : public EditorLayer
+	class GLFWEditor : public InstEditor
 	{
 	public:
 		GLFWEditor();
@@ -30,8 +30,6 @@ namespace Mystic
 
 		bool ShouldClose() override;
 		bool PollEvents() override;
-
-		void OnEvent(Event& e) override;
 
 		void StartGame();
 		void StopGame();

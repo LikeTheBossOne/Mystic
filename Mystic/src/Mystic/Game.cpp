@@ -1,8 +1,5 @@
 #include "Game.h"
 #include "Application.h"
-#include "Layer.h"
-#include "Events/RenderEvent.h"
-#include "Events/UpdateEvent.h"
 
 namespace Mystic
 {

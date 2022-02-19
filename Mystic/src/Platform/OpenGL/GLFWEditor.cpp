@@ -253,23 +253,6 @@ namespace Mystic
 		return true;
 	}
 
-	void GLFWEditor::OnEvent(Event& e)
-	{
-		switch (e.GetEventType())
-		{
-		case EventType::Update:
-			//PollEvents();
-			break;
-		case EventType::Render:
-			//TODO: Move these to separate events
-			//PreRender();
-			//Render();
-			//PostRender();
-			break;
-		default: ;
-		}
-	}
-
 	void GLFWEditor::StartGame()
 	{
 		_app = Ref<Application>(_appCreater());
