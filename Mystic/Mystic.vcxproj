@@ -162,7 +162,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Mystic\EditorLayer.cpp" />
+    <ClCompile Include="src\Mystic\Game.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLWindow.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp" />
@@ -185,7 +185,9 @@
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Mystic\EditorLayer.h" />
+    <ClInclude Include="src\Mystic\Events\RenderEvent.h" />
+    <ClInclude Include="src\Mystic\Events\UpdateEvent.h" />
+    <ClInclude Include="src\Mystic\Game.h" />
     <ClInclude Include="src\Platform\OpenGL\Model.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h" />
     <ClInclude Include="src\Platform\OpenGL\RenderJob.h" />

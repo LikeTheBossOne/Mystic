@@ -1,18 +1,20 @@
 #pragma once
+#include <functional>
 #include <memory>
 #include <string>
 #include "../Core.h"
+#include "../../Mystic/Layer.h"
 
 namespace Mystic
 {
 	class Application;
 
-	class InstEditor
+	class EditorLayer : public Layer
 	{
 	public:
-		virtual ~InstEditor() = default;
+		virtual ~EditorLayer() = default;
 		
-		virtual void Init(int windowWidth, int windowHeight, std::string windowTitle) = 0;
+		virtual void Init(int windowWidth, int windowHeight, std::string windowTitle, std::function<Application*()> applicationCreater) = 0;
 
 		virtual void OnStart() = 0;
 		virtual void OnEnd() = 0;
@@ -27,12 +29,14 @@ namespace Mystic
 
 		virtual bool ShouldClose() = 0;
 		virtual bool PollEvents() = 0;
+
+		virtual void OnEvent(Event& e) override = 0;
 	};
 	
 	class MYSTIC_API Editor
 	{
 	public:
-		static void Init(int windowWidth, int windowHeight, std::string title);
+		static void Init(int windowWidth, int windowHeight, std::string title, std::function<Application*()> applicationCreater);
 		static void Start();
 		static bool ShouldClose();
 		static void Update();
@@ -47,6 +51,6 @@ namespace Mystic
 		static void PostRender();
 
 	private:
-		static std::unique_ptr<InstEditor> s_editor;
+		static std::unique_ptr<EditorLayer> s_editor;
 	};
 }

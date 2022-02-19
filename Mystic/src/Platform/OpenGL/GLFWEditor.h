@@ -7,13 +7,15 @@
 
 namespace Mystic
 {
-	class GLFWEditor : public InstEditor
+	class Game;
+
+	class GLFWEditor : public EditorLayer
 	{
 	public:
 		GLFWEditor();
 		~GLFWEditor() override;
 		
-		void Init(int windowWidth, int windowHeigh, std::string windowTitle) override;
+		void Init(int windowWidth, int windowHeigh, std::string windowTitle, std::function<Application*()> applicationCreater) override;
 
 		void OnStart() override;
 		void OnEnd() override;
@@ -29,7 +31,11 @@ namespace Mystic
 		bool ShouldClose() override;
 		bool PollEvents() override;
 
-	
+		void OnEvent(Event& e) override;
+
+		void StartGame();
+		void StopGame();
+
 	private:
 		GLFWwindow* _window;
 		bool _show_demo_window;
@@ -41,5 +47,10 @@ namespace Mystic
 
 		int32_t _width;
 		int32_t _height;
+
+		std::function<Application* ()> _appCreater;
+		std::shared_ptr<Application> _app;
+		std::shared_ptr<Game> _game;
+		bool _appRunning;
 	};
 }

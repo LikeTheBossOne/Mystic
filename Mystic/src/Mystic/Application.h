@@ -1,5 +1,6 @@
 #pragma once
 
+#include <memory>
 #include <string>
 #include <vector>
 
@@ -7,16 +8,24 @@
 
 namespace Mystic
 {
+	class Game;
 
 	class MYSTIC_API Application
 	{
 	public:
-		Application() {}
-		virtual ~Application() {}
+		Application();
+		virtual ~Application() = default;
 
-		virtual void Start();
-		virtual void Update();
-		virtual void Render();
+		virtual void Start(std::shared_ptr<Game> game);
+		virtual void Update() = 0;
+		virtual void Render() = 0;
+
+		void Close();
+		bool ShouldClose();
+
+	private:
+		bool _shouldClose;
+		std::shared_ptr<Game> Game;
 	};
 
 	// To be defined in client

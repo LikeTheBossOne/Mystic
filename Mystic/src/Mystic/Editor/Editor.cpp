@@ -7,13 +7,13 @@
 
 namespace Mystic
 {
-	std::unique_ptr<InstEditor> Editor::s_editor = nullptr;
+	std::unique_ptr<EditorLayer> Editor::s_editor = nullptr;
 	
-	void Editor::Init( int windowWidth, int windowHeight, std::string title)
+	void Editor::Init( int windowWidth, int windowHeight, std::string title, std::function<Application*()> applicationCreater)
 	{
 		s_editor = std::make_unique<GLFWEditor>();
 		
-		s_editor->Init(windowWidth, windowHeight, title);
+		s_editor->Init(windowWidth, windowHeight, title, applicationCreater);
 
 		Renderer2D::Init();
 	}

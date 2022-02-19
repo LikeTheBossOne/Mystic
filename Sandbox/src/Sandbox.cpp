@@ -32,8 +32,9 @@ public:
 		
 	}
 
-	inline void Start() override
+	inline void Start(std::shared_ptr<Mystic::Game> game) override
 	{
+		Application::Start(game);
 		for (auto i = 0u; i < 10u; ++i) {
 			const entt::entity entity = _registry.create();
 			_registry.emplace<Position>(entity, i * 1.f, i * 1.f);

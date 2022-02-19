@@ -10,6 +10,8 @@
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
 #include "../../Mystic/GFX/Renderer2D.h"
+#include "../../Mystic/Application.h"
+#include "../../Mystic/Game.h"
 
 namespace Mystic
 {
@@ -18,15 +20,17 @@ namespace Mystic
         _window = nullptr;
 		_width = 800;
 		_height = 600;
+		_appRunning = false;
 	}
 
 	GLFWEditor::~GLFWEditor()
 	{
 	}
-	void GLFWEditor::Init(int windowWidth, int windowHeight, std::string windowTitle)
+	void GLFWEditor::Init(int windowWidth, int windowHeight, std::string windowTitle, std::function<Application* ()> applicationCreater)
 	{
 		_width = windowWidth;
 		_height = windowHeight;
+		_appCreater = applicationCreater;
 	}
 
 	static void framebuffer_size_callback(GLFWwindow* window, int width, int height)
@@ -165,14 +169,30 @@ namespace Mystic
 		}
 
 		{
-			ImGui::Begin("Image");
-			BindFramebuffer();
-			glViewport(0, 0, 400, 400);
-			Mystic::Renderer2D::HandleJobs();
-			UnbindFramebuffer();
+			ImGui::Begin("Game");
 
-			ImGui::Image((void*)_texture, ImVec2(400, 400), ImVec2(1, 1), ImVec2(0, 0));
+			if (ImGui::Button("Start/Stop", ImVec2(60, 20)))
+			{
+				if (!_appRunning)
+				{
+					StartGame();
+				}
+				else
+				{
+					StopGame();
+				}
+				
+			}
+			if (_appRunning)
+			{
+				BindFramebuffer();
+				glViewport(0, 0, 400, 400);
+				Renderer2D::HandleJobs();
+				UnbindFramebuffer();
 
+				ImGui::Image((void*)_texture, ImVec2(400, 400), ImVec2(1, 1), ImVec2(0, 0));
+			}
+			
 			ImGui::End();
 		}
 
@@ -201,7 +221,10 @@ namespace Mystic
 
 	void GLFWEditor::PostRender()
 	{
-
+		if (_appRunning && _app && _game)
+		{
+			_game->Update();
+		}
 	}
 
 	void GLFWEditor::ShowGameWindow()
@@ -228,6 +251,41 @@ namespace Mystic
 	{
 		glfwPollEvents();
 		return true;
+	}
+
+	void GLFWEditor::OnEvent(Event& e)
+	{
+		switch (e.GetEventType())
+		{
+		case EventType::Update:
+			//PollEvents();
+			break;
+		case EventType::Render:
+			//TODO: Move these to separate events
+			//PreRender();
+			//Render();
+			//PostRender();
+			break;
+		default: ;
+		}
+	}
+
+	void GLFWEditor::StartGame()
+	{
+		_app = std::shared_ptr<Application>(_appCreater());
+		_game = std::make_shared<Game>(_app);
+		_app->Start(_game);
+
+		_appRunning = true;
+	}
+
+	void GLFWEditor::StopGame()
+	{
+		_app->Close();
+		_app = nullptr;
+		_game = nullptr;
+
+		_appRunning = false;
 	}
 }
 

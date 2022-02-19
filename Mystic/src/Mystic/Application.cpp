@@ -4,16 +4,22 @@
 
 namespace Mystic
 {
-	void Application::Start()
-	{
-
-	}
-
-	void Application::Update()
+	Application::Application()
 	{
 	}
 
-	void Application::Render()
+	void Application::Start(std::shared_ptr<Mystic::Game> game)
 	{
+		Game = game;
+	}
+
+	void Application::Close()
+	{
+		_shouldClose = true;
+	}
+
+	bool Application::ShouldClose()
+	{
+		return _shouldClose;
 	}
 }
