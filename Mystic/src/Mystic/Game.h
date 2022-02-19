@@ -11,14 +11,14 @@ namespace Mystic
 	class MYSTIC_API Game
 	{
 	public:
-		Game(std::shared_ptr<Application> app);
+		Game(Ref<Application> app);
 		void Start();
 		void Update();
-		std::shared_ptr<entt::registry> GetRegistry();
+		Ref<entt::registry> GetRegistry();
 
 	private:
-		std::shared_ptr<Application> _app;
-		std::shared_ptr<entt::registry> _registry;
+		Ref<Application> _app;
+		Ref<entt::registry> _registry;
 	};
 }
 

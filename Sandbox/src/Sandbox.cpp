@@ -32,7 +32,7 @@ public:
 		
 	}
 
-	inline void Start(std::shared_ptr<Mystic::Game> game) override
+	inline void Start(Mystic::Ref<Mystic::Game> game) override
 	{
 		Application::Start(game);
 		for (auto i = 0u; i < 10u; ++i) {

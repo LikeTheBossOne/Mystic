@@ -24,7 +24,7 @@ namespace Mystic
 		EventType eventType = e.GetEventType();
 		for (auto iter = s_handlerMap[eventType].begin(); iter < s_handlerMap[eventType].end() ;)
 		{
-			if (std::shared_ptr<IEventHandler> shrdPtr = (*iter).lock())
+			if (Ref<IEventHandler> shrdPtr = (*iter).lock())
 			{
 				shrdPtr->OnEvent(e);
 				++iter;

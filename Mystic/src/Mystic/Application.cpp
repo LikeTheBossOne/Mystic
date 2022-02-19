@@ -8,7 +8,7 @@ namespace Mystic
 	{
 	}
 
-	void Application::Start(std::shared_ptr<Mystic::Game> game)
+	void Application::Start(Ref<Mystic::Game> game)
 	{
 		Game = game;
 	}

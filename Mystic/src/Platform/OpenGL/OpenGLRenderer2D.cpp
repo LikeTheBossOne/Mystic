@@ -12,12 +12,12 @@ namespace Mystic
 	Mystic::OpenGLRenderer2D::OpenGLRenderer2D()
 	{
         _jobs = std::vector<RenderJob>();
-        _models = std::unordered_map<std::string, std::shared_ptr<Model>>();
+        _models = std::unordered_map<std::string, Ref<Model>>();
 	}
 
 	Mystic::OpenGLRenderer2D::~OpenGLRenderer2D()
 	{
-        for (std::pair<std::string, std::shared_ptr<Model>> pair : _models)
+        for (std::pair<std::string, Ref<Model>> pair : _models)
         {
             glDeleteVertexArrays(1, &pair.second->VAO);
             glDeleteBuffers(1, &pair.second->VBO);
@@ -96,7 +96,7 @@ namespace Mystic
         glDeleteShader(fragmentShader);
 
 
-        const std::shared_ptr<Model> model = std::make_shared<Model>();
+        const Ref<Model> model = std::make_shared<Model>();
 
         float vertices[] = {
             -0.5f, -0.5f, 0.0f, // left  

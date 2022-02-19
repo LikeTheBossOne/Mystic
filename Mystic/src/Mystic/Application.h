@@ -16,7 +16,7 @@ namespace Mystic
 		Application();
 		virtual ~Application() = default;
 
-		virtual void Start(std::shared_ptr<Game> game);
+		virtual void Start(Ref<Game> game);
 		virtual void Update() = 0;
 		virtual void Render() = 0;
 
@@ -25,7 +25,7 @@ namespace Mystic
 
 	private:
 		bool _shouldClose;
-		std::shared_ptr<Game> Game;
+		Ref<Game> Game;
 	};
 
 	// To be defined in client

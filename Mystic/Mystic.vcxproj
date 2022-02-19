@@ -181,7 +181,7 @@
     <ClCompile Include="src\Mystic\Application.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp" />
     <ClCompile Include="src\Mystic\GFX\Camera.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\glad.c" />
+    <ClCompile Include="src\Mystic\glad.c" />
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>

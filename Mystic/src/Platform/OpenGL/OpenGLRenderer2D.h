@@ -36,7 +36,7 @@ namespace Mystic
 
 	private:
 		uint32_t _shaderProgram;
-		std::unordered_map<std::string, std::shared_ptr<Model>> _models;
+		std::unordered_map<std::string, Ref<Model>> _models;
 
 		std::vector<RenderJob> _jobs;
 	};

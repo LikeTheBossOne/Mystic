@@ -5,6 +5,7 @@
 #include "Application.h"
 #include "Game.h"
 #include "Editor/Editor.h"
+#include "GFX/Renderer2D.h"
 
 #ifdef MYST_PLATFORM_WINDOWS
 
@@ -35,21 +36,13 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		const auto app = std::shared_ptr<Mystic::Application>(Mystic::CreateApplication());
-		std::shared_ptr<Mystic::Game> game = std::make_shared<Mystic::Game>(app);
+		Mystic::Renderer2D::Init();
+		Mystic::Renderer2D::OpenScene(800, 600, "Game");
+
+		const auto app = Mystic::Ref<Mystic::Application>(Mystic::CreateApplication());
+		Mystic::Ref<Mystic::Game> game = std::make_shared<Mystic::Game>(app);
 		game->Start();
 	}
-
-	/*const auto app = Mystic::CreateApplication();
-	app->Start();
-	while (!Mystic::Editor::ShouldClose())
-	{
-		app->Update();
-		app->Render();
-		Mystic::Editor::Update();
-	}*/
-
-	//delete app;
 }
 
 #endif

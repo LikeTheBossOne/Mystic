@@ -49,8 +49,8 @@ namespace Mystic
 		int32_t _height;
 
 		std::function<Application* ()> _appCreater;
-		std::shared_ptr<Application> _app;
-		std::shared_ptr<Game> _game;
+		Ref<Application> _app;
+		Ref<Game> _game;
 		bool _appRunning;
 	};
 }

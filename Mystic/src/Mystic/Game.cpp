@@ -7,7 +7,7 @@
 namespace Mystic
 {
 
-	Game::Game(std::shared_ptr<Application> app)
+	Game::Game(Ref<Application> app)
 	{
 		_registry = std::make_shared<entt::registry>();
 		_app = app;
@@ -15,7 +15,7 @@ namespace Mystic
 
 	void Game::Start()
 	{
-		_app->Start(std::shared_ptr<Game>(this));
+		_app->Start(Ref<Game>(this));
 		while (!_app->ShouldClose())
 		{
 			Update();
@@ -28,7 +28,7 @@ namespace Mystic
 		_app->Render();
 	}
 
-	std::shared_ptr<entt::registry> Game::GetRegistry()
+	Ref<entt::registry> Game::GetRegistry()
 	{
 		return _registry;
 	}

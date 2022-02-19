@@ -272,7 +272,7 @@ namespace Mystic
 
 	void GLFWEditor::StartGame()
 	{
-		_app = std::shared_ptr<Application>(_appCreater());
+		_app = Ref<Application>(_appCreater());
 		_game = std::make_shared<Game>(_app);
 		_app->Start(_game);
 

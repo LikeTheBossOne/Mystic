@@ -11,13 +11,13 @@ namespace Mystic
 	class MYSTIC_API RenderJob
 	{
 	public:
-		RenderJob(std::shared_ptr<Model> model)
+		RenderJob(Ref<Model> model)
 		{
 			_model = model;
 		}
 
-		std::shared_ptr<Model> GetModel() const { return _model; }
+		Ref<Model> GetModel() const { return _model; }
 	private:
-		std::shared_ptr<Model> _model;
+		Ref<Model> _model;
 	};
 }
