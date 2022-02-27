@@ -4,26 +4,25 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "Model.h"
+#include "Mesh.h"
 #include "RenderJob.h"
+#include "../../Mystic/GFX/Camera.h"
 
 namespace Mystic
 {
 	Mystic::OpenGLRenderer2D::OpenGLRenderer2D()
 	{
-        _jobs = std::vector<RenderJob>();
-        _models = std::unordered_map<std::string, Ref<Model>>();
+        _jobs = std::vector<Ref<RenderJob>>();
+        _meshes = std::unordered_map<std::string, Ref<Mesh>>();
 	}
 
 	Mystic::OpenGLRenderer2D::~OpenGLRenderer2D()
 	{
-        for (std::pair<std::string, Ref<Model>> pair : _models)
+        for (std::pair<std::string, Ref<Mesh>> pair : _meshes)
         {
             glDeleteVertexArrays(1, &pair.second->VAO);
             glDeleteBuffers(1, &pair.second->VBO);
         }
-        
-        glDeleteProgram(_shaderProgram);
 	}
 
     void glfw_onError(int error, const char* description)
@@ -40,96 +39,17 @@ namespace Mystic
 
 	bool Mystic::OpenGLRenderer2D::CreateWindow(uint32_t width, uint32_t height, std::string title)
 	{
-        const unsigned int SCR_WIDTH = 800;
-        const unsigned int SCR_HEIGHT = 600;
+        _shader = new Shader("..\\Mystic\\assets\\shaders\\vertex1.vs", "..\\Mystic\\assets\\shaders\\fragment1.fs");
 
-        const char* vertexShaderSource = "#version 330 core\n"
-            "layout (location = 0) in vec3 aPos;\n"
-            "void main()\n"
-            "{\n"
-            "   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-            "}\0";
-        const char* fragmentShaderSource = "#version 330 core\n"
-            "out vec4 FragColor;\n"
-            "void main()\n"
-            "{\n"
-            "   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-            "}\n\0";
-
-        // build and compile our shader program
-        // vertex shader
-        unsigned int vertexShader = glCreateShader(GL_VERTEX_SHADER);
-        glShaderSource(vertexShader, 1, &vertexShaderSource, NULL);
-        glCompileShader(vertexShader);
-        // check for shader compile errors
-        int success;
-        char infoLog[512];
-        glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);
-        if (!success)
+        std::string key = "triangle";
+        Ref<Mesh> mesh = CreateMesh(key);
+        if (mesh != NULL)
         {
-            glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << infoLog << std::endl;
+            _meshes["triangle"] = mesh;
         }
-        // fragment shader
-        unsigned int fragmentShader = glCreateShader(GL_FRAGMENT_SHADER);
-        glShaderSource(fragmentShader, 1, &fragmentShaderSource, NULL);
-        glCompileShader(fragmentShader);
-        // check for shader compile errors
-        glGetShaderiv(fragmentShader, GL_COMPILE_STATUS, &success);
-        if (!success)
-        {
-            glGetShaderInfoLog(fragmentShader, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << infoLog << std::endl;
-        }
-        // link shaders
-        _shaderProgram = glCreateProgram();
-        glAttachShader(_shaderProgram, vertexShader);
-        glAttachShader(_shaderProgram, fragmentShader);
-        glLinkProgram(_shaderProgram);
-        // check for linking errors
-        glGetProgramiv(_shaderProgram, GL_LINK_STATUS, &success);
-        if (!success) {
-            glGetProgramInfoLog(_shaderProgram, 512, NULL, infoLog);
-            std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" << infoLog << std::endl;
-        }
-        glDeleteShader(vertexShader);
-        glDeleteShader(fragmentShader);
-
-
-        const Ref<Model> model = std::make_shared<Model>();
-
-        float vertices[] = {
-            -0.5f, -0.5f, 0.0f, // left  
-             0.5f, -0.5f, 0.0f, // right 
-             0.0f,  0.5f, 0.0f  // top   
-        };
-
-        glGenVertexArrays(1, &model->VAO);
-        glGenBuffers(1, &model->VBO);
-        // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
-        glBindVertexArray(model->VAO);
-        
-        glBindBuffer(GL_ARRAY_BUFFER, model->VBO);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
-
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-        glEnableVertexAttribArray(0);
-
-        // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
-        glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-        // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
-        // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
-        glBindVertexArray(0);
-        _models["triangle"] = model;
 
 
 		return true;
-	}
-
-	void Mystic::OpenGLRenderer2D::RenderTriangle()
-	{
-        _jobs.emplace_back(_models["triangle"]);
 	}
 
 	void Mystic::OpenGLRenderer2D::ClearScreen()
@@ -161,12 +81,39 @@ namespace Mystic
 	{
 	}
 
+	void OpenGLRenderer2D::UseShaderProgram()
+	{
+        _shader->Use();
+	}
+
+	void OpenGLRenderer2D::SetProjectionMatrix(glm::mat4& projectionMatrix)
+	{
+        glUniformMatrix4fv(glGetUniformLocation(_shader->id, "projection"), 1, GL_FALSE, glm::value_ptr(projectionMatrix));
+	}
+
+	void OpenGLRenderer2D::SetViewMatrix(glm::mat4& viewMatrix)
+	{
+        glUniformMatrix4fv(glGetUniformLocation(_shader->id, "view"), 1, GL_FALSE, glm::value_ptr(viewMatrix));
+	}
+
+	void OpenGLRenderer2D::RenderEnt(std::string& meshKey, glm::mat4& modelMat)
+	{
+        _jobs.emplace_back(std::make_shared<RenderJob>(meshKey, modelMat));
+	}
+
 	void OpenGLRenderer2D::HandleJobs()
 	{
-        for (RenderJob job : _jobs)
+        for (Ref<RenderJob> job : _jobs)
         {
-            glUseProgram(_shaderProgram);
-            glBindVertexArray(job.GetModel()->VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
+            if (_meshes.find(job->MeshKey) == _meshes.end())
+            {
+                assert(true, "Couldn't find mesh for " + job->MeshKey);
+            }
+
+			//TODO: Pass view (transform) and projection (camera) matrix into shaders
+            glUniformMatrix4fv(glGetUniformLocation(_shader->id, "model"), 1, GL_FALSE, glm::value_ptr(*job->ModelMat.get()));
+
+            glBindVertexArray(_meshes[job->MeshKey]->VAO); // seeing as we only have a single VAO there's no need to bind it every time, but we'll do so to keep things a bit more organized
             glDrawArrays(GL_TRIANGLES, 0, 3);
         }
 
@@ -176,5 +123,45 @@ namespace Mystic
 	uint32_t Mystic::OpenGLRenderer2D::GetTextureHandle() const
 	{
 		return NULL;
+	}
+
+    //TODO: Update this to use another parameter for vertices, or load vertices from a file.
+	Ref<Mesh> OpenGLRenderer2D::CreateMesh(std::string& key)
+	{
+        const Ref<Mesh> mesh = std::make_shared<Mesh>(key);
+
+        glGenVertexArrays(1, &mesh->VAO);
+        glGenBuffers(1, &mesh->VBO);
+        // bind the Vertex Array Object first, then bind and set vertex buffer(s), and then configure vertex attributes(s).
+        glBindVertexArray(mesh->VAO);
+        glBindBuffer(GL_ARRAY_BUFFER, mesh->VBO);
+
+
+        if (key == "triangle")
+        {
+            const float vertices[] = {
+                -0.5f, -0.5f, 0.0f, // left  
+                 0.5f, -0.5f, 0.0f, // right 
+                 0.0f,  0.5f, 0.0f  // top   
+            };
+            glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW);
+        }
+        else
+        {
+            return NULL;
+        }
+
+
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+        glEnableVertexAttribArray(0);
+
+        // note that this is allowed, the call to glVertexAttribPointer registered VBO as the vertex attribute's bound vertex buffer object so afterwards we can safely unbind
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        // You can unbind the VAO afterwards so other VAO calls won't accidentally modify this VAO, but this rarely happens. Modifying other
+        // VAOs requires a call to glBindVertexArray anyways so we generally don't unbind VAOs (nor VBOs) when it's not directly necessary.
+        glBindVertexArray(0);
+
+        return mesh;
 	}
 }

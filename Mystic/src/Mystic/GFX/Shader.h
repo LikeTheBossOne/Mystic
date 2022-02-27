@@ -19,6 +19,7 @@ namespace Mystic
 
 		Shader(const char* vertexPath, const char* fragmentPath)
 		{
+
 			_viewMatrixLoc = -1;
 			_modelLoc = -1;
 
@@ -47,7 +48,7 @@ namespace Mystic
 				vertexCode = vShaderStream.str();
 				fragmentCode = fShaderStream.str();
 			}
-			catch (std::ifstream::failure e)
+			catch (std::ifstream::failure& e)
 			{
 				std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << e.what() << std::endl;
 			}

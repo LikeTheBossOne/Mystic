@@ -7,7 +7,7 @@
 
 namespace Mystic
 {
-	struct Model;
+	struct Mesh;
 	class Camera;
 	class Shader;
 	class RenderJob;
@@ -22,7 +22,6 @@ namespace Mystic
 		~OpenGLRenderer2D() override;
 
 		bool CreateWindow(uint32_t width, uint32_t height, std::string title) override;
-		void RenderTriangle() override;
 		void ClearScreen() override;
 		bool GetKeyState(int16_t key) const override;
 		bool GetMouseButtonState(int8_t button) const override;
@@ -30,14 +29,25 @@ namespace Mystic
 		void PollEvents() override;
 		void SetFramerateLimit(uint32_t limit) override;
 
+
+		void UseShaderProgram() override;
+		void SetProjectionMatrix(glm::mat4& projectionMatrix) override;
+		void SetViewMatrix(glm::mat4& viewMatrix) override;
+
+
+		void RenderEnt(std::string& meshKey, glm::mat4& modelMat) override;
+
 		void HandleJobs() override;
 
 		uint32_t GetTextureHandle() const override;
 
 	private:
-		uint32_t _shaderProgram;
-		std::unordered_map<std::string, Ref<Model>> _models;
+		Ref<Mesh> CreateMesh(std::string& key);
 
-		std::vector<RenderJob> _jobs;
+	private:
+		Shader* _shader;
+		std::unordered_map<std::string, Ref<Mesh>> _meshes;
+
+		std::vector<Ref<RenderJob>> _jobs;
 	};
 }

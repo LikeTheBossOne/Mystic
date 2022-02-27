@@ -6,6 +6,7 @@
 
 namespace Mystic
 {
+	class Scene;
 	class Application;
 
 	class MYSTIC_API Game
@@ -14,11 +15,12 @@ namespace Mystic
 		Game(Ref<Application> app);
 		void Start();
 		void Update();
-		Ref<entt::registry> GetRegistry();
+		Ref<Scene> GetScene();
 
 	private:
 		Ref<Application> _app;
-		Ref<entt::registry> _registry;
+		
+		Ref<Scene> _currentScene;
 	};
 }
 

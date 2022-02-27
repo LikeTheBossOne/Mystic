@@ -1,23 +1,20 @@
 #pragma once
-#include <algorithm>
-#include <cstdint>
 #include <memory>
-#include <vector>
 
-#include "Model.h"
+#include "Mesh.h"
 
 namespace Mystic
 {
+
 	class MYSTIC_API RenderJob
 	{
 	public:
-		RenderJob(Ref<Model> model)
+		RenderJob(std::string& meshKey, glm::mat4& modelMat)
 		{
-			_model = model;
+			MeshKey = meshKey;
+			ModelMat = std::make_unique<glm::mat4>(modelMat);
 		}
-
-		Ref<Model> GetModel() const { return _model; }
-	private:
-		Ref<Model> _model;
+		std::string MeshKey;
+		Ref<glm::mat4> ModelMat;
 	};
 }

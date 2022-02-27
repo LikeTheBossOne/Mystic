@@ -162,6 +162,7 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Mystic\Scene.cpp" />
     <ClCompile Include="src\Mystic\Game.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLWindow.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
@@ -177,18 +178,20 @@
     <ClCompile Include="ImGui\imgui_widgets.cpp" />
     <ClCompile Include="src\Mystic\Events\EventSystem.cpp" />
     <ClCompile Include="src\Mystic\GFX\Renderer2D.cpp" />
-    <ClCompile Include="src\Platform\SFML\SFMLRenderer2D.cpp" />
     <ClCompile Include="src\Mystic\Application.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp" />
     <ClCompile Include="src\Mystic\GFX\Camera.cpp" />
-    <ClCompile Include="src\Mystic\glad.c" />
+    <ClCompile Include="src\Platform\OpenGL\glad.c" />
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Mystic\Components\Renderable.h" />
+    <ClInclude Include="src\Mystic\Components\Transform.h" />
+    <ClInclude Include="src\Mystic\Scene.h" />
     <ClInclude Include="src\Mystic\Events\RenderEvent.h" />
     <ClInclude Include="src\Mystic\Events\UpdateEvent.h" />
     <ClInclude Include="src\Mystic\Game.h" />
-    <ClInclude Include="src\Platform\OpenGL\Model.h" />
+    <ClInclude Include="src\Platform\OpenGL\Mesh.h" />
     <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h" />
     <ClInclude Include="src\Platform\OpenGL\RenderJob.h" />
     <ClInclude Include="src\Mystic\GFX\Window.h" />
@@ -209,7 +212,6 @@
     <ClInclude Include="src\Mystic\Events\EventSystem.h" />
     <ClInclude Include="src\Mystic\Events\IEventHandler.h" />
     <ClInclude Include="src\Mystic\GFX\Renderer2D.h" />
-    <ClInclude Include="src\Platform\SFML\SFMLRenderer2D.h" />
     <ClInclude Include="src\Mystic.h" />
     <ClInclude Include="src\Mystic\Application.h" />
     <ClInclude Include="src\Mystic\Core.h" />

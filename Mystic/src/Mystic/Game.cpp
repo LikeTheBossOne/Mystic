@@ -1,13 +1,14 @@
 #include "Game.h"
 #include "Application.h"
+#include "Scene.h"
 
 namespace Mystic
 {
 
 	Game::Game(Ref<Application> app)
 	{
-		_registry = std::make_shared<entt::registry>();
 		_app = app;
+		_currentScene = std::make_shared<Scene>();
 	}
 
 	void Game::Start()
@@ -22,12 +23,14 @@ namespace Mystic
 	void Game::Update()
 	{
 		_app->Update();
-		_app->Render();
+		//_app->Render();
+		_currentScene->RenderScene();
 	}
 
-	Ref<entt::registry> Game::GetRegistry()
+	Ref<Scene> Game::GetScene()
 	{
-		return _registry;
+		return _currentScene;
 	}
+
 }
 

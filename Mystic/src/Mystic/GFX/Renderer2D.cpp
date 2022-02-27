@@ -1,6 +1,5 @@
 #include "Renderer2D.h"
 
-#include "../../Platform/SFML/SFMLRenderer2D.h"
 #include "../../Platform/OpenGL//OpenGLRenderer2D.h"
 
 namespace Mystic
@@ -52,9 +51,24 @@ namespace Mystic
 		return s_renderer->GetTextureHandle();
 	}
 
-	void Renderer2D::RenderTriangle()
+	void Renderer2D::UseShaderProgram()
 	{
-		s_renderer->RenderTriangle();
+		s_renderer->UseShaderProgram();
+	}
+
+	void Renderer2D::SetProjectionMatrix(glm::mat4& projectionMatrix)
+	{
+		s_renderer->SetProjectionMatrix(projectionMatrix);
+	}
+
+	void Renderer2D::SetViewMatrix(glm::mat4& viewMatrix)
+	{
+		s_renderer->SetViewMatrix(viewMatrix);
+	}
+
+	void Renderer2D::RenderEnt(std::string& meshKey, glm::mat4& modelMat)
+	{
+		s_renderer->RenderEnt(meshKey, modelMat);
 	}
 
 	void Renderer2D::HandleJobs()

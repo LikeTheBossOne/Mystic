@@ -213,7 +213,7 @@ namespace Mystic
 		glfwGetFramebufferSize(_window, &display_w, &display_h);
 		glViewport(0, 0, display_w, display_h);
 
-		Mystic::Renderer2D::RenderTriangle();
+		//Mystic::Renderer2D::RenderTriangle();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		glfwSwapBuffers(_window);

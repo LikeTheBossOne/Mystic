@@ -4,27 +4,20 @@
 #include <vector>
 
 #include "Mystic/Editor/Editor.h"
+#include <glm/gtx/quaternion.hpp>
 #include "Mystic/GFX/Renderer2D.h"
 #include "entt/entt.hpp"
-
-struct Position
-{
-	float x;
-	float y;
-};
-
-struct Velocity
-{
-	float dx;
-	float dy;
-};
+#include "Mystic/Scene.h"
+#include "Mystic/Components/Renderable.h"
+#include "Mystic/Components/Transform.h"
+#include "Platform/OpenGL/Mesh.h"
 
 class Sandbox : public Mystic::Application
 {
 public:
 	Sandbox()
 	{
-		_registry = {};
+
 	}
 
 	~Sandbox()
@@ -34,40 +27,33 @@ public:
 
 	inline void Start(Mystic::Ref<Mystic::Game> game) override
 	{
+		// DO NOT REMOVE //
 		Application::Start(game);
-		for (auto i = 0u; i < 10u; ++i) {
-			const entt::entity entity = _registry.create();
-			_registry.emplace<Position>(entity, i * 1.f, i * 1.f);
-			if (i % 2 == 0) { _registry.emplace<Velocity>(entity, i * .1f, i * .1f); }
-		}
+		///////////////////
+
+		Mystic::Ref<Mystic::Scene> scene = game->GetScene();
+
+		Mystic::Ref<entt::registry> reg = scene->GetRegistry();
+		
+		const entt::entity ent = reg->create();
+		Mystic::Transform t = { glm::vec3(0.f, 0.f, -8.0f), glm::quat(glm::vec3(0, 0, 0)), glm::vec3(1, 1, 1) };
+		reg->emplace<Mystic::Transform>(ent, t);
+
+		const std::string key = "triangle";
+		Mystic::Renderable r = { key };
+		reg->emplace<Mystic::Renderable>(ent, r);
 	}
 
 	inline void Update() override
 	{
-		const auto view = _registry.view<Position,const Velocity>();
-
-		for (auto [entity, pos, vel] : view.each())
-		{
-			pos.x += vel.dx;
-			pos.y += vel.dy;
-		}
+		std::cout << "UPDATE" << std::endl;
 	}
 
 	inline void Render() override
 	{
-		std::cout << "FRAME" << std::endl;
-
-		const auto view = _registry.view<const Position>();
-		for (auto [entity, pos] : view.each())
-		{
-			std::cout << "E: " << static_cast<uint32_t>(entity) << "\t" << pos.x << "," << pos.y << std::endl;
-		}
-
-		Mystic::Renderer2D::RenderTriangle();
+		std::cout << "RENDER" << std::endl;
 	}
-
-private:
-	entt::registry _registry;
+	
 };
 
 Mystic::Application* Mystic::CreateApplication()
