@@ -12,6 +12,11 @@
 #include "../../Mystic/GFX/Renderer2D.h"
 #include "../../Mystic/Application.h"
 #include "../../Mystic/Game.h"
+#include "../../Mystic/Scene/SceneSerializer.h"
+#include "../../Mystic/Scene/ProjectScene.h"
+
+#include "../../Mystic/ECS/Components/Transform.h"
+#include "../../Mystic/ECS/Components/Renderable.h"
 
 namespace Mystic
 {
@@ -21,6 +26,33 @@ namespace Mystic
 		_width = 800;
 		_height = 600;
 		_appRunning = false;
+
+		_projectScene = std::make_shared<ProjectScene>();
+
+		/*SceneSerializer serializer(_projectScene);
+		std::string scenePath = "Scenes\\Scene1.yaml";
+		serializer.DeserializeScene(scenePath);*/
+
+		// Instead let's do some sample project generation
+		Ref<entt::registry> reg = _projectScene->GetRegistry();
+
+		const std::string key = "triangle";
+		std::srand(std::time(nullptr));
+		for (int i = 0; i < 10; i++)
+		{
+			Entity entInst = _projectScene->CreateEntity();
+			const entt::entity ent = entInst.EntId;
+			Transform transform =
+			{
+				glm::vec3((std::rand() % 20) - 10.f, (std::rand() % 20) - 10.f, (std::rand() % 20) - 30.f),
+				glm::quat(glm::vec3((std::rand() % 180) - 90.f, (std::rand() % 360), (std::rand() % 360))),
+				glm::vec3((std::rand() % 5), (std::rand() % 5), (std::rand() % 5))
+			};
+			reg->emplace<Transform>(ent, transform);
+			Renderable renderable = { key };
+			reg->emplace<Renderable>(ent, renderable);
+		}
+
 	}
 
 	GLFWEditor::~GLFWEditor()
@@ -183,15 +215,13 @@ namespace Mystic
 				}
 				
 			}
-			if (_appRunning)
-			{
-				BindFramebuffer();
-				glViewport(0, 0, 400, 400);
-				Renderer2D::HandleJobs();
-				UnbindFramebuffer();
+			BindFramebuffer();
+			Renderer2D::ClearScreen();
+			glViewport(0, 0, 400, 400);
+			Renderer2D::HandleJobs();
+			UnbindFramebuffer();
 
-				ImGui::Image((void*)_texture, ImVec2(400, 400), ImVec2(1, 1), ImVec2(0, 0));
-			}
+			ImGui::Image((void*)_texture, ImVec2(800, 800), ImVec2(1, 1), ImVec2(0, 0));
 			
 			ImGui::End();
 		}
@@ -225,6 +255,10 @@ namespace Mystic
 		{
 			_game->Update();
 		}
+		else
+		{
+			_projectScene->RenderScene();
+		}
 	}
 
 	void GLFWEditor::ShowGameWindow()
@@ -256,14 +290,22 @@ namespace Mystic
 	void GLFWEditor::StartGame()
 	{
 		_app = Ref<Application>(_appCreater());
-		_game = std::make_shared<Game>(_app);
+
+		Ref<RuntimeScene> runtimeScene = _projectScene->CreateRuntimeScene();
+
+		_game = std::make_shared<Game>(_app, runtimeScene);
 		_app->Start(_game);
+
 
 		_appRunning = true;
 	}
 
 	void GLFWEditor::StopGame()
 	{
+		SceneSerializer serializer(_projectScene);
+		std::string scenePath = "Scenes\\Scene1.yaml";
+		serializer.SerializeScene(scenePath);
+
 		_app->Close();
 		_app = nullptr;
 		_game = nullptr;

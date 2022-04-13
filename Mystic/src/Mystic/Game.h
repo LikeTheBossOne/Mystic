@@ -6,21 +6,22 @@
 
 namespace Mystic
 {
-	class Scene;
+	class RuntimeScene;
 	class Application;
 
 	class MYSTIC_API Game
 	{
 	public:
-		Game(Ref<Application> app);
+		Game(Ref<Application> app, Ref<RuntimeScene> startingScene);
+
 		void Start();
 		void Update();
-		Ref<Scene> GetScene();
+		Ref<RuntimeScene> GetScene();
 
 	private:
 		Ref<Application> _app;
 		
-		Ref<Scene> _currentScene;
+		Ref<RuntimeScene> _currentScene;
 	};
 }
 

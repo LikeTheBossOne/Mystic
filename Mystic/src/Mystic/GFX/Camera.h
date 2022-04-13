@@ -7,10 +7,10 @@ namespace Mystic
     class Camera
     {
     public:
-        constexpr static float DEFAULT_YAW = -90.f;
-        constexpr static float DEFAULT_PITCH = 0.0f;
-        constexpr static float DEFAULT_SENSITIVITY = 0.1f;
-        constexpr static float DEFAULT_FOV = 45.0f;
+        static constexpr float DEFAULT_YAW = -90.f;
+        static constexpr float DEFAULT_SENSITIVITY = 0.1f;
+        static constexpr float DEFAULT_FOV = 45.0f;
+        static constexpr float DEFAULT_PITCH_ = 0.0f;
 
         glm::vec3 _position;
         glm::vec3 _front;
@@ -24,7 +24,7 @@ namespace Mystic
         float _fov;
 
         Camera(glm::vec3 position = glm::vec3(0.f, 0.f, 0.f), glm::vec3 up = glm::vec3(0.f, 1.f, 0.f),
-            float yaw = DEFAULT_YAW, float pitch = DEFAULT_PITCH);
+            float yaw = DEFAULT_YAW, float pitch = DEFAULT_PITCH_);
 
         Camera(float posX, float posY, float posZ, float upX, float upY, float upZ, float yaw, float pitch);
 

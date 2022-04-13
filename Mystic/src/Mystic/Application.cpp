@@ -6,6 +6,7 @@ namespace Mystic
 {
 	Application::Application()
 	{
+		_shouldClose = false;
 	}
 
 	void Application::Start(Ref<Mystic::Game> game)

@@ -21,7 +21,7 @@ namespace Mystic
 		OpenGLRenderer2D();
 		~OpenGLRenderer2D() override;
 
-		bool CreateWindow(uint32_t width, uint32_t height, std::string title) override;
+		bool API_CreateWindow(uint32_t width, uint32_t height, std::string title) override;
 		void ClearScreen() override;
 		bool GetKeyState(int16_t key) const override;
 		bool GetMouseButtonState(int8_t button) const override;

@@ -37,7 +37,7 @@ namespace Mystic
             glfwSetWindowShouldClose(window, true);
     }
 
-	bool Mystic::OpenGLRenderer2D::CreateWindow(uint32_t width, uint32_t height, std::string title)
+	bool Mystic::OpenGLRenderer2D::API_CreateWindow(uint32_t width, uint32_t height, std::string title)
 	{
         _shader = new Shader("..\\Mystic\\assets\\shaders\\vertex1.vs", "..\\Mystic\\assets\\shaders\\fragment1.fs");
 

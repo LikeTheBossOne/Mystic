@@ -7,9 +7,9 @@
 #include <glm/gtx/quaternion.hpp>
 #include "Mystic/GFX/Renderer2D.h"
 #include "entt/entt.hpp"
-#include "Mystic/Scene.h"
-#include "Mystic/Components/Renderable.h"
-#include "Mystic/Components/Transform.h"
+#include "Mystic/Scene/ProjectScene.h"
+#include "Mystic/ECS/Components/Renderable.h"
+#include "Mystic/ECS/Components/Transform.h"
 #include "Platform/OpenGL/Mesh.h"
 
 class Sandbox : public Mystic::Application
@@ -31,27 +31,35 @@ public:
 		Application::Start(game);
 		///////////////////
 
-		Mystic::Ref<Mystic::Scene> scene = game->GetScene();
+		/*Mystic::Ref<Mystic::ProjectScene> scene = game->GetScene();
 
 		Mystic::Ref<entt::registry> reg = scene->GetRegistry();
-		
-		const entt::entity ent = reg->create();
-		Mystic::Transform t = { glm::vec3(0.f, 0.f, -8.0f), glm::quat(glm::vec3(0, 0, 0)), glm::vec3(1, 1, 1) };
-		reg->emplace<Mystic::Transform>(ent, t);
 
 		const std::string key = "triangle";
-		Mystic::Renderable r = { key };
-		reg->emplace<Mystic::Renderable>(ent, r);
+
+		for (int i = 0; i < 10; i++)
+		{
+			const entt::entity ent = reg->create();
+			Mystic::Transform transform =
+			{
+				glm::vec3((std::rand() % 20) - 10.f, (std::rand() % 20) - 10.f, (std::rand() % 20) - 30.f),
+				glm::quat(glm::vec3((std::rand() % 180) - 90.f, (std::rand() % 360), (std::rand() % 360))),
+				glm::vec3((std::rand() % 5), (std::rand() % 5), (std::rand() % 5))
+			};
+			reg->emplace<Mystic::Transform>(ent, transform);
+			Mystic::Renderable renderable = { key };
+			reg->emplace<Mystic::Renderable>(ent, renderable);
+		}*/
 	}
 
 	inline void Update() override
 	{
-		std::cout << "UPDATE" << std::endl;
+		//std::cout << "UPDATE" << std::endl;
 	}
 
 	inline void Render() override
 	{
-		std::cout << "RENDER" << std::endl;
+		// /std::cout << "RENDER" << std::endl;
 	}
 	
 };

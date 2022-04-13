@@ -1,15 +1,18 @@
 #pragma once
-#include <glm/vec2.hpp>
+#include "../Core.h"
 
-class Window
+namespace Mystic
 {
-public:
-	Window();
-	virtual ~Window();
+	class MYSTIC_API Window
+	{
+	public:
+		Window() = default;
+		virtual ~Window() = default;
 
-
-	virtual void SwapBuffer();
-	virtual glm::uvec2 GetSize();
-	virtual void Resize(uint32_t width, uint32_t height);
-	virtual void Resize(glm::uvec2 size);
-};
+		virtual void OpenWindow(int width, int height) = 0;
+		virtual void Clear(float r, float g, float b, float a) = 0;
+		virtual void SwapBuffer() = 0;
+		virtual bool ShouldClose() = 0;
+		virtual void PollEvents() = 0;
+	};
+}

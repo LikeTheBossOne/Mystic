@@ -13,7 +13,7 @@ namespace Mystic
 
 	void Renderer2D::OpenScene(uint32_t width, uint32_t height, std::string title)
 	{
-		s_renderer->CreateWindow(width, height, title);
+		s_renderer->API_CreateWindow(width, height, title);
 	}
 
 	void Renderer2D::ClearScreen()

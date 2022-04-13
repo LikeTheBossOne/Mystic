@@ -33,7 +33,6 @@ namespace Mystic
 			fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
 			try
 			{
-				std::cout << std::filesystem::current_path() << std::endl;
 				// open files
 				vShaderFile.open(vertexPath);
 				fShaderFile.open(fragmentPath);

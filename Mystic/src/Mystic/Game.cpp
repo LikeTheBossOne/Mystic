@@ -1,14 +1,20 @@
+#define RYML_SINGLE_HDR_DEFINE_NOW
+#include "ryml/ryml.hpp"
+
 #include "Game.h"
 #include "Application.h"
-#include "Scene.h"
+#include "Scene/RuntimeScene.h"
 
 namespace Mystic
 {
 
-	Game::Game(Ref<Application> app)
+	Game::Game(Ref<Application> app, Ref<RuntimeScene> startingScene)
 	{
 		_app = app;
-		_currentScene = std::make_shared<Scene>();
+		_currentScene = startingScene;
+		//SceneSerializer serializer(_currentScene);
+		//std::string filePath("scenes/scene1.yaml");
+		//serializer.DeserializeScene(filePath);
 	}
 
 	void Game::Start()
@@ -27,7 +33,7 @@ namespace Mystic
 		_currentScene->RenderScene();
 	}
 
-	Ref<Scene> Game::GetScene()
+	Ref<RuntimeScene> Game::GetScene()
 	{
 		return _currentScene;
 	}

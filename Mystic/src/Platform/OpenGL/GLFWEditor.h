@@ -7,6 +7,7 @@
 
 namespace Mystic
 {
+	class ProjectScene;
 	class Game;
 
 	class GLFWEditor : public InstEditor
@@ -49,6 +50,8 @@ namespace Mystic
 		std::function<Application* ()> _appCreater;
 		Ref<Application> _app;
 		Ref<Game> _game;
+		Ref<ProjectScene> _projectScene;
+
 		bool _appRunning;
 	};
 }

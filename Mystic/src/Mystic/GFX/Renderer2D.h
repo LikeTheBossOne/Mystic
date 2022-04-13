@@ -16,7 +16,7 @@ namespace Mystic
 	public:
 		virtual ~InstRenderer2D() = default;
 
-		virtual bool CreateWindow(uint32_t width, uint32_t height, std::string title) = 0;
+		virtual bool API_CreateWindow(uint32_t width, uint32_t height, std::string title) = 0;
 		virtual void ClearScreen() = 0;
 		virtual bool GetKeyState(int16_t key) const = 0;
 		virtual bool GetMouseButtonState(int8_t button) const = 0;

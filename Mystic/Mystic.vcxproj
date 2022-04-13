@@ -162,8 +162,13 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Mystic\Scene.cpp" />
+    <ClCompile Include="src\Mystic\ECS\ComponentRegistry.cpp" />
+    <ClCompile Include="src\Mystic\ECS\Entity.cpp" />
+    <ClCompile Include="src\Mystic\Scene\RuntimeScene.cpp" />
+    <ClCompile Include="src\Mystic\Scene\Scene.cpp" />
+    <ClCompile Include="src\Mystic\Scene\SceneSerializer.cpp" />
     <ClCompile Include="src\Mystic\Game.cpp" />
+    <ClCompile Include="src\Mystic\Scene\ProjectScene.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLWindow.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer2D.cpp" />
     <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp" />
@@ -185,9 +190,15 @@
     <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Mystic\Components\Renderable.h" />
-    <ClInclude Include="src\Mystic\Components\Transform.h" />
-    <ClInclude Include="src\Mystic\Scene.h" />
+    <ClInclude Include="src\Mystic\ECS\ComponentRegistry.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\GUIDComponent.h" />
+    <ClInclude Include="src\Mystic\Scene\RuntimeScene.h" />
+    <ClInclude Include="src\Mystic\ECS\Entity.h" />
+    <ClInclude Include="src\Mystic\Scene\Scene.h" />
+    <ClInclude Include="src\Mystic\Scene\SceneSerializer.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\Renderable.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\Transform.h" />
+    <ClInclude Include="src\Mystic\Scene\ProjectScene.h" />
     <ClInclude Include="src\Mystic\Events\RenderEvent.h" />
     <ClInclude Include="src\Mystic\Events\UpdateEvent.h" />
     <ClInclude Include="src\Mystic\Game.h" />
@@ -224,6 +235,7 @@
     <ClInclude Include="src\Mystic\GFX\Renderer3D.h" />
     <ClInclude Include="src\Mystic\GFX\Shader.h" />
     <ClInclude Include="src\Platform\OpenGL\stb_image.h" />
+    <ClInclude Include="src\Utility\utilities.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Mystic.rc" />
