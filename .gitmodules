@@ -10,3 +10,6 @@
 [submodule "Mystic/vendor/ryml"]
 	path = Mystic/vendor/ryml
 	url = https://github.com/biojppm/rapidyaml
+[submodule "Mystic/vendor/yaml-cpp"]
+	path = Mystic/vendor/yaml-cpp
+	url = https://github.com/jbeder/yaml-cpp
