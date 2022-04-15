@@ -1,0 +1,6 @@
+[submodule "Mystic/vendor/glfw"]
+	path = Mystic/vendor/glfw
+	url = https://github.com/glfw/glfw
+[submodule "Mystic/vendor/imgui"]
+	path = Mystic/vendor/imgui
+	url = https://github.com/ocornut/imgui
