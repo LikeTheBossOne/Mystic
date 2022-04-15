@@ -1,62 +1,53 @@
 #pragma once
-
-#include <glad/glad.h>
-#include "GLFW/glfw3.h"
-
+#include <memory>
+#include <unordered_map>
+#include <vector>
+#include <glm/ext/matrix_float4x4.hpp>
 #include "../../Mystic/GFX/Renderer3D.h"
 
 namespace Mystic
 {
-	inline glm::vec2 g_lastPos = {0, 0};
-	inline bool g_firstMouse = true;
-	
-	inline void framebuffer_size_callback(GLFWwindow* window, int width, int height)
-	{
-		glViewport(0, 0, width, height);
-	}
-
-	inline void MouseMovedCallback(GLFWwindow* window, double xPos, double yPos)
-	{
-		if (g_firstMouse) // initially set to true
-		{
-			g_lastPos = { xPos, yPos };
-			g_firstMouse = false;
-		}
-
-		float xOffset = xPos - g_lastPos.x;
-		float yOffset = g_lastPos.y - yPos; // Y ranges from bottom to top
-		g_lastPos.x = xPos;
-		g_lastPos.y = yPos;
-
-		//world->GetCamera()->ProcessMouseMovement(xOffset, yOffset, true);
-	}
-
-	inline void ScrollCallback(GLFWwindow* window, double xOffset, double yOffset)
-	{
-		//world->GetCamera()->ProcessMouseScroll(yOffset);
-	}
-	
+	struct Mesh;
+	class Camera;
+	class Shader;
+	class RenderJob;
+	/**
+	 * This is not super performant because you construct a shape or sprite/texture every time.
+	 * In the future, this should be optimized to reuse shapes/textures or should just switch to 2D OpenGL
+	 */
 	class OpenGLRenderer3D : public InstRenderer3D
 	{
 	public:
-		bool CreateWindow(uint32_t width, uint32_t height, std::string title) override;
-		
-		void RenderBox(glm::mat4 transform, glm::vec4 color) override;
+		OpenGLRenderer3D();
+		~OpenGLRenderer3D() override;
 
-		glm::vec2 GetMousePosition() override;
-		bool ShouldCloseWindow() override;
+		bool API_CreateWindow(uint32_t width, uint32_t height, std::string title) override;
 		void ClearScreen() override;
-		bool GetKeyState(int16_t key) override;
-		bool GetMouseButtonState(int8_t button) override;
+		bool GetKeyState(int16_t key) const override;
+		bool GetMouseButtonState(int8_t button) const override;
 		void SwapBuffers() override;
 		void PollEvents() override;
-		void SetWindowShouldClose(bool shouldClose) override;
-		
-	private:
-		
-	private:
-		GLFWwindow* _window = nullptr;
+		void SetFramerateLimit(uint32_t limit) override;
 
-		glm::vec2 _mousePos = {0, 0};
+
+		void UseShaderProgram() override;
+		void SetProjectionMatrix(glm::mat4& projectionMatrix) override;
+		void SetViewMatrix(glm::mat4& viewMatrix) override;
+
+
+		void RenderEnt(std::string& meshKey, glm::mat4& modelMat) override;
+
+		void HandleJobs() override;
+
+		uint32_t GetTextureHandle() const override;
+
+	private:
+		Ref<Mesh> CreateMesh(std::string& key);
+
+	private:
+		Shader* _shader;
+		std::unordered_map<std::string, Ref<Mesh>> _meshes;
+
+		std::vector<Ref<RenderJob>> _jobs;
 	};
 }

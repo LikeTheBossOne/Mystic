@@ -36,6 +36,12 @@ namespace Mystic
 		void StopGame();
 
 	private:
+		void StartWindow();
+		void SceneWindow();
+		void SceneHierarchy();
+		void EntityEditor();
+
+	private:
 		GLFWwindow* _window;
 		bool _show_demo_window;
 		bool _show_another_window;

@@ -7,9 +7,10 @@
 #include <GLES2/gl2.h>
 #endif
 #include <iostream>
+#include <sstream>
 #include <GLFW/glfw3.h> // Will drag system OpenGL headers
 
-#include "../../Mystic/GFX/Renderer2D.h"
+#include "../../Mystic/GFX/Renderer3D.h"
 #include "../../Mystic/Application.h"
 #include "../../Mystic/Game.h"
 #include "../../Mystic/Scene/SceneSerializer.h"
@@ -17,6 +18,7 @@
 
 #include "../../Mystic/ECS/Components/Transform.h"
 #include "../../Mystic/ECS/Components/Renderable.h"
+#include "../../Mystic/ECS/Components/InEditorNameComponent.h"
 
 namespace Mystic
 {
@@ -40,7 +42,10 @@ namespace Mystic
 		std::srand(std::time(nullptr));
 		for (int i = 0; i < 10; i++)
 		{
-			Entity entInst = _projectScene->CreateEntity();
+			std::ostringstream ss;
+			ss << "Entity" << i;
+			std::string str = ss.str();
+			Entity entInst = _projectScene->CreateEntity(str);
 			const entt::entity ent = entInst.EntId;
 			Transform transform =
 			{
@@ -119,7 +124,7 @@ namespace Mystic
 		ImGui_ImplOpenGL3_Init("#version 330");
 
 
-        Renderer2D::OpenScene(1, 1, "");
+        Renderer3D::OpenScene(1, 1, "");
 
 		// Setup FBO for ImGui::Image rendering
 		glGenFramebuffers(1, &_FBO);
@@ -176,55 +181,12 @@ namespace Mystic
 		if (_show_demo_window)
 			ImGui::ShowDemoWindow(&_show_demo_window);
 
-		// 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
-		{
-			static float f = 0.0f;
-			static int counter = 0;
 
-			ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+		StartWindow();
 
-			ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
-			ImGui::Checkbox("Demo Window", &_show_demo_window);      // Edit bools storing our window open/close state
-			ImGui::Checkbox("Another Window", &_show_another_window);
+		SceneWindow();
 
-			ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
-			ImGui::ColorEdit3("clear color", (float*)&_clear_color); // Edit 3 floats representing a color
-
-			if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
-				counter++;
-			ImGui::SameLine();
-			ImGui::Text("counter = %d", counter);
-
-			ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
-			
-			ImGui::End();
-		}
-
-		{
-			ImGui::Begin("Game");
-
-			if (ImGui::Button("Start/Stop", ImVec2(60, 20)))
-			{
-				if (!_appRunning)
-				{
-					StartGame();
-				}
-				else
-				{
-					StopGame();
-				}
-				
-			}
-			BindFramebuffer();
-			Renderer2D::ClearScreen();
-			glViewport(0, 0, 400, 400);
-			Renderer2D::HandleJobs();
-			UnbindFramebuffer();
-
-			ImGui::Image((void*)_texture, ImVec2(800, 800), ImVec2(1, 1), ImVec2(0, 0));
-			
-			ImGui::End();
-		}
+		SceneHierarchy();
 
 		// 3. Show another simple window.
 		if (_show_another_window)
@@ -243,12 +205,12 @@ namespace Mystic
 		glfwGetFramebufferSize(_window, &display_w, &display_h);
 		glViewport(0, 0, display_w, display_h);
 
-		//Mystic::Renderer2D::RenderTriangle();
+		//Mystic::Renderer3D::RenderTriangle();
 		ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
 		glfwSwapBuffers(_window);
 	}
-
+		
 	void GLFWEditor::PostRender()
 	{
 		if (_appRunning && _app && _game)
@@ -311,6 +273,83 @@ namespace Mystic
 		_game = nullptr;
 
 		_appRunning = false;
+	}
+
+	void GLFWEditor::StartWindow()
+	{
+		static float f = 0.0f;
+		static int counter = 0;
+
+		ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
+
+		ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
+		ImGui::Checkbox("Demo Window", &_show_demo_window);      // Edit bools storing our window open/close state
+		ImGui::Checkbox("Another Window", &_show_another_window);
+
+		ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
+		ImGui::ColorEdit3("clear color", (float*)&_clear_color); // Edit 3 floats representing a color
+
+		if (ImGui::Button("Button"))                            // Buttons return true when clicked (most widgets return true when edited/activated)
+			counter++;
+		ImGui::SameLine();
+		ImGui::Text("counter = %d", counter);
+
+		ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
+
+		ImGui::End();
+	}
+
+	void GLFWEditor::SceneWindow()
+	{
+		ImGui::Begin("Game");
+
+		if (_appRunning)
+		{
+			if (ImGui::Button("Stop", ImVec2(60, 20)))
+			{
+				StopGame();
+			}
+		}
+		else if (ImGui::Button("Start", ImVec2(60, 20)))
+		{
+			StartGame();
+		}
+
+		BindFramebuffer();
+		Renderer3D::ClearScreen();
+		glViewport(0, 0, 400, 400);
+		Renderer3D::HandleJobs();
+		UnbindFramebuffer();
+
+		ImGui::Image((void*)_texture, ImVec2(800, 800), ImVec2(1, 1), ImVec2(0, 0));
+
+		ImGui::End();
+	}
+
+	void GLFWEditor::SceneHierarchy()
+	{
+		ImGui::Begin("Scene");
+
+
+		Ref<entt::registry> reg = _projectScene->GetRegistry();
+		reg->view<InEditorNameComponent>().each([](const InEditorNameComponent& nameComponent)
+		{
+			ImGui::Text(nameComponent.Name.c_str());
+		});
+
+
+		ImGui::End();
+	}
+
+	void GLFWEditor::EntityEditor()
+	{
+		ImGui::Begin("Entity");
+
+
+
+
+
+		ImGui::End();
 	}
 }
 

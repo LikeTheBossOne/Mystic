@@ -6,7 +6,7 @@
 #include "ECS/ComponentRegistry.h"
 #include "ECS/Components/Renderable.h"
 #include "Editor/Editor.h"
-#include "GFX/Renderer2D.h"
+#include "GFX/Renderer3D.h"
 #include "GFX/Window.h"
 #include "Platform/OpenGL/OpenGLWindow.h"
 #include "Scene/ProjectScene.h"
@@ -50,8 +50,8 @@ int main(int argc, char* argv[])
 	{
 		Mystic::Window* window = new Mystic::OpenGLWindow();
 		window->OpenWindow(800, 600);
-		Mystic::Renderer2D::Init();
-		Mystic::Renderer2D::OpenScene(800, 600, "Game");
+		Mystic::Renderer3D::Init();
+		Mystic::Renderer3D::OpenScene(800, 600, "Game");
 
 		const auto app = Mystic::Ref<Mystic::Application>(Mystic::CreateApplication());
 		Mystic::Ref<Mystic::ProjectScene> projectScene = std::make_shared<Mystic::ProjectScene>();
@@ -66,7 +66,7 @@ int main(int argc, char* argv[])
 
 			game->Update();
 
-			Mystic::Renderer2D::HandleJobs();
+			Mystic::Renderer3D::HandleJobs();
 
 			window->SwapBuffer();
 			window->PollEvents();

@@ -3,7 +3,7 @@
 #include <iostream>
 
 #include "../../Platform/OpenGL/GLFWEditor.h"
-#include "../GFX/Renderer2D.h"
+#include "../GFX/Renderer3D.h"
 
 namespace Mystic
 {
@@ -15,7 +15,7 @@ namespace Mystic
 		
 		s_editor->Init(windowWidth, windowHeight, title, applicationCreater);
 
-		Renderer2D::Init();
+		Renderer3D::Init();
 	}
 
     

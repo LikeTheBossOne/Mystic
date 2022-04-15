@@ -1,6 +1,6 @@
 #include "Application.h"
 
-#include "GFX/Renderer2D.h"
+#include "GFX/Renderer3D.h"
 
 namespace Mystic
 {
