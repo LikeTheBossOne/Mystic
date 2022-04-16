@@ -10,11 +10,11 @@
     <Filter Include="..\Mystic\vendor">
       <UniqueIdentifier>{460B1848-3204-379A-5B36-1C1F478E16A6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Mystic\vendor\GLFW">
+      <UniqueIdentifier>{45C29A66-B12E-5661-7A22-EEBEE64D78C9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Mystic\vendor\Glad">
       <UniqueIdentifier>{ED4D9B66-59BA-5661-22AE-EEBE8ED978C9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="..\Mystic\vendor\glfw">
-      <UniqueIdentifier>{C5DAAC66-3147-6861-FA3A-00BF66668AC9}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Mystic\vendor\imgui">
       <UniqueIdentifier>{30F56C3C-1CEF-958E-055C-2C9FF1F4FBFA}</UniqueIdentifier>
@@ -30,11 +30,11 @@
     <None Include="..\..\Mystic\premake5.lua">
       <Filter>..\Mystic</Filter>
     </None>
+    <None Include="..\..\Mystic\vendor\GLFW\premake5.lua">
+      <Filter>..\Mystic\vendor\GLFW</Filter>
+    </None>
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua">
       <Filter>..\Mystic\vendor\Glad</Filter>
-    </None>
-    <None Include="..\..\Mystic\vendor\glfw\premake5.lua">
-      <Filter>..\Mystic\vendor\glfw</Filter>
     </None>
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua">
       <Filter>..\Mystic\vendor\imgui</Filter>

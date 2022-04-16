@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glfw\include;..\Mystic\vendor\Glad\include;..\Mystic\vendor\imgui;..\Mystic\vendor\glm;..\Mystic\vendor\stb_image;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\GLFW\include;..\Mystic\vendor\Glad\include;..\Mystic\vendor\imgui;..\Mystic\vendor\glm;..\Mystic\vendor\stb_image;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -98,7 +98,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glfw\include;..\Mystic\vendor\Glad\include;..\Mystic\vendor\imgui;..\Mystic\vendor\glm;..\Mystic\vendor\stb_image;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\GLFW\include;..\Mystic\vendor\Glad\include;..\Mystic\vendor\imgui;..\Mystic\vendor\glm;..\Mystic\vendor\stb_image;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -120,7 +120,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glfw\include;..\Mystic\vendor\Glad\include;..\Mystic\vendor\imgui;..\Mystic\vendor\glm;..\Mystic\vendor\stb_image;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\GLFW\include;..\Mystic\vendor\Glad\include;..\Mystic\vendor\imgui;..\Mystic\vendor\glm;..\Mystic\vendor\stb_image;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

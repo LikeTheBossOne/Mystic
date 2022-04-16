@@ -78,8 +78,8 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <None Include="..\..\Mystic\premake5.lua" />
+    <None Include="..\..\Mystic\vendor\GLFW\premake5.lua" />
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua" />
-    <None Include="..\..\Mystic\vendor\glfw\premake5.lua" />
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua" />
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua" />
     <None Include="..\..\Sandbox\premake5.lua" />
