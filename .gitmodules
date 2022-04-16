@@ -1,0 +1,13 @@
+[submodule "Mystic/vendor/GLFW"]
+	path = Mystic/vendor/GLFW
+	url = https://github.com/LikeTheBossOne/glfw
+[submodule "Mystic/vendor/glm"]
+	path = Mystic/vendor/glm
+	url = https://github.com/LikeTheBossOne/glm
+[submodule "Mystic/vendor/imgui"]
+	path = Mystic/vendor/imgui
+	url = https://github.com/LikeTheBossOne/imgui
+	branch = docking
+[submodule "Mystic/vendor/yaml-cpp"]
+	path = Mystic/vendor/yaml-cpp
+	url = https://github.com/LikeTheBossOne/yaml-cpp
