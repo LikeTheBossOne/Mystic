@@ -1,8 +1,8 @@
 #include "GLFWEditor.h"
 
-#include "../../../ImGui/imgui.h"
-#include "../../../ImGui/imgui_impl_glfw.h"
-#include "../../../ImGui/imgui_impl_opengl3.h"
+#include "imgui.h"
+#include "ImGuiGLFWRenderer.h"
+#include "ImGuiOpenGLRenderer.h"
 #if defined(IMGUI_IMPL_OPENGL_ES2)
 #include <GLES2/gl2.h>
 #endif

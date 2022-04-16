@@ -6,7 +6,7 @@
 #include "Mystic/Editor/Editor.h"
 #include <glm/gtx/quaternion.hpp>
 #include "Mystic/GFX/Renderer3D.h"
-#include "entt/entt.hpp"
+#include "entt.hpp"
 #include "Mystic/Scene/ProjectScene.h"
 #include "Mystic/ECS/Components/Renderable.h"
 #include "Mystic/ECS/Components/Transform.h"

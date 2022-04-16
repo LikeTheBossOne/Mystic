@@ -9,21 +9,31 @@ project "Sandbox"
 
 	files
 	{
-		"%{prj.name}/src/**.h"
-		"%{prj.name}/src/**.cpp"
+		"src/**.h",
+		"src/**.cpp",
 	}
 
 	includedirs
 	{
 		"%{wks.location}/Mystic/src",
 		"%{wks.location}/Mystic/vendor",
+		"%{IncludeDir.GLFW}",
+		"%{IncludeDir.Glad}",
+		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.entt}"
+		"%{IncludeDir.stb_image}",
+		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}",
 	}
 
 	links
 	{
-		"Mystic"
+		"Mystic",
+		"GLFW",
+		"Glad",
+		"ImGui",
+		"yaml-cpp",
+		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -31,7 +41,7 @@ project "Sandbox"
 
 		defines
 		{
-			"MYST_PLATFORM_WINDOWS"
+			"MYST_PLATFORM_WINDOWS",
 			"MYST_BUILD_DLL"
 		}
 
@@ -40,11 +50,6 @@ project "Sandbox"
 		runtime "Debug"
 		symbols "On"
 
-		postbuildcommands
-		{
-			("{COPY} %{cfg.buildtarget.relpath} ../bin/" .. outputdir .. "/Sandbox")
-		}
-
 	filter "configurations:Release"
 		defines "MYST_RELEASE"
 		runtime "Release"
@@ -52,5 +57,5 @@ project "Sandbox"
 
 	filter "configurations:Dist"
 		defines "MYST_DIST"
-		runtime "Rlease"
+		runtime "Release"
 		optimize "On"

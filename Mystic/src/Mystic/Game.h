@@ -2,7 +2,7 @@
 #include <vector>
 
 #include "Core.h"
-#include "entt/entt.hpp"
+#include "entt.hpp"
 
 namespace Mystic
 {

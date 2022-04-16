@@ -6,9 +6,9 @@
 #include "ECS/ComponentRegistry.h"
 #include "ECS/Components/Renderable.h"
 #include "Editor/Editor.h"
-#include "GFX/Renderer3D.h"
-#include "GFX/Window.h"
-#include "Platform/OpenGL/OpenGLWindow.h"
+//#include "GFX/Renderer3D.h"
+//#include "GFX/Window.h"
+//#include "Platform/OpenGL/OpenGLWindow.h"
 #include "Scene/ProjectScene.h"
 
 #ifdef MYST_PLATFORM_WINDOWS
@@ -48,29 +48,29 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
-		Mystic::Window* window = new Mystic::OpenGLWindow();
-		window->OpenWindow(800, 600);
-		Mystic::Renderer3D::Init();
-		Mystic::Renderer3D::OpenScene(800, 600, "Game");
+		//Mystic::Window* window = new Mystic::OpenGLWindow();
+		//window->OpenWindow(800, 600);
+		//Mystic::Renderer3D::Init();
+		//Mystic::Renderer3D::OpenScene(800, 600, "Game");
 
-		const auto app = Mystic::Ref<Mystic::Application>(Mystic::CreateApplication());
-		Mystic::Ref<Mystic::ProjectScene> projectScene = std::make_shared<Mystic::ProjectScene>();
-		Mystic::Ref<Mystic::RuntimeScene> runtimeScene = projectScene->CreateRuntimeScene();
+		//const auto app = Mystic::Ref<Mystic::Application>(Mystic::CreateApplication());
+		//Mystic::Ref<Mystic::ProjectScene> projectScene = std::make_shared<Mystic::ProjectScene>();
+		//Mystic::Ref<Mystic::RuntimeScene> runtimeScene = projectScene->CreateRuntimeScene();
 
-		Mystic::Ref<Mystic::Game> game = std::make_shared<Mystic::Game>(app, runtimeScene);
-		//game->Start();
-		app->Start(Mystic::Ref<Mystic::Game>(game));
-		while (!app->ShouldClose() && !window->ShouldClose())
-		{
-			window->Clear(0.1f, 0.1f, 0.1f, 1.f);
+		//Mystic::Ref<Mystic::Game> game = std::make_shared<Mystic::Game>(app, runtimeScene);
+		////game->Start();
+		//app->Start(Mystic::Ref<Mystic::Game>(game));
+		//while (!app->ShouldClose() && !window->ShouldClose())
+		//{
+		//	window->Clear(0.1f, 0.1f, 0.1f, 1.f);
 
-			game->Update();
+		//	game->Update();
 
-			Mystic::Renderer3D::HandleJobs();
+		//	Mystic::Renderer3D::HandleJobs();
 
-			window->SwapBuffer();
-			window->PollEvents();
-		}
+		//	window->SwapBuffer();
+		//	window->PollEvents();
+		//}
 	}
 
 	return 0;

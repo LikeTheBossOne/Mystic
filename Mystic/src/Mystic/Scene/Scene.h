@@ -2,7 +2,7 @@
 #include "../Core.h"
 #include "../ECS/Entity.h"
 #include <string>
-#include <entt/entt.hpp>
+#include <entt.hpp>
 
 namespace Mystic
 {

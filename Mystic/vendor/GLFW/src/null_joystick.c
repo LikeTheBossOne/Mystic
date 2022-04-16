@@ -1,5 +1,5 @@
 //========================================================================
-// GLFW 3.4 - www.glfw.org
+// GLFW 3.3 - www.glfw.org
 //------------------------------------------------------------------------
 // Copyright (c) 2016-2017 Camilla Löwy <elmindreda@glfw.org>
 //
@@ -23,8 +23,6 @@
 //    distribution.
 //
 //========================================================================
-// It is fine to use C99 in this file because it will not be built with VS
-//========================================================================
 
 #include "internal.h"
 
@@ -33,26 +31,12 @@
 //////                       GLFW platform API                      //////
 //////////////////////////////////////////////////////////////////////////
 
-GLFWbool _glfwInitJoysticksNull(void)
-{
-    return GLFW_TRUE;
-}
-
-void _glfwTerminateJoysticksNull(void)
-{
-}
-
-int _glfwPollJoystickNull(_GLFWjoystick* js, int mode)
+int _glfwPlatformPollJoystick(_GLFWjoystick* js, int mode)
 {
     return GLFW_FALSE;
 }
 
-const char* _glfwGetMappingNameNull(void)
-{
-    return "";
-}
-
-void _glfwUpdateGamepadGUIDNull(char* guid)
+void _glfwPlatformUpdateGamepadGUID(char* guid)
 {
 }
 
