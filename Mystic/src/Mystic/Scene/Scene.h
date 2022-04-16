@@ -2,7 +2,7 @@
 #include "../Core.h"
 #include "../ECS/Entity.h"
 #include <string>
-#include <entt/entt.hpp>
+#include <entt.hpp>
 
 namespace Mystic
 {
@@ -16,6 +16,7 @@ namespace Mystic
 		void SetName(const std::string& name);
 		[[nodiscard]] std::string GetName() const;
 
+		[[nodiscard]] Entity CreateEntity(std::string& name) const;
 		[[nodiscard]] Entity CreateEntity() const;
 
 		[[nodiscard]] Ref<entt::registry> GetRegistry() const;

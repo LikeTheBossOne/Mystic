@@ -1,27 +1,19 @@
 #include "Renderer3D.h"
 
-#include "Shader.h"
-#include "../../Platform/OpenGL/OpenGLRenderer3D.h"
+#include "../../Platform/OpenGL//OpenGLRenderer3D.h"
 
 namespace Mystic
 {
-	Shader* Renderer3D::s_boxShader = nullptr;
 	InstRenderer3D* Renderer3D::s_renderer = nullptr;
 
 	void Renderer3D::Init()
 	{
 		s_renderer = new OpenGLRenderer3D();
-		//s_boxShader = new Shader("path\\to\\vert", "path\\to\frag");
 	}
 
 	void Renderer3D::OpenScene(uint32_t width, uint32_t height, std::string title)
 	{
-		s_renderer->CreateWindow(width, height, title);
-	}
-
-	bool Renderer3D::ShouldCloseWindow()
-	{
-		return s_renderer->ShouldCloseWindow();
+		s_renderer->API_CreateWindow(width, height, title);
 	}
 
 	void Renderer3D::ClearScreen()
@@ -49,18 +41,38 @@ namespace Mystic
 		s_renderer->PollEvents();
 	}
 
-	void Renderer3D::SetWindowShouldClose(bool shouldClose)
+	void Renderer3D::SetFramerateLimit(uint32_t limit)
 	{
-		s_renderer->SetWindowShouldClose(shouldClose);
+		s_renderer->SetFramerateLimit(limit);
 	}
 
-	void Renderer3D::RenderBox(glm::mat4 transform, glm::vec4 color)
+	uint32_t Renderer3D::GetTextureHandle()
 	{
-		s_boxShader->Use();
-
-		s_boxShader->SetModel(transform);
-
-
+		return s_renderer->GetTextureHandle();
 	}
 
+	void Renderer3D::UseShaderProgram()
+	{
+		s_renderer->UseShaderProgram();
+	}
+
+	void Renderer3D::SetProjectionMatrix(glm::mat4& projectionMatrix)
+	{
+		s_renderer->SetProjectionMatrix(projectionMatrix);
+	}
+
+	void Renderer3D::SetViewMatrix(glm::mat4& viewMatrix)
+	{
+		s_renderer->SetViewMatrix(viewMatrix);
+	}
+
+	void Renderer3D::RenderEnt(std::string& meshKey, glm::mat4& modelMat)
+	{
+		s_renderer->RenderEnt(meshKey, modelMat);
+	}
+
+	void Renderer3D::HandleJobs()
+	{
+		s_renderer->HandleJobs();
+	}
 }

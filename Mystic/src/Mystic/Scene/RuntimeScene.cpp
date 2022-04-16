@@ -1,7 +1,7 @@
 #include "RuntimeScene.h"
 
 #include "../GFX/Camera.h"
-#include "../GFX/Renderer2D.h"
+#include "../GFX/Renderer3D.h"
 
 namespace Mystic
 {
@@ -18,14 +18,14 @@ namespace Mystic
 
 	void RuntimeScene::RenderScene()
 	{
-		Renderer2D::UseShaderProgram();
+		Renderer3D::UseShaderProgram();
 
 		glm::mat4 projection = glm::mat4(1.0f);
 		projection = glm::perspective(glm::radians(45.0f), 1.f, 0.1f, 100.f);
-		Renderer2D::SetProjectionMatrix(projection);
+		Renderer3D::SetProjectionMatrix(projection);
 
 		glm::mat4 viewMat = _activeCamera->GetViewMatrix();
-		Renderer2D::SetViewMatrix(viewMat);
+		Renderer3D::SetViewMatrix(viewMat);
 
 		auto group = _registry->group<Renderable>(entt::get<Transform>);
 		group.each([](const Renderable& renderable, const Transform& transform)
@@ -37,7 +37,7 @@ namespace Mystic
 			model = glm::scale(model, transform.Scale);
 
 			std::string key = renderable.MeshKey;
-			Renderer2D::RenderEnt(key, model);
+			Renderer3D::RenderEnt(key, model);
 		});
 	}
 }

@@ -1,7 +1,7 @@
 #pragma once
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
-#include "../../../ImGui/imgui.h"
+#include "imgui.h"
 
 #include "../../Mystic/Editor/Editor.h"
 
@@ -34,6 +34,12 @@ namespace Mystic
 
 		void StartGame();
 		void StopGame();
+
+	private:
+		void StartWindow();
+		void SceneWindow();
+		void SceneHierarchy();
+		void EntityEditor();
 
 	private:
 		GLFWwindow* _window;

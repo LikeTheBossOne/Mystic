@@ -1,5 +1,4 @@
-#define RYML_SINGLE_HDR_DEFINE_NOW
-#include "ryml/ryml.hpp"
+//#define RYML_SINGLE_HDR_DEFINE_NOW
 
 #include "Game.h"
 #include "Application.h"
