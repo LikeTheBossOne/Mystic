@@ -11,3 +11,6 @@
 [submodule "Mystic/vendor/yaml-cpp"]
 	path = Mystic/vendor/yaml-cpp
 	url = https://github.com/LikeTheBossOne/yaml-cpp
+[submodule "Mystic/vendor/ImGuizmo"]
+	path = Mystic/vendor/ImGuizmo
+	url = https://github.com/LikeTheBossOne/ImGuizmo
