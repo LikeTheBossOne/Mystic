@@ -22,6 +22,9 @@
     <Filter Include="..\Mystic\vendor\yaml-cpp">
       <UniqueIdentifier>{B880FEB0-2443-323B-6DF3-C0C7D9F40A19}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\MysticEditor">
+      <UniqueIdentifier>{901126D7-FC9C-939B-05AE-169071B8EF9B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Sandbox">
       <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
     </Filter>
@@ -41,6 +44,9 @@
     </None>
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Mystic\vendor\yaml-cpp</Filter>
+    </None>
+    <None Include="..\..\MysticEditor\premake5.lua">
+      <Filter>..\MysticEditor</Filter>
     </None>
     <None Include="..\..\Sandbox\premake5.lua">
       <Filter>..\Sandbox</Filter>

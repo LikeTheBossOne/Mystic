@@ -1,5 +1,5 @@
 #pragma once
-#include "../Core.h"
+#include "../Core/Core.h"
 #include "../ECS/Entity.h"
 #include <string>
 #include <entt.hpp>
@@ -16,17 +16,25 @@ namespace Mystic
 		void SetName(const std::string& name);
 		[[nodiscard]] std::string GetName() const;
 
-		[[nodiscard]] Entity CreateEntity(std::string& name) const;
-		[[nodiscard]] Entity CreateEntity() const;
+		[[nodiscard]] Entity CreateEntity(std::string name);
+		[[nodiscard]] Entity CreateEntity(std::string name, GUID guid);
+		[[nodiscard]] Entity CreateEntity();
+		[[nodiscard]] Entity GetEntity(entt::entity id);
 
-		[[nodiscard]] Ref<entt::registry> GetRegistry() const;
+		void DestroyEntity(Entity& entity);
 
-		virtual void RenderScene() = 0;
+		void OnViewportResize(uint32_t width, uint32_t height);
 
 	protected:
-		Ref<entt::registry> _registry;
-		Ref<Camera> _activeCamera;
+		entt::registry _registry;
+		Ref<Camera> _mainCamera;
 
 		std::string _name;
+
+		uint32_t _viewportWidth = 0;
+		uint32_t _viewportHeight = 0;
+
+		friend class SceneHierarchyPanel;
+		friend class EditorLayer;
 	};
 }

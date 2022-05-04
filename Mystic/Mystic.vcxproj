@@ -54,20 +54,20 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <OutDir>bin\Debug-windows-x86_64\Mystic\</OutDir>
-    <IntDir>bin-int\Debug-windows-x86_64\Mystic\</IntDir>
+    <OutDir>..\bin\Debug-windows-x86_64\Mystic\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\Mystic\</IntDir>
     <TargetName>Mystic</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <OutDir>bin\Release-windows-x86_64\Mystic\</OutDir>
-    <IntDir>bin-int\Release-windows-x86_64\Mystic\</IntDir>
+    <OutDir>..\bin\Release-windows-x86_64\Mystic\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\Mystic\</IntDir>
     <TargetName>Mystic</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
-    <OutDir>bin\Dist-windows-x86_64\Mystic\</OutDir>
-    <IntDir>bin-int\Dist-windows-x86_64\Mystic\</IntDir>
+    <OutDir>..\bin\Dist-windows-x86_64\Mystic\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\Mystic\</IntDir>
     <TargetName>Mystic</TargetName>
     <TargetExt>.lib</TargetExt>
   </PropertyGroup>
@@ -76,7 +76,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;..\Hazel\vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -97,7 +97,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;..\Hazel\vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -121,7 +121,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;GLFW_INCLUDE_NONE;MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;..\Hazel\vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;vendor\GLFW\include;vendor\Glad\include;vendor\imgui;vendor\glm;vendor\stb_image;vendor\entt\include;vendor\yaml-cpp\include;vendor\ImGuizmo;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -142,43 +142,68 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Mystic.h" />
-    <ClInclude Include="src\Mystic\Application.h" />
-    <ClInclude Include="src\Mystic\Core.h" />
+    <ClInclude Include="src\Mystic\Core\Application.h" />
+    <ClInclude Include="src\Mystic\Core\Core.h" />
+    <ClInclude Include="src\Mystic\Core\EntryPoint.h" />
+    <ClInclude Include="src\Mystic\Core\Input.h" />
+    <ClInclude Include="src\Mystic\Core\KeyCodes.h" />
+    <ClInclude Include="src\Mystic\Core\Layer.h" />
+    <ClInclude Include="src\Mystic\Core\LayerStack.h" />
+    <ClInclude Include="src\Mystic\Core\MouseCodes.h" />
+    <ClInclude Include="src\Mystic\Core\Window.h" />
     <ClInclude Include="src\Mystic\ECS\ComponentRegistry.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\CameraComponent.h" />
     <ClInclude Include="src\Mystic\ECS\Components\GUIDComponent.h" />
-    <ClInclude Include="src\Mystic\ECS\Components\InEditorNameComponent.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\TagComponent.h" />
     <ClInclude Include="src\Mystic\ECS\Components\Renderable.h" />
-    <ClInclude Include="src\Mystic\ECS\Components\Transform.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\SpriteRendererComponent.h" />
+    <ClInclude Include="src\Mystic\ECS\Components\TransformComponent.h" />
     <ClInclude Include="src\Mystic\ECS\Entity.h" />
-    <ClInclude Include="src\Mystic\Editor\Editor.h" />
-    <ClInclude Include="src\Mystic\EntryPoint.h" />
+    <ClInclude Include="src\Mystic\Events\ApplicationEvent.h" />
     <ClInclude Include="src\Mystic\Events\Event.h" />
-    <ClInclude Include="src\Mystic\Events\EventSystem.h" />
-    <ClInclude Include="src\Mystic\Events\IEventHandler.h" />
-    <ClInclude Include="src\Mystic\Events\RenderEvent.h" />
-    <ClInclude Include="src\Mystic\Events\UpdateEvent.h" />
+    <ClInclude Include="src\Mystic\Events\KeyEvent.h" />
+    <ClInclude Include="src\Mystic\Events\MouseEvent.h" />
+    <ClInclude Include="src\Mystic\GFX\Buffer.h" />
     <ClInclude Include="src\Mystic\GFX\Camera.h" />
-    <ClInclude Include="src\Mystic\GFX\Renderer3D.h" />
+    <ClInclude Include="src\Mystic\GFX\EditorCamera.h" />
+    <ClInclude Include="src\Mystic\GFX\Framebuffer.h" />
+    <ClInclude Include="src\Mystic\GFX\GraphicsContext.h" />
+    <ClInclude Include="src\Mystic\GFX\OrthographicCamera.h" />
+    <ClInclude Include="src\Mystic\GFX\OrthographicCameraController.h" />
+    <ClInclude Include="src\Mystic\GFX\RenderCommand.h" />
+    <ClInclude Include="src\Mystic\GFX\Renderer.h" />
+    <ClInclude Include="src\Mystic\GFX\Renderer2D.h" />
+    <ClInclude Include="src\Mystic\GFX\RendererAPI.h" />
     <ClInclude Include="src\Mystic\GFX\Shader.h" />
-    <ClInclude Include="src\Mystic\GFX\Window.h" />
+    <ClInclude Include="src\Mystic\GFX\Texture.h" />
+    <ClInclude Include="src\Mystic\GFX\UniformBuffer.h" />
+    <ClInclude Include="src\Mystic\GFX\VertexArray.h" />
     <ClInclude Include="src\Mystic\GFX\primitives.h" />
-    <ClInclude Include="src\Mystic\Game.h" />
+    <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Mystic\Scene\ProjectScene.h" />
     <ClInclude Include="src\Mystic\Scene\RuntimeScene.h" />
     <ClInclude Include="src\Mystic\Scene\Scene.h" />
+    <ClInclude Include="src\Mystic\Scene\SceneCamera.h" />
     <ClInclude Include="src\Mystic\Scene\SceneSerializer.h" />
-    <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h" />
+    <ClInclude Include="src\Mystic\Utility\utilities.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLFWRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRendererLoader.h" />
     <ClInclude Include="src\Platform\OpenGL\Mesh.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer3D.h" />
-    <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h" />
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h" />
     <ClInclude Include="src\Platform\OpenGL\RenderJob.h" />
     <ClInclude Include="src\Platform\OpenGL\load_stb_image.h" />
     <ClInclude Include="src\Platform\OpenGL\stb_image.h" />
-    <ClInclude Include="src\Utility\utilities.h" />
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h" />
     <ClInclude Include="src\mystpch.h" />
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h" />
     <ClInclude Include="vendor\glm\glm\common.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_features.hpp" />
     <ClInclude Include="vendor\glm\glm\detail\_fixes.hpp" />
@@ -597,23 +622,43 @@
     <ClInclude Include="vendor\stb_image\stb_image.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Mystic\Application.cpp" />
+    <ClCompile Include="src\Mystic\Core\Application.cpp" />
+    <ClCompile Include="src\Mystic\Core\LayerStack.cpp" />
+    <ClCompile Include="src\Mystic\Core\Window.cpp" />
     <ClCompile Include="src\Mystic\ECS\ComponentRegistry.cpp" />
-    <ClCompile Include="src\Mystic\ECS\Entity.cpp" />
-    <ClCompile Include="src\Mystic\Editor\Editor.cpp" />
-    <ClCompile Include="src\Mystic\Events\EventSystem.cpp" />
-    <ClCompile Include="src\Mystic\GFX\Camera.cpp" />
-    <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp" />
-    <ClCompile Include="src\Mystic\Game.cpp" />
+    <ClCompile Include="src\Mystic\GFX\Buffer.cpp" />
+    <ClCompile Include="src\Mystic\GFX\EditorCamera.cpp" />
+    <ClCompile Include="src\Mystic\GFX\Framebuffer.cpp" />
+    <ClCompile Include="src\Mystic\GFX\GraphicsContext.cpp" />
+    <ClCompile Include="src\Mystic\GFX\OrthographicCamera.cpp" />
+    <ClCompile Include="src\Mystic\GFX\OrthographicCameraController.cpp" />
+    <ClCompile Include="src\Mystic\GFX\RenderCommand.cpp" />
+    <ClCompile Include="src\Mystic\GFX\Renderer.cpp" />
+    <ClCompile Include="src\Mystic\GFX\Renderer2D.cpp" />
+    <ClCompile Include="src\Mystic\GFX\RendererAPI.cpp" />
+    <ClCompile Include="src\Mystic\GFX\Shader.cpp" />
+    <ClCompile Include="src\Mystic\GFX\Texture.cpp" />
+    <ClCompile Include="src\Mystic\GFX\UniformBuffer.cpp" />
+    <ClCompile Include="src\Mystic\GFX\VertexArray.cpp" />
+    <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Mystic\Scene\ProjectScene.cpp" />
     <ClCompile Include="src\Mystic\Scene\RuntimeScene.cpp" />
     <ClCompile Include="src\Mystic\Scene\Scene.cpp" />
+    <ClCompile Include="src\Mystic\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Mystic\Scene\SceneSerializer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp" />
-    <ClCompile Include="src\Platform\OpenGL\OpenGLWindow.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp" />
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp" />
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp" />
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp" />
     <ClCompile Include="vendor\stb_image\stb_image.cpp" />
   </ItemGroup>
   <ItemGroup>

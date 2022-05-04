@@ -4,8 +4,8 @@ project "Sandbox"
 	cppdialect "C++latest"
 	staticruntime "off"
 
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	files
 	{
@@ -15,25 +15,16 @@ project "Sandbox"
 
 	includedirs
 	{
+		"src",
 		"%{wks.location}/Mystic/src",
 		"%{wks.location}/Mystic/vendor",
-		"%{IncludeDir.GLFW}",
-		"%{IncludeDir.Glad}",
-		"%{IncludeDir.ImGui}",
 		"%{IncludeDir.glm}",
-		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.yaml_cpp}",
 	}
 
 	links
 	{
 		"Mystic",
-		"GLFW",
-		"Glad",
-		"ImGui",
-		"yaml-cpp",
-		"opengl32.lib"
 	}
 
 	filter "system:windows"

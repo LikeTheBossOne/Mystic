@@ -1,0 +1,10 @@
+{
+  "FileVersion": 2,
+  "Id": "65d1d007-5134-60ac-fab9-9862e6fb2b2f",
+  "Items": [
+    {
+      "Id": "884e05b7-0384-4bba-a3b5-c0bcc2ccd570",
+      "Command": "assets/scenes/Example.myst"
+    }
+  ]
+}

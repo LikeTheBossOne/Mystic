@@ -1,15 +1,12 @@
 #pragma once
 
 #include "Scene.h"
-#include "../Core.h"
-
-#include "../ECS/Components/Renderable.h"
-#include "../ECS/Components/Transform.h"
+#include "../Core/Core.h"
 
 namespace Mystic
 {
 	struct Renderable;
-	struct Transform;
+	struct TransformComponent;
 
 	class MYSTIC_API RuntimeScene : public Scene
 	{
@@ -17,7 +14,7 @@ namespace Mystic
 		RuntimeScene();
 		~RuntimeScene() override;
 
-		void RenderScene() override;
+		void OnUpdate();
 
 
 		friend class ProjectScene;

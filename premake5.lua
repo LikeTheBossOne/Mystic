@@ -3,6 +3,7 @@ include "Dependencies.lua"
 
 workspace "Mystic"
 	architecture "x64"
+	startproject "MysticEditor"
 
 	configurations
 	{
@@ -33,3 +34,4 @@ group ""
 
 include "Mystic"
 include "Sandbox"
+include "MysticEditor"

@@ -1,13 +1,11 @@
 #pragma once
 
 #include "Scene.h"
-#include "../Core.h"
-
-#include "../ECS/Components/Renderable.h"
-#include "../ECS/Components/Transform.h"
+#include "../Core/Core.h"
 
 namespace Mystic
 {
+	class EditorCamera;
 	class RuntimeScene;
 
 	class MYSTIC_API ProjectScene : public Scene
@@ -20,8 +18,9 @@ namespace Mystic
 
 
 	public:
-		void RenderScene() override;
+		void OnUpdate(EditorCamera& camera);
 
+		friend class SceneSerializer;
 	};
 }
 

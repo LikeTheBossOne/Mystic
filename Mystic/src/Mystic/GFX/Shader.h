@@ -1,152 +1,49 @@
 #pragma once
-#include <string>
-#include <ostream>
-#include <iostream>
-#include <fstream>
-#include <sstream>
-#include <glad/glad.h>
-#include <glm/gtc/type_ptr.hpp>
-#include <filesystem>
 
-namespace Mystic
-{
+#include <string>
+#include <unordered_map>
+
+#include <glm/glm.hpp>
+
+#include "Mystic/Core/Core.h"
+
+namespace Mystic {
+
 	class Shader
 	{
 	public:
-		unsigned int id;
-		GLint _viewMatrixLoc;
-		GLint _modelLoc;
+		virtual ~Shader() = default;
 
-		Shader(const char* vertexPath, const char* fragmentPath)
-		{
+		virtual void Bind() const = 0;
+		virtual void Unbind() const = 0;
 
-			_viewMatrixLoc = -1;
-			_modelLoc = -1;
+		virtual void SetInt(const std::string& name, int value) = 0;
+		virtual void SetIntArray(const std::string& name, int* values, uint32_t count) = 0;
+		virtual void SetFloat(const std::string& name, float value) = 0;
+		virtual void SetFloat2(const std::string& name, const glm::vec2& value) = 0;
+		virtual void SetFloat3(const std::string& name, const glm::vec3& value) = 0;
+		virtual void SetFloat4(const std::string& name, const glm::vec4& value) = 0;
+		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
 
-			std::string vertexCode;
-			std::string fragmentCode;
-			std::ifstream vShaderFile;
-			std::ifstream fShaderFile;
+		virtual const std::string& GetName() const = 0;
 
-			// ensure ifstream objects can throw exceptions:
-			vShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-			fShaderFile.exceptions(std::ifstream::failbit | std::ifstream::badbit);
-			try
-			{
-				// open files
-				vShaderFile.open(vertexPath);
-				fShaderFile.open(fragmentPath);
-				std::stringstream vShaderStream, fShaderStream;
-				// read file’s buffer contents into streams
-				vShaderStream << vShaderFile.rdbuf();
-				fShaderStream << fShaderFile.rdbuf();
-				// close file handlers
-				vShaderFile.close();
-				fShaderFile.close();
-				// convert stream into string
-				vertexCode = vShaderStream.str();
-				fragmentCode = fShaderStream.str();
-			}
-			catch (std::ifstream::failure& e)
-			{
-				std::cout << "ERROR::SHADER::FILE_NOT_SUCCESFULLY_READ" << e.what() << std::endl;
-			}
+		static Ref<Shader> Create(const std::string& filepath);
+		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+	};
 
-			const char* vShaderCode = vertexCode.c_str();
-			const char* fShaderCode = fragmentCode.c_str();
+	class ShaderLibrary
+	{
+	public:
+		void Add(const std::string& name, const Ref<Shader>& shader);
+		void Add(const Ref<Shader>& shader);
+		Ref<Shader> Load(const std::string& filepath);
+		Ref<Shader> Load(const std::string& name, const std::string& filepath);
 
+		Ref<Shader> Get(const std::string& name);
 
-			// Compile Shaders
-			unsigned int vertex, fragment;
-			int success;
-			char infoLog[512];
-
-			// vertex Shader
-			vertex = glCreateShader(GL_VERTEX_SHADER);
-			glShaderSource(vertex, 1, &vShaderCode, NULL);
-			glCompileShader(vertex);
-
-			glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-			if (!success)
-			{
-				glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-				std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<
-					infoLog << std::endl;
-			}
-
-			// fragment Shader
-			fragment = glCreateShader(GL_FRAGMENT_SHADER);
-			glShaderSource(fragment, 1, &fShaderCode, NULL);
-			glCompileShader(fragment);
-
-			glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-			if (!success)
-			{
-				glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-				std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" <<
-					infoLog << std::endl;
-			}
-
-
-			id = glCreateProgram();
-			glAttachShader(id, vertex);
-			glAttachShader(id, fragment);
-			glLinkProgram(id);
-			// print linking errors if any
-			glGetProgramiv(id, GL_LINK_STATUS, &success);
-			if (!success)
-			{
-				glGetProgramInfoLog(id, 512, NULL, infoLog);
-				std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" <<
-					infoLog << std::endl;
-			}
-
-			// Delete Shaders
-			glDeleteShader(vertex);
-			glDeleteShader(fragment);
-		}
-
-		void Use()
-		{
-			glUseProgram(id);
-		}
-
-		void UniSetBool(const std::string& name, bool value)
-		{
-			glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
-		}
-
-		void UniSetInt(const std::string& name, int value)
-		{
-			glUniform1i(glGetUniformLocation(id, name.c_str()), (int)value);
-		}
-
-		void UniSetFloat(const std::string& name, float value)
-		{
-			glUniform1f(glGetUniformLocation(id, name.c_str()), value);
-		}
-
-		void UniSetMat4f(const std::string& name, glm::mat4 value)
-		{
-			glUniformMatrix4fv(glGetUniformLocation(id, name.c_str()), 1, GL_FALSE, glm::value_ptr(value));
-		}
-
-		void SetViewMatrix(glm::mat4 value)
-		{
-			if (_viewMatrixLoc == -1)
-			{
-				_viewMatrixLoc = glGetUniformLocation(id, "view");
-			}
-			glUniformMatrix4fv(_viewMatrixLoc, 1, GL_FALSE, glm::value_ptr(value));
-		}
-		void SetModel(glm::mat4 value)
-		{
-			if (_modelLoc == -1)
-			{
-				_modelLoc = glGetUniformLocation(id, "model");
-			}
-			glUniformMatrix4fv(_modelLoc, 1, GL_FALSE, glm::value_ptr(value));
-		}
+		bool Exists(const std::string& name) const;
+	private:
+		std::unordered_map<std::string, Ref<Shader>> _shaders;
 	};
 
 }

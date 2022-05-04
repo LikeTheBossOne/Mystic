@@ -1,6 +1,7 @@
 #include "Scene.h"
 #include "../ECS/Components/GUIDComponent.h"
-#include "../ECS/Components/InEditorNameComponent.h"
+#include "../ECS/Components/TagComponent.h"
+#include "Mystic/ECS/Components/CameraComponent.h"
 
 namespace Mystic
 {
@@ -18,28 +19,64 @@ namespace Mystic
 		return _name;
 	}
 
-	Entity Scene::CreateEntity() const
+	Entity Scene::CreateEntity()
 	{
-		std::string defaultName("entity");
-		return CreateEntity(defaultName);
+		return CreateEntity("default");
 	}
 
-	Entity Scene::CreateEntity(std::string& name) const
+	Entity Scene::GetEntity(entt::entity id)
 	{
-		Entity ent(_registry->create(), _registry);
+		Entity entity{};
+		if (!_registry.valid(id))
+		{
+			return entity;
+		}
 
+		GUIDComponent comp = _registry.get<GUIDComponent>(id);
+		entity.EntId = id;
+		entity.GUID = comp.GUID;
+		entity.OwningScene = this;
+
+		return entity;
+	}
+
+	void Scene::DestroyEntity(Entity& entity)
+	{
+		_registry.destroy(entity.EntId);
+	}
+
+	void Scene::OnViewportResize(uint32_t width, uint32_t height)
+	{
+		_viewportWidth = width;
+		_viewportHeight = height;
+
+		// Resize our non-FixedAspectRatio cameras
+		auto view = _registry.view<CameraComponent>();
+		for (auto entity : view)
+		{
+			auto& cameraComponent = view.get<CameraComponent>(entity);
+			if (!cameraComponent.FixedAspectRatio)
+				cameraComponent.Camera.SetViewportSize(width, height);
+		}
+
+	}
+
+	Entity Scene::CreateEntity(std::string name)
+	{
 		GUID entGuid;
 		HRESULT result = CoCreateGuid(&entGuid);
 		assert(result == S_OK, "GUID Creation failed");
-
-		_registry->emplace<GUIDComponent>(ent.EntId, GUIDComponent{ entGuid });
-		_registry->emplace<InEditorNameComponent>(ent.EntId, InEditorNameComponent{ name });
-
-		return ent;
+		
+		return CreateEntity(name, entGuid);
 	}
 
-	Ref<entt::registry> Scene::GetRegistry() const
+	Entity Scene::CreateEntity(std::string name, GUID guid)
 	{
-		return _registry;
+		Entity ent(_registry.create(), guid, this);
+
+		_registry.emplace<GUIDComponent>(ent.EntId, GUIDComponent{ guid });
+		_registry.emplace<TagComponent>(ent.EntId, TagComponent{ name });
+
+		return ent;
 	}
 }

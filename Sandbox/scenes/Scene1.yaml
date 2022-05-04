@@ -1,72 +1,56 @@
-ProjectScene: name
+Scene: Untitled
 Entities:
-  - GUID: 9
-    Transform:
-      Position: '-10,-10,-19'
-      Rotation: '0.220636,-0.80419,-0.0768949,-0.546521'
-      Scale: '0,2,2'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 8
-    Transform:
-      Position: '2,-7,-17'
-      Rotation: '0.830224,-0.291462,0.411578,0.237446'
-      Scale: '1,4,1'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 7
-    Transform:
-      Position: '-8,5,-23'
-      Rotation: '-0.297691,0.724627,0.390415,0.483603'
-      Scale: '2,3,2'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 6
-    Transform:
-      Position: '9,4,-26'
-      Rotation: '-0.154292,-0.0130578,-0.175506,0.972225'
-      Scale: '2,0,2'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 5
-    Transform:
-      Position: '-2,-5,-18'
-      Rotation: '-0.437024,-0.378861,0.530803,-0.619454'
-      Scale: '0,1,3'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 4
-    Transform:
-      Position: '0,-6,-13'
-      Rotation: '0.407971,0.607517,0.317408,-0.603104'
-      Scale: '2,1,0'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 3
-    Transform:
-      Position: '8,-1,-21'
-      Rotation: '0.224731,0.341316,0.724662,0.554855'
-      Scale: '2,0,4'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 2
-    Transform:
-      Position: '-10,-2,-11'
-      Rotation: '-0.352943,0.106952,-0.851685,0.372324'
-      Scale: '0,4,1'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 1
-    Transform:
-      Position: '-1,-9,-16'
-      Rotation: '-0.47652,-0.134165,-0.200861,-0.84533'
-      Scale: '2,2,1'
-    Renderable:
-      MeshKey: triangle
-  - GUID: 0
-    Transform:
-      Position: '2,-1,-28'
-      Rotation: '0.678613,-0.135385,0.701924,0.168694'
-      Scale: '0,4,1'
-    Renderable:
-      MeshKey: triangle
+  - Entity: 1283719283127312837192831272
+    TagComponent:
+      Tag: Camera B
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: false
+      FixedAspectRatio: false
+  - Entity: 1283719283127312837192831273
+    TagComponent:
+      Tag: Camera A
+    TransformComponent:
+      Translation: [0, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 1283719283127312837192831274
+    TagComponent:
+      Tag: Red Square
+    TransformComponent:
+      Translation: [0, 1.10000002, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+  - Entity: 1283719283127312837192831275
+    TagComponent:
+      Tag: Green Square
+    TransformComponent:
+      Translation: [2.4000001, 0, 0]
+      Rotation: [0, 0, 0]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0, 1, 0, 1]

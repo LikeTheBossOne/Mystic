@@ -1,5 +1,5 @@
 #pragma once
-#include "../../Mystic/Core.h"
+#include "../../Mystic/Core/Core.h"
 
 namespace Mystic
 {
