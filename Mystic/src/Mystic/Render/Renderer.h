@@ -1,10 +1,10 @@
 #pragma once
 
-#include "Mystic/GFX/RenderCommand.h"
+#include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Core/Core.h"
 
-#include "Mystic/GFX/OrthographicCamera.h"
-#include "Mystic/GFX/Shader.h"
+#include "Mystic/Render/OrthographicCamera.h"
+#include "Mystic/Render/Shader.h"
 
 namespace Mystic {
 	class VertexArray;

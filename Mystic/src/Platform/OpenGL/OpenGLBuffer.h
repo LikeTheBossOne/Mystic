@@ -2,7 +2,7 @@
 
 #include <cstdint>
 
-#include "Mystic/GFX/Buffer.h"
+#include "Mystic/Render/Buffer.h"
 
 namespace Mystic {
 

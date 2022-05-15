@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/VertexArray.h"
+#include "Mystic/Render/VertexArray.h"
 
 namespace Mystic {
 

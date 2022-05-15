@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/UniformBuffer.h"
+#include "Mystic/Render/UniformBuffer.h"
 
 namespace Mystic {
 

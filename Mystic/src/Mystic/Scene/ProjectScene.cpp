@@ -5,11 +5,11 @@
 
 #include "RuntimeScene.h"
 #include "Mystic/ECS/Components/GUIDComponent.h"
-#include "Mystic/GFX/Camera.h"
-#include "Mystic/GFX/Renderer.h"
+#include "Mystic/Render/Camera.h"
+#include "Mystic/Render/Renderer.h"
 #include "Mystic/ECS/ComponentRegistry.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
-#include "Mystic/GFX/Renderer2D.h"
+#include "Mystic/Render/Renderer2D.h"
 
 namespace Mystic
 {

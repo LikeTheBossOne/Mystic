@@ -4,8 +4,8 @@
 #include "Application.h"
 #include "../ECS/ComponentRegistry.h"
 #include "../ECS/Components/Renderable.h"
-//#include "GFX/Renderer3D.h"
-//#include "GFX/Window.h"
+//#include "Render/Renderer3D.h"
+//#include "Render/Window.h"
 //#include "Platform/OpenGL/OpenGLWindow.h"
 #include "../Scene/ProjectScene.h"
 

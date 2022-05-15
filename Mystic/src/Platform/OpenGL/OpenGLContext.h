@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/GraphicsContext.h"
+#include "Mystic/Render/GraphicsContext.h"
 
 struct GLFWwindow;
 

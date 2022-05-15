@@ -3,12 +3,12 @@
 #include "Mystic/Core/Layer.h"
 #include "Mystic/Events/KeyEvent.h"
 
-#include "Mystic/GFX/EditorCamera.h"
-#include "Mystic/GFX/Framebuffer.h"
-#include "Mystic/GFX/OrthographicCameraController.h"
-#include "Mystic/GFX/Shader.h"
-#include "Mystic/GFX/Texture.h"
-#include "Mystic/GFX/VertexArray.h"
+#include "Mystic/Render/EditorCamera.h"
+#include "Mystic/Render/Framebuffer.h"
+#include "Mystic/Render/OrthographicCameraController.h"
+#include "Mystic/Render/Shader.h"
+#include "Mystic/Render/Texture.h"
+#include "Mystic/Render/VertexArray.h"
 #include "Mystic/Scene/ProjectScene.h"
 #include "Panels/SceneHierarchyPanel.h"
 

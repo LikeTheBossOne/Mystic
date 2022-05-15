@@ -13,14 +13,15 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "Mystic/Core/Application.h"
 #include "Mystic/Core/Input.h"
+#include "Mystic/ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
-#include "Mystic/GFX/RenderCommand.h"
-#include "Mystic/GFX/Renderer2D.h"
+#include "Mystic/Render/RenderCommand.h"
+#include "Mystic/Render/Renderer2D.h"
 #include "Mystic/ImGui/ImGuiLayer.h"
 
 namespace Mystic {
 
-	const std::string g_AssetPath = "assets";
+	extern const std::string g_AssetPath = "assets";
 
 	EditorLayer::EditorLayer()
 		: m_CameraController(1280.0f / 720.0f), _squareColor({ 0.2f, 0.3f, 0.8f, 1.0f })
@@ -94,7 +95,7 @@ namespace Mystic {
 			}
 			case SceneState::Play:
 			{
-				_activeRuntimeScene->OnUpdate();
+				_activeRuntimeScene->OnUpdate(deltaTime);
 				break;
 			}
 		}
@@ -110,7 +111,7 @@ namespace Mystic {
 		if (mouseX >= 0 && mouseY >= 0 && mouseX < (int)viewportSize.x && mouseY < (int)viewportSize.y)
 		{
 			int pixelData = _framebuffer->ReadPixel(1, mouseX, mouseY);
-			//_hoveredEntity = pixelData == -1 ? Entity() : Entity((entt::entity)pixelData, _activeScene.get());
+			_hoveredEntity = pixelData == -1 ? Entity() : _activeScene->GetEntity((entt::entity)pixelData);
 		}
 
 		_framebuffer->Unbind();
@@ -197,8 +198,8 @@ namespace Mystic {
 		ImGui::Begin("Stats");
 
 		std::string name = "None";
-		//if (_hoveredEntity)
-		//    name = _hoveredEntity.GetComponent<TagComponent>().Tag;
+		if (_hoveredEntity)
+			name = _activeScene->EntityGetComponent<TagComponent>(_hoveredEntity).Tag;
 		ImGui::Text("Hovered Entity: %s", name.c_str());
 
 		auto stats = Renderer2D::GetStats();
@@ -212,6 +213,7 @@ namespace Mystic {
 
 		ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2{ 0, 0 });
 		ImGui::Begin("Viewport");
+
 		auto viewportMinRegion = ImGui::GetWindowContentRegionMin();
 		auto viewportMaxRegion = ImGui::GetWindowContentRegionMax();
 		auto viewportOffset = ImGui::GetWindowPos();
@@ -444,12 +446,20 @@ namespace Mystic {
 
 	void EditorLayer::SaveSceneAs()
 	{
-		/*std::string filepath = FileDialogs::SaveFile("Hazel Scene (*.hazel)\0*.hazel\0");
-		if (!filepath.empty())
+		std::string sceneFilePath;
+		auto commandLineArgs = Application::Get().GetCommandLineArgs();
+		if (commandLineArgs.Count > 1)
 		{
-			SceneSerializer serializer(_activeScene);
-			serializer.Serialize(filepath);
-		}*/
+			sceneFilePath = commandLineArgs[1];
+		}
+		else
+		{
+			sceneFilePath = "UntitledScene.myst";
+		}
+
+		SceneSerializer serializer(_activeProjectScene);
+		serializer.SerializeScene(sceneFilePath);
+		
 	}
 
 	void EditorLayer::OnScenePlay()

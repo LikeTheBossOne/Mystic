@@ -2,6 +2,7 @@
 #include "../ECS/Components/GUIDComponent.h"
 #include "../ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
+#include "Mystic/ECS/Components/TransformComponent.h"
 
 namespace Mystic
 {
@@ -76,6 +77,7 @@ namespace Mystic
 
 		_registry.emplace<GUIDComponent>(ent.EntId, GUIDComponent{ guid });
 		_registry.emplace<TagComponent>(ent.EntId, TagComponent{ name });
+		_registry.emplace<TransformComponent>(ent.EntId);
 
 		return ent;
 	}

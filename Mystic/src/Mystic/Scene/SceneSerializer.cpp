@@ -9,9 +9,11 @@
 #include "../ECS/Components/TransformComponent.h"
 #include "../ECS/Components/Renderable.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
+#include "Mystic/ECS/Components/CharacterComponent.h"
 #include "Mystic/ECS/Components/GUIDComponent.h"
 #include "Mystic/ECS/Components/SpriteRendererComponent.h"
 #include "Mystic/ECS/Components/TagComponent.h"
+#include "Mystic/ECS/Components/VelocityComponent.h"
 #include "yaml-cpp/yaml.h"
 
 namespace YAML
@@ -122,6 +124,30 @@ namespace Mystic
 		_strCount = 0;
 	}
 
+	GUID StringToGuid(std::string& str)
+	{
+		GUID guid;
+		unsigned long p0;
+		int p1, p2, p3, p4, p5, p6, p7, p8, p9, p10;
+
+		sscanf(str.c_str(), "%08lx-%04x-%04x-%02x%02x-%02x%02x%02x%02x%02x%02x",
+			&p0, &p1, &p2, &p3, &p4, &p5, &p6, &p7, &p8, &p9, &p10);
+
+		guid.Data1 = p0;
+		guid.Data2 = p1;
+		guid.Data3 = p2;
+		guid.Data4[0] = p3;
+		guid.Data4[1] = p4;
+		guid.Data4[2] = p5;
+		guid.Data4[3] = p6;
+		guid.Data4[4] = p7;
+		guid.Data4[5] = p8;
+		guid.Data4[6] = p9;
+		guid.Data4[7] = p10;
+
+		return guid;
+	}
+
 	void SceneSerializer::SerializeScene(std::string& filePath)
 	{
 		YAML::Emitter out;
@@ -144,20 +170,7 @@ namespace Mystic
 		std::ofstream fOut(filePath);
 		fOut << out.c_str();
 	}
-
-	typedef std::vector<unsigned char> bytes;
-	bytes HexToBytes(const std::string& hex) {
-		bytes bytesArr;
-
-		for (unsigned int i = 0; i < hex.length(); i += 2) {
-			std::string byteString = hex.substr(i, 2);
-			char byte = (char)strtol(byteString.c_str(), NULL, 16);
-			bytesArr.push_back(byte);
-		}
-
-		return bytesArr;
-	}
-
+	
 	bool SceneSerializer::DeserializeScene(const std::string& filePath)
 	{
 
@@ -182,10 +195,8 @@ namespace Mystic
 		{
 			for (auto entity : entities)
 			{
-				GUID guid;
 				auto guidStr = entity["Entity"].as<std::string>();
-				bytes guidBytes = HexToBytes(guidStr);
-				std::memcpy(&guid, guidBytes.data(), sizeof(guid));
+				GUID guid = StringToGuid(guidStr);
 
 				auto tag = entity["TagComponent"]["Tag"].as<std::string>();
 
@@ -195,12 +206,10 @@ namespace Mystic
 				if (transformComponent)
 				{
 					// Entities always have transforms
-					TransformComponent tc;
+					TransformComponent& tc = _scene->EntityGetComponent<TransformComponent>(deserializedEntity);
 					tc.Position = transformComponent["Position"].as<glm::vec3>();
 					tc.Rotation = transformComponent["Rotation"].as<glm::quat>();
 					tc.Scale = transformComponent["Scale"].as<glm::vec3>();
-
-					_scene->_registry.emplace<TransformComponent>(deserializedEntity.EntId, tc);
 				}
 
 				auto cameraComponent = entity["CameraComponent"];
@@ -242,57 +251,39 @@ namespace Mystic
 
 					_scene->_registry.emplace<Renderable>(deserializedEntity.EntId, rc);
 				}
+
+				auto velocityComponent = entity["VelocityComponent"];
+				if (velocityComponent)
+				{
+					VelocityComponent vc;
+					vc.Velocity = velocityComponent["Velocity"].as<glm::vec3>();
+
+					_scene->_registry.emplace<VelocityComponent>(deserializedEntity.EntId, vc);
+				}
+
+				auto characterComponent = entity["CharacterComponent"];
+				if (characterComponent)
+				{
+					CharacterComponent cc;
+					cc.Active = characterComponent["Active"].as<bool>();
+
+					_scene->_registry.emplace<CharacterComponent>(deserializedEntity.EntId, cc);
+				}
 			}
 		}
 		return true;
 	}
-	
-	std::string BytesToStr(const bytes& in)
-	{
-		bytes::const_iterator from = in.cbegin();
-		bytes::const_iterator to = in.cend();
-		std::ostringstream oss;
-		for (; from != to; ++from)
-			oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(*from);
-		return oss.str();
-	}
 
-	bytes longToBytes(const unsigned long paramLong)
+	std::string GuidToString(GUID& guid)
 	{
-		bytes arrayOfByte(8);
-		for (int i = 0; i < 8; i++)
-			arrayOfByte[7 - i] = (paramLong >> (i * 8));
-		return arrayOfByte;
-	}
+		char guid_cstr[39];
+		snprintf(guid_cstr, sizeof(guid_cstr),
+			"%08X-%04X-%04X-%02X%02X-%02X%02X%02X%02X%02X%02X",
+			guid.Data1, guid.Data2, guid.Data3,
+			guid.Data4[0], guid.Data4[1], guid.Data4[2], guid.Data4[3],
+			guid.Data4[4], guid.Data4[5], guid.Data4[6], guid.Data4[7]);
 
-	bytes shortToBytes(const unsigned short paramShort)
-	{
-		bytes arrayOfByte(2);
-		for (int i = 0; i < 2; i++)
-			arrayOfByte[1 - i] = (paramShort >> (i * 8));
-		return arrayOfByte;
-	}
-
-	std::string LongBytesToStr(const unsigned long paramInt)
-	{
-		bytes longBytes = longToBytes(paramInt);
-		bytes::const_iterator from = longBytes.cbegin();
-		bytes::const_iterator to = longBytes.cend();
-		std::ostringstream oss;
-		for (; from != to; ++from)
-			oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(*from);
-		return oss.str();
-	}
-
-	std::string ShortBytesToStr(const unsigned short paramShort)
-	{
-		bytes shortBytes = shortToBytes(paramShort);
-		bytes::const_iterator from = shortBytes.cbegin();
-		bytes::const_iterator to = shortBytes.cend();
-		std::ostringstream oss;
-		for (; from != to; ++from)
-			oss << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(*from);
-		return oss.str();
+		return std::string(guid_cstr);
 	}
 	
 
@@ -301,13 +292,15 @@ namespace Mystic
 		out << YAML::BeginMap;
 
 		GUIDComponent guid = _scene->_registry.get<GUIDComponent>(entity);
-		out << YAML::Key << "GUID";
-		out << YAML::Value << LongBytesToStr(guid.GUID.Data1) << ShortBytesToStr(guid.GUID.Data2) << ShortBytesToStr(guid.GUID.Data3);
-		out << BytesToStr(std::vector<unsigned char>(guid.GUID.Data4, guid.GUID.Data4 + 8));
+		out << YAML::Key << "Entity";
+		std::string guidStr = GuidToString(guid.GUID);
+		out << YAML::Value << guidStr;
 
 		TagComponent tag = _scene->_registry.get<TagComponent>(entity);
+		out << YAML::Key << "TagComponent" << YAML::Value << YAML::BeginMap;
 		out << YAML::Key << "Tag";
-		out << YAML::Value << tag.Name;
+		out << YAML::Value << tag.Tag;
+		out << YAML::EndMap;
 
 
 		TransformComponent* transformComponent;
@@ -362,6 +355,26 @@ namespace Mystic
 			out << YAML::Key << "SpriteRendererComponent" << YAML::BeginMap;
 			
 			out << YAML::Key << "Color" << YAML::Value << spriteRendererComponent->Color;
+
+			out << YAML::EndMap;
+		}
+
+		VelocityComponent* velocityComponent;
+		if ((velocityComponent = _scene->_registry.try_get<VelocityComponent>(entity)))
+		{
+			out << YAML::Key << "VelocityComponent" << YAML::BeginMap;
+
+			out << YAML::Key << "Velocity" << YAML::Value << velocityComponent->Velocity;
+
+			out << YAML::EndMap;
+		}
+
+		CharacterComponent* characterComponent;
+		if ((characterComponent = _scene->_registry.try_get<CharacterComponent>(entity)))
+		{
+			out << YAML::Key << "CharacterComponent" << YAML::BeginMap;
+
+			out << YAML::Key << "Active" << YAML::Value << characterComponent->Active;
 
 			out << YAML::EndMap;
 		}

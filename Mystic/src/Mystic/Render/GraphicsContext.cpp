@@ -1,7 +1,7 @@
 #include "mystpch.h"
 #include "GraphicsContext.h"
 
-#include "Mystic/GFX/Renderer.h"
+#include "Mystic/Render/Renderer.h"
 #include "Platform/OpenGL/OpenGLContext.h"
 
 namespace Mystic {

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/Texture.h"
+#include "Mystic/Render/Texture.h"
 
 #include <glad/glad.h>
 

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/Camera.h"
+#include "Mystic/Render/Camera.h"
 
 namespace Mystic {
 
@@ -30,6 +30,8 @@ namespace Mystic {
 		void SetOrthographicNearClip(float nearClip) { _orthographicNear = nearClip; RecalculateProjection(); }
 		float GetOrthographicFarClip() const { return _orthographicFar; }
 		void SetOrthographicFarClip(float farClip) { _orthographicFar = farClip; RecalculateProjection(); }
+
+		float GetAspectRatio() { return _aspectRatio; }
 
 		ProjectionType GetProjectionType() const { return _projectionType; }
 		void SetProjectionType(ProjectionType type) { _projectionType = type; RecalculateProjection(); }

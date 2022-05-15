@@ -5,7 +5,7 @@
 #include "Mystic/Events/MouseEvent.h"
 #include "Mystic/Events/KeyEvent.h"
 
-#include "Mystic/GFX/Renderer.h"
+#include "Mystic/Render/Renderer.h"
 
 #include "Platform/OpenGL/OpenGLContext.h"
 

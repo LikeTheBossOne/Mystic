@@ -135,11 +135,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="src\Components\AsteroidComponent.h" />
+    <ClInclude Include="src\Components\AsteroidSpawner.h" />
+    <ClInclude Include="src\Components\LaserComponent.h" />
+    <ClInclude Include="src\Components\PlayerComponent.h" />
     <ClInclude Include="src\SandboxLayer.h" />
+    <ClInclude Include="src\Systems\AsteroidDeathSystem.h" />
+    <ClInclude Include="src\Systems\AsteroidSpawnSystem.h" />
+    <ClInclude Include="src\Systems\LaserSpawnSystem.h" />
+    <ClInclude Include="src\Systems\WindowLoopSystem.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Sandbox.cpp" />
     <ClCompile Include="src\SandboxLayer.cpp" />
+    <ClCompile Include="src\Systems\AsteroidDeathSystem.cpp" />
+    <ClCompile Include="src\Systems\AsteroidSpawnSystem.cpp" />
+    <ClCompile Include="src\Systems\LaserSpawnSystem.cpp" />
+    <ClCompile Include="src\Systems\WindowLoopSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mystic\Mystic.vcxproj">

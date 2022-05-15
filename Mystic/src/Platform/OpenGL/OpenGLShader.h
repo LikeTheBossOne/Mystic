@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/Shader.h"
+#include "Mystic/Render/Shader.h"
 #include <glm/glm.hpp>
 
 // TODO: REMOVE!

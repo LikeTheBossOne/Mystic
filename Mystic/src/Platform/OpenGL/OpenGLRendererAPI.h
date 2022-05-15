@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Mystic/GFX/RendererAPI.h"
+#include "Mystic/Render/RendererAPI.h"
 
 namespace Mystic {
 

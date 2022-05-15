@@ -20,9 +20,10 @@ namespace Mystic
 		}
 
 		operator bool() const { return EntId != entt::null; }
+		bool operator ==(const Entity& rhs) const { return EntId == rhs.EntId; }
 
 	public:
-		entt::entity EntId;
+		entt::entity EntId = entt::null;
 
 		GUID GUID;
 

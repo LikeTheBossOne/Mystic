@@ -1,13 +1,15 @@
 #include "RuntimeScene.h"
 
-#include "Mystic/GFX/Camera.h"
-#include "Mystic/GFX/Renderer.h"
+#include "Mystic/Render/Camera.h"
+#include "Mystic/Render/Renderer.h"
 #include "Mystic/ECS/Components/Renderable.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
 #include "glm/ext/matrix_clip_space.hpp"
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/SpriteRendererComponent.h"
-#include "Mystic/GFX/Renderer2D.h"
+#include "Mystic/Render/Renderer2D.h"
+
+#include "Mystic/ECS/SystemRegistry.h"
 
 namespace Mystic
 {
@@ -22,29 +24,15 @@ namespace Mystic
 	{
 	}
 
-	void RuntimeScene::OnUpdate()
+	void RuntimeScene::OnUpdate(float deltaTime)
 	{
-		/*Renderer3D::UseShaderProgram();
-
-		glm::mat4 projection = glm::mat4(1.0f);
-		projection = glm::perspective(glm::radians(45.0f), 1.f, 0.1f, 100.f);
-		Renderer3D::SetProjectionMatrix(projection);
-
-		glm::mat4 viewMat = _mainCamera->GetViewMatrix();
-		Renderer3D::SetViewMatrix(viewMat);
-
-		auto group = _registry->group<Renderable>(entt::get<TransformComponent>);
-		group.each([](const Renderable& renderable, const TransformComponent& transform)
+		for (auto system: SystemRegistry::s_systems)
 		{
-			glm::mat4 model = glm::mat4(1.0f);
-			model = glm::translate(model, transform.Position);
-			glm::mat4 rotMatrix = glm::toMat4(transform.Rotation);
-			model = model * rotMatrix;
-			model = glm::scale(model, transform.Scale);
-
-			std::string key = renderable.MeshKey;
-			Renderer3D::RenderEnt(key, model);
-		});*/
+			if (system.second.second)
+			{
+				system.second.first->OnUpdate(this, _registry, deltaTime);
+			}
+		}
 
 		// Render 2D
 		Camera* mainCamera = nullptr;

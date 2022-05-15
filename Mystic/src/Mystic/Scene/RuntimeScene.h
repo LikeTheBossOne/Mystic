@@ -14,7 +14,7 @@ namespace Mystic
 		RuntimeScene();
 		~RuntimeScene() override;
 
-		void OnUpdate();
+		void OnUpdate(float deltaTime);
 
 
 		friend class ProjectScene;

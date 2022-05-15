@@ -2,7 +2,7 @@
 
 #include "glm/vec4.hpp"
 #include "Mystic/Core/Core.h"
-#include "Mystic/GFX/Texture.h"
+#include "Mystic/Render/Texture.h"
 
 namespace Mystic
 {

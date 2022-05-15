@@ -2,7 +2,7 @@
 
 #include <cassert>
 
-#include "Mystic/GFX/Framebuffer.h"
+#include "Mystic/Render/Framebuffer.h"
 
 namespace Mystic {
 
