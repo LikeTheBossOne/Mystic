@@ -30,6 +30,7 @@ group "Dependencies"
 	include "Mystic/vendor/Glad"
 	include "Mystic/vendor/imgui"
 	include "Mystic/vendor/yaml-cpp"
+	include "Mystic/vendor/OpenFBX"
 group ""
 
 include "Mystic"

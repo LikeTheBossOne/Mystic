@@ -5,12 +5,13 @@
 //#include <glm/gtc/matrix_transform.hpp>
 //#include <glm/gtc/type_ptr.hpp>
 
-#include "Mystic/Scene/SceneSerializer.h"
+#include "Mystic/Scene/ProjectSerializer.h"
 #include "Mystic/Scene/RuntimeScene.h"
 #include "Mystic/Scene/ProjectScene.h"
 
 #include "ImGuizmo.h"
 #include "glm/gtc/type_ptr.hpp"
+#include "Mystic/Assets/FBXImporter.h"
 #include "Mystic/Core/Application.h"
 #include "Mystic/Core/Input.h"
 #include "Mystic/ECS/Components/TagComponent.h"
@@ -18,6 +19,8 @@
 #include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Render/Renderer2D.h"
 #include "Mystic/ImGui/ImGuiLayer.h"
+#include "Mystic/Render/Mesh.h"
+#include "Mystic/Render/Renderer3D.h"
 
 namespace Mystic {
 
@@ -30,8 +33,8 @@ namespace Mystic {
 
 	void EditorLayer::OnAttach()
 	{
-		_iconPlay = Texture2D::Create("Resources/Icons/PlayButton.png");
-		_iconStop = Texture2D::Create("Resources/Icons/StopButton.png");
+		_iconPlay = Texture2D::Create("PlayButton", "Resources/Icons/PlayButton.png");
+		_iconStop = Texture2D::Create("StopButton", "Resources/Icons/StopButton.png");
 
 		FramebufferSpecification fbSpec;
 		fbSpec.Attachments = { FramebufferTextureFormat::RGBA8, FramebufferTextureFormat::RED_INTEGER, FramebufferTextureFormat::Depth };
@@ -46,13 +49,20 @@ namespace Mystic {
 		if (commandLineArgs.Count > 1)
 		{
 			std::string sceneFilePath = commandLineArgs[1];
-			SceneSerializer serializer(_activeProjectScene);
-			serializer.DeserializeScene(sceneFilePath);
+			ProjectSerializer serializer(_activeProjectScene);
+			serializer.DeserializeProject(sceneFilePath);
 		}
 
 		_editorCamera = EditorCamera(30.0f, 1.778f, 0.001f, 1000.0f);
 
 		_sceneHierarchyPanel.SetContext(_activeScene);
+
+		/*std::unordered_map<FBXAssetType, std::unordered_map<std::string, std::string>> map;
+		FBXImporter::Import("../Sandbox/assets/fbx/BaseCharacter.fbx", map);
+		for (auto filePair : map[FBXAssetType::MESH])
+		{
+			Ref<Mesh> m = Mesh::CreateMeshFromMystAsset(filePair.second);
+		}*/
 	}
 
 	void EditorLayer::OnDetach()
@@ -435,8 +445,8 @@ namespace Mystic {
 		//}
 		
 		Ref<ProjectScene> newScene = std::make_shared<ProjectScene>();
-		SceneSerializer serializer(newScene);
-		if (serializer.DeserializeScene(path))
+		ProjectSerializer serializer(newScene);
+		if (serializer.DeserializeProject(path))
 		{
 			_activeScene = newScene;
 			_activeScene->OnViewportResize((uint32_t)_viewportSize.x, (uint32_t)_viewportSize.y);
@@ -457,8 +467,8 @@ namespace Mystic {
 			sceneFilePath = "UntitledScene.myst";
 		}
 
-		SceneSerializer serializer(_activeProjectScene);
-		serializer.SerializeScene(sceneFilePath);
+		ProjectSerializer serializer(_activeProjectScene);
+		serializer.SerializeProject(sceneFilePath);
 		
 	}
 

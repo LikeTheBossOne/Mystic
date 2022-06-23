@@ -19,5 +19,4 @@ namespace Mystic {
 	{
 		return std::make_shared<OpenGLIndexBuffer>(indices, size);
 	}
-
 }

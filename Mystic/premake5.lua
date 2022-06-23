@@ -40,6 +40,7 @@ project "Mystic"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.OpenFBX}"
 	}
 
 	links
@@ -48,7 +49,8 @@ project "Mystic"
 		"Glad",
 		"ImGui",
 		"yaml-cpp",
-		"opengl32.lib"
+		"opengl32.lib",
+		"OpenFBX"
 	}
 
 	flags { "NoPCH" }

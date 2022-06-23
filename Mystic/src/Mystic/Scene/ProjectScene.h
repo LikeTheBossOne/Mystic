@@ -2,9 +2,12 @@
 
 #include "Scene.h"
 #include "../Core/Core.h"
+#include "Mystic/Render/Mesh.h"
+#include "Mystic/Render/Texture.h"
 
 namespace Mystic
 {
+	class AssetLibrary;
 	class EditorCamera;
 	class RuntimeScene;
 
@@ -16,11 +19,15 @@ namespace Mystic
 
 		Ref<RuntimeScene> CreateRuntimeScene();
 
-
 	public:
 		void OnUpdate(EditorCamera& camera);
 
-		friend class SceneSerializer;
+		friend class ProjectSerializer;
+
+	private:
+		Ref<AssetLibrary> _assetLibrary;
+		Ref<Mesh> _mesh;
+		Ref<Texture2D> _texture;
 	};
 }
 

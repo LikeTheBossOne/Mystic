@@ -33,6 +33,55 @@ namespace Mystic {
 		return 0;
 	}
 
+	static std::string ShaderDataTypeName(ShaderDataType type)
+	{
+		switch (type)
+		{
+		case ShaderDataType::Float:    return "Float";
+		case ShaderDataType::Float2:   return "Float2";
+		case ShaderDataType::Float3:   return "Float3";
+		case ShaderDataType::Float4:   return "Float4";
+		case ShaderDataType::Mat3:     return "Mat3";
+		case ShaderDataType::Mat4:     return "Mat4";
+		case ShaderDataType::Int:      return "Int";
+		case ShaderDataType::Int2:     return "Int2";
+		case ShaderDataType::Int3:     return "Int3";
+		case ShaderDataType::Int4:	   return "Int4";
+		case ShaderDataType::Bool:     return "Bool";
+		}
+
+		assert(false, "Unknown ShaderDataType!");
+		return "null";
+	}
+
+	static ShaderDataType ShaderDataTypeFromName(std::string name)
+	{
+		if (name == "Float")
+			return ShaderDataType::Float;
+		if (name == "Float2")
+			return ShaderDataType::Float2;
+		if (name == "Float3")
+			return ShaderDataType::Float3;
+		if (name == "Float4")
+			return ShaderDataType::Float4;
+		if (name == "Mat3")
+			return ShaderDataType::Mat3;
+		if (name == "Mat4")
+			return ShaderDataType::Mat4;
+		if (name == "Int")
+			return ShaderDataType::Int;
+		if (name == "Int2")
+			return ShaderDataType::Int2;
+		if (name == "Int3")
+			return ShaderDataType::Int3;
+		if (name == "Int4")
+			return ShaderDataType::Int4;
+		if (name == "Bool")
+			return ShaderDataType::Bool;
+
+		return ShaderDataType::None;
+	}
+
 	struct BufferElement
 	{
 		std::string Name;
@@ -81,6 +130,12 @@ namespace Mystic {
 			CalculateOffsetsAndStride();
 		}
 
+		BufferLayout(std::vector<BufferElement> elements)
+			: m_Elements(elements)
+		{
+			CalculateOffsetsAndStride();
+		}
+
 		uint32_t GetStride() const { return m_Stride; }
 		const std::vector<BufferElement>& GetElements() const { return m_Elements; }
 
@@ -122,7 +177,7 @@ namespace Mystic {
 		static Ref<VertexBuffer> Create(float* vertices, uint32_t size);
 	};
 
-	// Currently Hazel only supports 32-bit index buffers
+	// Currently Mystic only supports 32-bit index buffers
 	class IndexBuffer
 	{
 	public:
@@ -135,5 +190,4 @@ namespace Mystic {
 
 		static Ref<IndexBuffer> Create(uint32_t* indices, uint32_t count);
 	};
-
 }

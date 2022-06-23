@@ -1,4 +1,4 @@
-#include "SceneSerializer.h"
+#include "ProjectSerializer.h"
 
 #include <fstream>
 #include <iomanip>
@@ -11,10 +11,12 @@
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/CharacterComponent.h"
 #include "Mystic/ECS/Components/GUIDComponent.h"
+#include "Mystic/ECS/Components/MeshRendererComponent.h"
 #include "Mystic/ECS/Components/SpriteRendererComponent.h"
 #include "Mystic/ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/VelocityComponent.h"
 #include "yaml-cpp/yaml.h"
+#include "Mystic/Assets/AssetLibrary.h"
 
 namespace YAML
 {
@@ -96,6 +98,42 @@ namespace YAML
 			return true;
 		}
 	};
+
+	template<>
+	struct convert<Mystic::BufferLayout>
+	{
+		static Node encode(const Mystic::BufferLayout& rhs)
+		{
+			Node node;
+			for (auto element : rhs.GetElements())
+			{
+				Node mapNode;
+				mapNode.force_insert("Name", element.Name);
+				mapNode.force_insert("Type", ShaderDataTypeName(element.Type));
+
+				node.push_back(mapNode);
+			}
+			return node;
+		}
+
+		static bool decode(const Node& node, Mystic::BufferLayout& rhs)
+		{
+			if (!node.IsSequence())
+				return false;
+
+			std::vector<Mystic::BufferElement> elements;
+			for (auto nodeElement : node)
+			{
+				elements.push_back({ 
+					Mystic::ShaderDataTypeFromName(nodeElement["Type"].as<std::string>()),
+					nodeElement["Name"].as<std::string>()
+				});
+			}
+			rhs = { elements };
+
+			return true;
+		}
+	};
 }
 
 namespace Mystic
@@ -118,7 +156,24 @@ namespace Mystic
 		return out;
 	}
 
-	SceneSerializer::SceneSerializer(Ref<ProjectScene> scene)
+	YAML::Emitter& operator << (YAML::Emitter& out, const BufferLayout& v) {
+		out << YAML::BeginSeq;
+		for (auto element : v.GetElements())
+		{
+			out << YAML::BeginMap;
+
+			out << YAML::Key << "Name";
+			out << YAML::Value << element.Name;
+			out << YAML::Key << "Type";
+			out << YAML::Value << ShaderDataTypeName(element.Type);
+
+			out << YAML::EndMap;
+		}
+		out << YAML::EndSeq;
+		return out;
+	}
+
+	ProjectSerializer::ProjectSerializer(Ref<ProjectScene> scene)
 	{
 		_scene = scene;
 		_strCount = 0;
@@ -148,7 +203,7 @@ namespace Mystic
 		return guid;
 	}
 
-	void SceneSerializer::SerializeScene(std::string& filePath)
+	void ProjectSerializer::SerializeProject(std::string& filePath)
 	{
 		YAML::Emitter out;
 		out << YAML::BeginMap;
@@ -165,13 +220,15 @@ namespace Mystic
 
 		out << YAML::EndSeq;
 
+		SerializeAssets(out);
+		
 		out << YAML::EndMap;
 
 		std::ofstream fOut(filePath);
 		fOut << out.c_str();
 	}
 	
-	bool SceneSerializer::DeserializeScene(const std::string& filePath)
+	bool ProjectSerializer::DeserializeProject(const std::string& filePath)
 	{
 
 		YAML::Node sceneRoot;
@@ -269,9 +326,84 @@ namespace Mystic
 
 					_scene->_registry.emplace<CharacterComponent>(deserializedEntity.EntId, cc);
 				}
+
+				auto meshRendererComponent = entity["MeshRendererComponent"];
+				if (meshRendererComponent)
+				{
+					MeshRendererComponent mrc;
+					mrc.MeshName = meshRendererComponent["MeshName"].as<std::string>();
+					mrc.ShaderName = meshRendererComponent["ShaderName"].as<std::string>();
+					mrc.TextureName = meshRendererComponent["TextureName"].as<std::string>();
+					mrc.Color = meshRendererComponent["Color"].as<glm::vec4>();
+
+					_scene->_registry.emplace<MeshRendererComponent>(deserializedEntity.EntId, mrc);
+				}
 			}
 		}
+
+		DeserializeAssets(sceneRoot);
+		
 		return true;
+	}
+
+	void ProjectSerializer::SerializeAssets(YAML::Emitter& out)
+	{
+		out << YAML::Key << "Assets";
+		out << YAML::Value << YAML::BeginMap;
+
+		out << YAML::Key << "Meshes";
+		out << YAML::Value << YAML::BeginSeq;
+		for (auto pair : _scene->_assetLibrary->Meshes)
+		{
+			out << YAML::BeginMap;
+
+			out << YAML::Key << "Path";
+			out << YAML::Value << pair.first;
+
+			out << YAML::Key << "Name";
+			out << YAML::Value << pair.second->GetName();
+
+			out << YAML::EndMap;
+			
+		}
+		out << YAML::EndSeq;
+
+		out << YAML::Key << "Shaders";
+		out << YAML::Value << YAML::BeginSeq;
+		for (auto pair : _scene->_assetLibrary->Shaders)
+		{
+			out << YAML::BeginMap;
+
+			out << YAML::Key << "Path";
+			out << YAML::Value << pair.first;
+
+			out << YAML::Key << "Name";
+			out << YAML::Value << pair.second->GetName();
+
+			out << YAML::Key << "BufferLayout";
+			out << YAML::Value << pair.second->GetBufferLayout();
+
+			out << YAML::EndMap;
+		}
+		out << YAML::EndSeq;
+
+		out << YAML::Key << "Textures";
+		out << YAML::Value << YAML::BeginSeq;
+		for (auto pair : _scene->_assetLibrary->Textures)
+		{
+			out << YAML::BeginMap;
+
+			out << YAML::Key << "Path";
+			out << YAML::Value << pair.first;
+
+			out << YAML::Key << "Name";
+			out << YAML::Value << pair.second->GetName();
+
+			out << YAML::EndMap;
+		}
+		out << YAML::EndSeq;
+
+		out << YAML::EndMap;
 	}
 
 	std::string GuidToString(GUID& guid)
@@ -287,7 +419,7 @@ namespace Mystic
 	}
 	
 
-	void SceneSerializer::SerializeEntity(YAML::Emitter& out, entt::entity entity)
+	void ProjectSerializer::SerializeEntity(YAML::Emitter& out, entt::entity entity)
 	{
 		out << YAML::BeginMap;
 
@@ -379,6 +511,71 @@ namespace Mystic
 			out << YAML::EndMap;
 		}
 
+		MeshRendererComponent* meshRendererComponent;
+		if ((meshRendererComponent = _scene->_registry.try_get<MeshRendererComponent>(entity)))
+		{
+			out << YAML::Key << "MeshRendererComponent" << YAML::BeginMap;
+
+			out << YAML::Key << "MeshName" << YAML::Value << meshRendererComponent->MeshName;
+			out << YAML::Key << "ShaderName" << YAML::Value << meshRendererComponent->ShaderName;
+			out << YAML::Key << "TextureName" << YAML::Value << meshRendererComponent->TextureName;
+			out << YAML::Key << "Color" << YAML::Value << meshRendererComponent->Color;
+
+			out << YAML::EndMap;
+		}
+
 		out << YAML::EndMap;
+	}
+
+	void ProjectSerializer::DeserializeAssets(YAML::Node& root)
+	{
+		if (!root["Assets"])
+			return;
+
+		auto assetNode = root["Assets"];
+
+		if (assetNode["Meshes"])
+		{
+			for (auto mesh : assetNode["Meshes"])
+			{
+				if (!mesh["Path"] || !mesh["Name"])
+					continue;
+
+				_scene->_assetLibrary->Meshes[mesh["Name"].as<std::string>()] = 
+					Mesh::CreateMeshFromMystAsset(mesh["Name"].as<std::string>(), mesh["Path"].as<std::string>());
+			}
+		}
+
+		if (assetNode["Shaders"])
+		{
+			for (auto shader : assetNode["Shaders"])
+			{
+				if (!shader["Path"] || !shader["Name"] || !shader["BufferLayout"])
+					continue;
+
+				BufferLayout bf = shader["BufferLayout"].as<BufferLayout>();
+				_scene->_assetLibrary->Shaders[shader["Name"].as<std::string>()] =
+					Shader::Create(
+						shader["Name"].as<std::string>(), 
+						shader["Path"].as<std::string>(), 
+						bf
+					);
+			}
+		}
+
+		if (assetNode["Textures"])
+		{
+			for (auto texture : assetNode["Textures"])
+			{
+				if (!texture["Path"] || !texture["Name"])
+					continue;
+				
+				_scene->_assetLibrary->Textures[texture["Name"].as<std::string>()] =
+					Texture2D::Create(
+						texture["Name"].as<std::string>(),
+						texture["Path"].as<std::string>()
+					);
+			}
+		}
 	}
 }

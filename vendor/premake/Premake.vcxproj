@@ -80,6 +80,7 @@
     <None Include="..\..\Mystic\premake5.lua" />
     <None Include="..\..\Mystic\vendor\GLFW\premake5.lua" />
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua" />
+    <None Include="..\..\Mystic\vendor\OpenFBX\premake5.lua" />
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua" />
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua" />
     <None Include="..\..\MysticEditor\premake5.lua" />

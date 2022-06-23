@@ -356,7 +356,8 @@ namespace Mystic
 						const std::wstring wstrPath(path);
 						const std::string strPath(wstrPath.begin(), wstrPath.end());
 						std::string texturePath = g_AssetPath + "/" + strPath;
-						Ref<Texture2D> texture = Texture2D::Create(texturePath);
+						//TODO: Change this to use an actual name
+						Ref<Texture2D> texture = Texture2D::Create(strPath, texturePath);
 						if (texture->IsLoaded())
 							component.Texture = texture;
 						//else

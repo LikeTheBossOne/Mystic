@@ -11,8 +11,8 @@ namespace Mystic {
 	class OpenGLShader : public Shader
 	{
 	public:
-		OpenGLShader(const std::string& filepath);
-		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+		OpenGLShader(const std::string& name, const std::string& filepath, BufferLayout& bufferLayout);
+		OpenGLShader(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc, BufferLayout& bufferLayout);
 		virtual ~OpenGLShader();
 
 		virtual void Bind() const override;
@@ -27,6 +27,7 @@ namespace Mystic {
 		virtual void SetMat4(const std::string& name, const glm::mat4& value) override;
 
 		virtual const std::string& GetName() const override { return _name; }
+		virtual const BufferLayout& GetBufferLayout() const override { return _bufferLayout; }
 
 		void UploadUniformInt(const std::string& name, int value);
 		void UploadUniformIntArray(const std::string& name, int* values, uint32_t count);
@@ -47,6 +48,7 @@ namespace Mystic {
 		uint32_t _rendererID;
 		std::string _filePath;
 		std::string _name;
+		BufferLayout _bufferLayout;
 
 		std::unordered_map<GLenum, std::string> _openGLSourceCode;
 	};

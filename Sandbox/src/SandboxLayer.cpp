@@ -17,7 +17,7 @@
 #include "Mystic/ECS/Components/VelocityComponent.h"
 #include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Scene/ProjectScene.h"
-#include "Mystic/Scene/SceneSerializer.h"
+#include "Mystic/Scene/ProjectSerializer.h"
 #include "Systems/AsteroidDeathSystem.h"
 #include "Systems/AsteroidSpawnSystem.h"
 #include "Systems/LaserSpawnSystem.h"
@@ -45,8 +45,8 @@ SandboxLayer::SandboxLayer()
 
 	Mystic::Ref<Mystic::ProjectScene> projScene = std::make_shared<Mystic::ProjectScene>();
 
-	Mystic::SceneSerializer serializer(projScene);
-	serializer.DeserializeScene("assets/scenes/asteroids.myst");
+	Mystic::ProjectSerializer serializer(projScene);
+	serializer.DeserializeProject("assets/scenes/asteroids.myst");
 
 	_scene = projScene->CreateRuntimeScene();
 	Mystic::Application& app = Mystic::Application::Get();

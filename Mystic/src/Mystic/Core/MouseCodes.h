@@ -18,6 +18,7 @@ namespace Mystic
 			Button5 = 5,
 			Button6 = 6,
 			Button7 = 7,
+			Size,
 
 			ButtonLast = Button7,
 			ButtonLeft = Button0,

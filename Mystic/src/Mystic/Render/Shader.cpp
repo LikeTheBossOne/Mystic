@@ -6,24 +6,36 @@
 
 namespace Mystic {
 
-	Ref<Shader> Shader::Create(const std::string& filepath)
+	Ref<Shader> Shader::Create(const std::string& filepath, BufferLayout& bufferLayout)
+	{
+		// Extract name from filepath
+		auto lastSlash = filepath.find_last_of("/\\");
+		lastSlash = lastSlash == std::string::npos ? 0 : lastSlash + 1;
+		auto lastDot = filepath.rfind('.');
+		auto count = lastDot == std::string::npos ? filepath.size() - lastSlash : lastDot - lastSlash;
+		std::string name = filepath.substr(lastSlash, count);
+
+		return Create(name, filepath, bufferLayout);
+	}
+
+	Ref<Shader> Shader::Create(const std::string& name, const std::string& filepath, BufferLayout& bufferLayout)
 	{
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:    assert(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(filepath);
+			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, filepath, bufferLayout);
 		}
 
 		assert(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
-	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc)
+	Ref<Shader> Shader::Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc, BufferLayout& bufferLayout)
 	{
 		switch (Renderer::GetAPI())
 		{
 			case RendererAPI::API::None:    assert(false, "RendererAPI::None is currently not supported!"); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc);
+			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc, bufferLayout);
 		}
 
 		assert(false, "Unknown RendererAPI!");
@@ -42,16 +54,16 @@ namespace Mystic {
 		Add(name, shader);
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const std::string& filepath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& filepath, BufferLayout& bufferLayout)
 	{
-		auto shader = Shader::Create(filepath);
+		auto shader = Shader::Create(filepath, bufferLayout);
 		Add(shader);
 		return shader;
 	}
 
-	Ref<Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath)
+	Ref<Shader> ShaderLibrary::Load(const std::string& name, const std::string& filepath, BufferLayout& bufferLayout)
 	{
-		auto shader = Shader::Create(filepath);
+		auto shader = Shader::Create(filepath, bufferLayout);
 		Add(name, shader);
 		return shader;
 	}

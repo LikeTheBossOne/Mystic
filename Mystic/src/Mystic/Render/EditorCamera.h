@@ -32,7 +32,7 @@ namespace Mystic {
 		glm::quat GetOrientation() const;
 
 		float GetPitch() const { return _pitch; }
-		float GetYaw() const { return m_Yaw; }
+		float GetYaw() const { return _yaw; }
 	private:
 		void UpdateProjection();
 		void UpdateView();
@@ -58,7 +58,7 @@ namespace Mystic {
 		glm::vec2 _initialMousePosition = { 0.0f, 0.0f };
 
 		float _distance = 10.0f;
-		float _pitch = 0.0f, m_Yaw = 0.0f;
+		float _pitch = 0.0f, _yaw = 0.0f;
 
 		float _viewportWidth = 1280, _viewportHeight = 720;
 	};

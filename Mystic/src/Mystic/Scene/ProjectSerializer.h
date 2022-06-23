@@ -1,11 +1,10 @@
 #pragma once
 #include "../Core/Core.h"
 #include <entt.hpp>
-#include <glm/fwd.hpp>
-#include <glm/vec3.hpp>
 
 namespace YAML
 {
+	class Node;
 	class Emitter;
 }
 
@@ -13,16 +12,19 @@ namespace Mystic
 {
 	class ProjectScene;
 
-	class MYSTIC_API SceneSerializer
+	class MYSTIC_API ProjectSerializer
 	{
 	public:
-		SceneSerializer(Ref<ProjectScene> scene);
+		ProjectSerializer(Ref<ProjectScene> scene);
 
-		void SerializeScene(std::string& filePath);
-		bool DeserializeScene(const std::string& filePath);
+		void SerializeProject(std::string& filePath);
+		bool DeserializeProject(const std::string& filePath);
 
 	private:
+		void SerializeAssets(YAML::Emitter& out);
 		void SerializeEntity(YAML::Emitter& out, entt::entity entity);
+
+		void DeserializeAssets(YAML::Node& root);
 
 	private:
 		Ref<ProjectScene> _scene;

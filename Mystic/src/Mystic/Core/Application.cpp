@@ -9,6 +9,7 @@
 #include "Mystic/ECS/SystemRegistry.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/CharacterComponent.h"
+#include "Mystic/ECS/Components/MeshRendererComponent.h"
 #include "Mystic/ECS/Components/Renderable.h"
 #include "Mystic/ECS/Components/RigidBodyComponent.h"
 #include "Mystic/ECS/Components/SpriteRendererComponent.h"
@@ -51,6 +52,7 @@ namespace Mystic
 		ComponentRegistry::AddComponent<CharacterComponent>();
 		ComponentRegistry::AddComponent<RigidBodyComponent>();
 		ComponentRegistry::AddComponent<ThrusterComponent>();
+		ComponentRegistry::AddComponent<MeshRendererComponent>();
 
 		SystemRegistry::AddSystem<CharacterMovementSystem>("CharacterMovementSystem");
 		SystemRegistry::AddSystem<VelocitySystem>("VelocitySystem");

@@ -26,7 +26,7 @@ namespace Mystic {
 
 	void EditorCamera::UpdateView()
 	{
-		// m_Yaw = _pitch = 0.0f; // Lock the camera's rotation
+		// _yaw = _pitch = 0.0f; // Lock the camera's rotation
 		_position = CalculatePosition();
 
 		glm::quat orientation = GetOrientation();
@@ -102,7 +102,7 @@ namespace Mystic {
 	void EditorCamera::MouseRotate(const glm::vec2& delta)
 	{
 		float yawSign = GetUpDirection().y < 0 ? -1.0f : 1.0f;
-		m_Yaw += yawSign * delta.x * RotationSpeed();
+		_yaw += yawSign * delta.x * RotationSpeed();
 		_pitch += delta.y * RotationSpeed();
 	}
 
@@ -138,7 +138,7 @@ namespace Mystic {
 
 	glm::quat EditorCamera::GetOrientation() const
 	{
-		return glm::quat(glm::vec3(-_pitch, -m_Yaw, 0.0f));
+		return glm::quat(glm::vec3(-_pitch, -_yaw, 0.0f));
 	}
 
 }

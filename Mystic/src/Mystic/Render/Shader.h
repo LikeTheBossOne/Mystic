@@ -5,6 +5,7 @@
 
 #include <glm/glm.hpp>
 
+#include "Buffer.h"
 #include "Mystic/Core/Core.h"
 
 namespace Mystic {
@@ -26,9 +27,11 @@ namespace Mystic {
 		virtual void SetMat4(const std::string& name, const glm::mat4& value) = 0;
 
 		virtual const std::string& GetName() const = 0;
+		virtual const BufferLayout& GetBufferLayout() const = 0;
 
-		static Ref<Shader> Create(const std::string& filepath);
-		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc);
+		static Ref<Shader> Create(const std::string& filepath, BufferLayout& bufferLayout);
+		static Ref<Shader> Create(const std::string& name, const std::string& filepath, BufferLayout& bufferLayout);
+		static Ref<Shader> Create(const std::string& name, const std::string& vertexSrc, const std::string& fragmentSrc, BufferLayout& bufferLayout);
 	};
 
 	class ShaderLibrary
@@ -36,8 +39,8 @@ namespace Mystic {
 	public:
 		void Add(const std::string& name, const Ref<Shader>& shader);
 		void Add(const Ref<Shader>& shader);
-		Ref<Shader> Load(const std::string& filepath);
-		Ref<Shader> Load(const std::string& name, const std::string& filepath);
+		Ref<Shader> Load(const std::string& filepath, BufferLayout& bufferLayout);
+		Ref<Shader> Load(const std::string& name, const std::string& filepath, BufferLayout& bufferLayout);
 
 		Ref<Shader> Get(const std::string& name);
 

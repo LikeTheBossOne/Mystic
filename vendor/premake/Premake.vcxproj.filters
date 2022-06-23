@@ -16,6 +16,9 @@
     <Filter Include="..\Mystic\vendor\Glad">
       <UniqueIdentifier>{ED4D9B66-59BA-5661-22AE-EEBE8ED978C9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Mystic\vendor\OpenFBX">
+      <UniqueIdentifier>{C7BBEB40-B3E0-3AC1-DC2B-2051C8AF39DF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Mystic\vendor\imgui">
       <UniqueIdentifier>{30F56C3C-1CEF-958E-055C-2C9FF1F4FBFA}</UniqueIdentifier>
     </Filter>
@@ -38,6 +41,9 @@
     </None>
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua">
       <Filter>..\Mystic\vendor\Glad</Filter>
+    </None>
+    <None Include="..\..\Mystic\vendor\OpenFBX\premake5.lua">
+      <Filter>..\Mystic\vendor\OpenFBX</Filter>
     </None>
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua">
       <Filter>..\Mystic\vendor\imgui</Filter>

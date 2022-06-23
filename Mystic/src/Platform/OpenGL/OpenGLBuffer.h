@@ -11,7 +11,7 @@ namespace Mystic {
 	public:
 		OpenGLVertexBuffer(uint32_t size);
 		OpenGLVertexBuffer(float* vertices, uint32_t size);
-		virtual ~OpenGLVertexBuffer();
+		virtual ~OpenGLVertexBuffer() override;
 
 		virtual void Bind() const override;
 		virtual void Unbind() const override;
@@ -29,15 +29,14 @@ namespace Mystic {
 	{
 	public:
 		OpenGLIndexBuffer(uint32_t* indices, uint32_t count);
-		virtual ~OpenGLIndexBuffer();
+		virtual ~OpenGLIndexBuffer() override;
 
-		virtual void Bind() const;
-		virtual void Unbind() const;
+		void Bind() const override;
+		void Unbind() const override;
 
-		virtual uint32_t GetCount() const { return _count; }
+		virtual uint32_t GetCount() const override { return _count; }
 	private:
 		uint32_t _rendererID;
 		uint32_t _count;
 	};
-
 }

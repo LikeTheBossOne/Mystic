@@ -6,8 +6,8 @@
 
 namespace Mystic {
 
-	OpenGLTexture2D::OpenGLTexture2D(uint32_t width, uint32_t height)
-		: _width(width), _height(height)
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& name, uint32_t width, uint32_t height)
+		: _name(name), _width(width), _height(height)
 	{
 		_internalFormat = GL_RGBA8;
 		_dataFormat = GL_RGBA;
@@ -22,8 +22,8 @@ namespace Mystic {
 		glTextureParameteri(_rendererID, GL_TEXTURE_WRAP_T, GL_REPEAT);
 	}
 
-	OpenGLTexture2D::OpenGLTexture2D(const std::string& path)
-		: _path(path)
+	OpenGLTexture2D::OpenGLTexture2D(const std::string& name, const std::string& path)
+		: _name(name), _path(path)
 	{
 		int width, height, channels;
 		stbi_set_flip_vertically_on_load(1);
