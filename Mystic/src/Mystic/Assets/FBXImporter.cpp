@@ -1,6 +1,7 @@
 #include "FBXImporter.h"
 
 #include <chrono>
+#include <filesystem>
 
 #include "mystpch.h"
 #include <ios>
@@ -60,7 +61,7 @@ namespace Mystic
 	std::string FBXImporter::OutputMeshGroup(const ofbx::Mesh& mesh)
 	{
 		std::ofstream out;
-		std::string fileName = AssetUtilities::g_baseAssetPath + mesh.name + AssetUtilities::g_assetFileEnding;
+		std::string fileName = AssetUtilities::g_baseAssetPath + "meshes/" + mesh.name + AssetUtilities::g_assetFileEnding;
 		out.open(fileName);
 		OutputMeshGroup(mesh, out);
 		out.close();
@@ -163,6 +164,7 @@ namespace Mystic
 
 	void FBXImporter::OutputTexture(const ofbx::Texture& texture)
 	{
+		
 	}
 
 	void FBXImporter::OutputVertex(const ofbx::Vec3& vec, std::ofstream& out)
