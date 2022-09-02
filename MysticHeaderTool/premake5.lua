@@ -22,6 +22,16 @@ project "MysticHeaderTool"
 		"**/bin-int/**",
 	}
 
+	nuget
+	{
+		"System.Text.RegularExpressions:4.3.1"
+	}
+
+	links
+	{
+		"System.Text.RegularExpressions"
+	}
+
 	filter "system:windows"
 		systemversion "latest"
 

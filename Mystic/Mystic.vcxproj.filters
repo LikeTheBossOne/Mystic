@@ -108,6 +108,9 @@
     <ClInclude Include="src\Mystic\Core\LayerStack.h">
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\Core\MMacros.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mystic\Core\MouseCodes.h">
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>

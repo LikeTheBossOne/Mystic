@@ -152,6 +152,7 @@
     <ClInclude Include="src\Mystic\Core\KeyCodes.h" />
     <ClInclude Include="src\Mystic\Core\Layer.h" />
     <ClInclude Include="src\Mystic\Core\LayerStack.h" />
+    <ClInclude Include="src\Mystic\Core\MMacros.h" />
     <ClInclude Include="src\Mystic\Core\MouseCodes.h" />
     <ClInclude Include="src\Mystic\Core\Window.h" />
     <ClInclude Include="src\Mystic\ECS\ComponentRegistry.h" />

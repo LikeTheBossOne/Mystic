@@ -7,6 +7,7 @@
 
 #include "Core.h"
 #include "LayerStack.h"
+#include "MMacros.h"
 
 int main(int argc, char** argv);
 

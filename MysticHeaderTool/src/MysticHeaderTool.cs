@@ -1,5 +1,4 @@
-﻿
-namespace MysticHeaderTool
+﻿namespace MysticHeaderTool
 {
     internal class MysticHeaderTool
     {
