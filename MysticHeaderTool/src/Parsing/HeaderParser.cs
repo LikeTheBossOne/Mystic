@@ -7,7 +7,7 @@ namespace MysticHeaderTool.Parsing
 {
     internal class HeaderParser
     {
-        private Dictionary<string, MPropertyType> s_PropDict = new Dictionary<string, MPropertyType>()
+        private static readonly Dictionary<string, MPropertyType> MPropDict = new()
         {
             {"float", MPropertyType.Float},
             {"double", MPropertyType.Double},
@@ -24,6 +24,15 @@ namespace MysticHeaderTool.Parsing
             {"bool", MPropertyType.Bool},
             {"std::string", MPropertyType.String}
         };
+
+        private static readonly Regex MStructClassifier = new(@"struct\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
+        private static readonly Regex MClassClassifier = new(@"class\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
+        private static readonly Regex MStructLineFinder = new(@"^\s*MSTRUCT\((.*?)\)\s*$");
+
+        private static readonly Regex MPropertyClassifier = new(@"MPROPERTY\((?'meta'.*?)\)\s*(?'declaration'.*?);\s");
+        private static readonly Regex MPropertyDeclarationParser =
+            new(@"^\s*(?'isConst'const)?\s*(?'type'[\w\d:_*]+)\s*(?'name'[\w\d_*]+)\{?(?:.*?)\}?$");
+
         private Dictionary<string, MProperty> _properties;
 
         public HeaderParser(HeaderParserSettings settings)
@@ -33,109 +42,109 @@ namespace MysticHeaderTool.Parsing
 
         public void Parse(string headerPath)
         {
-            Regex r = new Regex("");
-            string[] lines;
-            try
-            {
-                lines = File.ReadAllLines(headerPath);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return;
-            }
-            
-            
-            for (uint i = 0; i < lines.Length; i++)
-            {
-                string trimmedLine = lines[i].Trim();
+            Regex propertyAndVariable = new Regex(@"MPROPERTY\((.*)\)\s*(.*);\s");
+            Regex propertyFinder = new Regex(@"MPROPERTY\((?:(.*),)*(.*)\)");
 
-                if (trimmedLine.StartsWith("MSTRUCT("))
-                {
-                    ParseMStruct(in lines, ref i);
-                }
-                else if (trimmedLine.StartsWith("MCLASS("))
-                {
-                    //ParseMClass(in lines, ref i);
-                }
-            }
+            string headerContents = File.ReadAllText(headerPath);
+
+            // First find all MStructs
+            List<MStruct> mstructs = FindMStructs(headerContents);
+
+            // Find all MClasses
+
         }
 
-        private MStruct ParseMStruct(in string[] lines, ref uint currIdx)
+
+        private List<MStruct> FindMStructs(string fileContents)
         {
-            uint initialIdx = currIdx;
+            var mstructs = new List<MStruct>();
 
-            currIdx++;
-            if (currIdx >= lines.Length)
+            // Get MSTRUCT line numbers and match them to declarations
+            string[] lines = fileContents.Split('\n');
+            var mstructLineNumbers = new Queue<uint>();
+            for (uint i = 1; i <= lines.Length; i++)
             {
-                return null;
-            }
-
-            string firstLine = lines[currIdx];
-
-            string[] tokens = firstLine.Split(' ');
-            if (tokens.Length < 2 || tokens[0] != "struct")
-            {
-                return null;
-            }
-
-            string typeName = tokens[2].TrimEnd('{');
-            var mStruct = new MStruct(typeName, initialIdx);
-
-            while (currIdx < lines.Length)
-            {
-                string currLine = lines[currIdx];
-
-                if (currLine.StartsWith("MPROPERTY(") && currIdx + 1 < lines.Length)
+                if (MStructLineFinder.IsMatch(lines[i]))
                 {
-                    MProperty mProp = ParseMProperty(in currLine, in lines[currIdx + 1]);
-                    if (mProp != null)
-                    {
-                        mStruct.Properties.Add(mProp);
-
-                        currIdx++;
-                    }
+                    mstructLineNumbers.Enqueue(i);
                 }
-
-                currIdx++;
             }
 
-            return mStruct;
+
+            MatchCollection matches = MStructClassifier.Matches(fileContents);
+            foreach (Match match in matches)
+            {
+                GroupCollection groupCollection = match.Groups;
+
+                Group typenameGroup = groupCollection["typename"];
+                Group contentsGroup = groupCollection["contents"];
+                if (typenameGroup.Success && contentsGroup.Success)
+                {
+                    mstructs.Add(ParseMStruct(typenameGroup.Value, contentsGroup.Value, mstructLineNumbers.Dequeue()));
+                }
+                else
+                {
+                    throw new Exception("Bad regex group");
+                }
+            }
+
+            return mstructs;
         }
 
-        private MProperty ParseMProperty(in string metaLine, in string propLine)
+        private MStruct ParseMStruct(string typeName, string structContents, uint lineNumber)
         {
-            // Don't do anything with meta information yet.
-            bool isConst = false;
-            string name;
-            MPropertyType type;
-
-            string[] propTokens = propLine.Split(' ');
-
-            uint idx = 0;
-            if (idx < propTokens.Length && propTokens[idx] == "const")
+            var mstruct = new MStruct(typeName, lineNumber)
             {
-                isConst = true;
-                idx++;
+                Properties = FindMProperties(structContents),
+            };
+
+            return mstruct;
+        }
+
+        private List<MProperty> FindMProperties(string typeContents)
+        {
+            var mprops = new List<MProperty>();
+
+            MatchCollection matches = MPropertyClassifier.Matches(typeContents);
+            foreach (Match match in matches)
+            {
+                GroupCollection groupCollection = match.Groups;
+
+                Group metaGroup = groupCollection["meta"];
+                Group declarationGroup = groupCollection["declaration"];
+                if (declarationGroup.Success)
+                {
+                    mprops.Add(metaGroup.Success
+                        ? ParseMProperty(declarationGroup.Value, metaGroup.Value)
+                        : ParseMProperty(declarationGroup.Value));
+                }
+                else
+                {
+                    throw new Exception("missing declaration from MPROPERTY");
+                }
+            }
+            return mprops;
+        }
+
+        private MProperty ParseMProperty(string declaration, string meta = null)
+        {
+            Match declarationMatch = MPropertyDeclarationParser.Match(declaration);
+            if (!declarationMatch.Success)
+            {
+                throw new Exception("Failed parsing MPROPERTY with declaration: " + declaration.Trim());
             }
 
-            if (idx < propTokens.Length)
+            GroupCollection groups = declarationMatch.Groups;
+            Group isConstGroup = groups["isConst"];
+            Group typeGroup = groups["type"];
+            Group nameGroup = groups["name"];
+
+            if (!typeGroup.Success || !nameGroup.Success)
             {
-                string token = propTokens[idx];
-
-                type = s_PropDict[token];
-
-                idx++;
+                throw new Exception("Failed parsing MPROPERTY with declaration: " + declaration.Trim());
             }
 
-            if (idx < propTokens.Length)
-            {
-                name = propTokens[idx].TrimEnd(';');
-
-                idx++;
-            }
-
-
+            var mprop = new MProperty();
 
             return null;
         }

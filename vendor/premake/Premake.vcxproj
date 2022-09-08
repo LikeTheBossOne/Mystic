@@ -85,6 +85,7 @@
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua" />
     <None Include="..\..\MysticEditor\premake5.lua" />
     <None Include="..\..\MysticHeaderTool\premake5.lua" />
+    <None Include="..\..\MysticHeaderToolTests\premake5.lua" />
     <None Include="..\..\Sandbox\premake5.lua" />
     <None Include="..\..\premake5.lua" />
     <None Include="premake5.lua" />

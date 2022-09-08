@@ -1,4 +1,7 @@
-﻿namespace MysticHeaderTool
+﻿using System.Runtime.CompilerServices;
+[assembly: InternalsVisibleTo("MysticHeaderToolTests")]
+
+namespace MysticHeaderTool
 {
     internal class MysticHeaderTool
     {

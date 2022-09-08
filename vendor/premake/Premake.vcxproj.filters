@@ -31,6 +31,9 @@
     <Filter Include="..\MysticHeaderTool">
       <UniqueIdentifier>{506BBA6F-BCCC-977D-453A-DE2FB19ACE3C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\MysticHeaderToolTests">
+      <UniqueIdentifier>{8362BBAC-6F87-0A2D-98D2-EFBC8456094B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Sandbox">
       <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
     </Filter>
@@ -59,6 +62,9 @@
     </None>
     <None Include="..\..\MysticHeaderTool\premake5.lua">
       <Filter>..\MysticHeaderTool</Filter>
+    </None>
+    <None Include="..\..\MysticHeaderToolTests\premake5.lua">
+      <Filter>..\MysticHeaderToolTests</Filter>
     </None>
     <None Include="..\..\Sandbox\premake5.lua">
       <Filter>..\Sandbox</Filter>

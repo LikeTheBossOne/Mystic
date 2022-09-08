@@ -1,5 +1,5 @@
-project "MysticHeaderTool"
-	kind "ConsoleApp"
+project "MysticHeaderToolTests"
+	kind "SharedLib"
 	language "C#"
 	csversion "10.0"
 
@@ -8,12 +8,12 @@ project "MysticHeaderTool"
 
 	files
 	{
-		"src/**.cs",
+		"test/**.cs",
 	}
 
 	includedirs
 	{
-		"src",
+		"test",
 	}
 
 	excludes
@@ -24,7 +24,14 @@ project "MysticHeaderTool"
 
 	nuget
 	{
-		"System.Text.RegularExpressions:4.3.1"
+		"Microsoft.NET.Test.Sdk:17.1.0",
+		"MSTest.TestAdapter:2.2.8",
+		"MSTest.TestFramework:2.2.8"
+	}
+
+	links
+	{
+		"MysticHeaderTool"
 	}
 
 	filter "system:windows"
@@ -32,7 +39,7 @@ project "MysticHeaderTool"
 
 		defines
 		{
-			"MYST_PLATFORM_WINDOWS"
+			"MYST_PLATFORM_WINDOWS",
 		}
 
 	filter "configurations:Debug"
