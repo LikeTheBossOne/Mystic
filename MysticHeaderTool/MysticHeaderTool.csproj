@@ -57,20 +57,24 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Generation\CodeGenerator.cs" />
-    <Compile Include="src\Generation\GeneratedFile.cs" />
+    <Compile Include="src\Generation\GenEditorDrawComponentsFile.cs" />
+    <Compile Include="src\Generation\GenMStructHeaderFile.cs" />
+    <Compile Include="src\Generation\GenReflectionFile.cs" />
+    <Compile Include="src\Generation\MCodeGenerator.cs" />
     <Compile Include="src\MysticHeaderTool.cs" />
+    <Compile Include="src\Parsing\Exceptions\InvalidMPropertyTypeException.cs" />
     <Compile Include="src\Parsing\HeaderParser.cs" />
     <Compile Include="src\Parsing\HeaderParserSettings.cs" />
     <Compile Include="src\Parsing\MClass.cs" />
     <Compile Include="src\Parsing\MProperty.cs" />
     <Compile Include="src\Parsing\MStruct.cs" />
     <Compile Include="src\Parsing\PropertyParser.cs" />
+    <Compile Include="src\Reflection\MReflectionContext.cs" />
   </ItemGroup>
   <ItemGroup>
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1"/>
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

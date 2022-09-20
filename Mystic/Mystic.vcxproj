@@ -179,6 +179,9 @@
     <ClInclude Include="src\Mystic\Events\KeyEvent.h" />
     <ClInclude Include="src\Mystic\Events\MouseEvent.h" />
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Mystic\Objects\MClass.h" />
+    <ClInclude Include="src\Mystic\Objects\MObject.h" />
+    <ClInclude Include="src\Mystic\Objects\MStruct.h" />
     <ClInclude Include="src\Mystic\Render\Buffer.h" />
     <ClInclude Include="src\Mystic\Render\Camera.h" />
     <ClInclude Include="src\Mystic\Render\EditorCamera.h" />

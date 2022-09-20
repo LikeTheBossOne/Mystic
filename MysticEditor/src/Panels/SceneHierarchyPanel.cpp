@@ -6,6 +6,8 @@
 #include "glm/gtc/type_ptr.hpp"
 #include "imgui/imgui.h"
 #include "imgui/imgui_internal.h"
+
+#include "../Utility/EditorStructControls.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/CharacterComponent.h"
 #include "Mystic/ECS/Components/SpriteRendererComponent.h"
@@ -100,114 +102,6 @@ namespace Mystic
 		}
 	}
 
-	static void DrawVec3Control(const std::string& label, glm::vec3& values, float resetValue = 0.0f, float columnWidth = 100.0f)
-	{
-		ImGuiIO& io = ImGui::GetIO();
-		auto boldFont = io.Fonts->Fonts[0];
-
-		ImGui::PushID(label.c_str());
-
-		ImGui::Columns(2);
-		ImGui::SetColumnWidth(0, columnWidth);
-		ImGui::Text(label.c_str());
-		ImGui::NextColumn();
-
-		ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
-		ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
-
-		float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-		ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
-
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("X", buttonSize))
-			values.x = resetValue;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-
-		ImGui::SameLine();
-		ImGui::DragFloat("##X", &values.x, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-		ImGui::SameLine();
-
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Y", buttonSize))
-			values.y = resetValue;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-
-		ImGui::SameLine();
-		ImGui::DragFloat("##Y", &values.y, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-		ImGui::SameLine();
-
-		ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.2f, 0.35f, 0.9f, 1.0f });
-		ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.1f, 0.25f, 0.8f, 1.0f });
-		ImGui::PushFont(boldFont);
-		if (ImGui::Button("Z", buttonSize))
-			values.z = resetValue;
-		ImGui::PopFont();
-		ImGui::PopStyleColor(3);
-
-		ImGui::SameLine();
-		ImGui::DragFloat("##Z", &values.z, 0.1f, 0.0f, 0.0f, "%.2f");
-		ImGui::PopItemWidth();
-
-		ImGui::PopStyleVar();
-
-		ImGui::Columns(1);
-
-		ImGui::PopID();
-	}
-
-	template<typename T, typename UIFunction>
-	static void DrawComponent(const std::string& name, Entity entity, UIFunction uiFunction)
-	{
-		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
-		Scene* scene = entity.OwningScene;
-		if (scene->EntityHasComponent<T>(entity))
-		{
-			T& component = scene->EntityGetComponent<T>(entity);
-			ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
-
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
-			float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
-			ImGui::Separator();
-			bool open = ImGui::TreeNodeEx((void*)typeid(T).hash_code(), treeNodeFlags, name.c_str());
-			ImGui::PopStyleVar(
-			);
-			ImGui::SameLine(contentRegionAvailable.x - lineHeight * 0.5f);
-			if (ImGui::Button("+", ImVec2{ lineHeight, lineHeight }))
-			{
-				ImGui::OpenPopup("ComponentSettings");
-			}
-
-			bool removeComponent = false;
-			if (ImGui::BeginPopup("ComponentSettings"))
-			{
-				if (ImGui::MenuItem("Remove component"))
-					removeComponent = true;
-
-				ImGui::EndPopup();
-			}
-
-			if (open)
-			{
-				uiFunction(component);
-				ImGui::TreePop();
-			}
-
-			if (removeComponent)
-				scene->EntityRemoveComponent<T>(entity);
-		}
-	}
-
 	//TODO: ECS-ify this. This should theoretically act like a pure ECS system instead of this
 	void SceneHierarchyPanel::DrawComponents(Entity entity)
 	{
@@ -274,17 +168,17 @@ namespace Mystic
 
 		ImGui::PopItemWidth();
 
-		DrawComponent<TransformComponent>("TransformComponent", entity, [](TransformComponent& component)
+		EditorStructControls::DrawComponent<TransformComponent>("TransformComponent", entity, [](TransformComponent& component)
 			{
-				DrawVec3Control("Translation", component.Position);
+				EditorStructControls::DrawVec3Control("Translation", component.Position);
 				glm::vec3 eulerRotation = glm::eulerAngles(component.Rotation);
 				glm::vec3 rotationDegs = glm::degrees(eulerRotation);
-				DrawVec3Control("Rotation", rotationDegs);
+				EditorStructControls::DrawVec3Control("Rotation", rotationDegs);
 				component.Rotation = glm::quat(glm::radians(rotationDegs));
-				DrawVec3Control("Scale", component.Scale, 1.0f);
+				EditorStructControls::DrawVec3Control("Scale", component.Scale, 1.0f);
 			});
 
-		DrawComponent<CameraComponent>("CameraComponent", entity, [](CameraComponent& component)
+		EditorStructControls::DrawComponent<CameraComponent>("CameraComponent", entity, [](CameraComponent& component)
 			{
 				auto& camera = component.Camera;
 
@@ -343,7 +237,7 @@ namespace Mystic
 				}
 			});
 
-		DrawComponent<SpriteRendererComponent>("SpriteRendererComponent", entity, [](SpriteRendererComponent& component)
+		EditorStructControls::DrawComponent<SpriteRendererComponent>("SpriteRendererComponent", entity, [](SpriteRendererComponent& component)
 			{
 				ImGui::ColorEdit4("Color", glm::value_ptr(component.Color));
 
@@ -369,12 +263,12 @@ namespace Mystic
 				ImGui::DragFloat("Tiling Factor", &component.TilingFactor, 0.1f, 0.0f, 100.0f);
 			});
 
-		DrawComponent<VelocityComponent>("VelocityComponent", entity, [](VelocityComponent& component)
+		EditorStructControls::DrawComponent<VelocityComponent>("VelocityComponent", entity, [](VelocityComponent& component)
 			{
-				DrawVec3Control("Velocity", component.Velocity);
+				EditorStructControls::DrawVec3Control("Velocity", component.Velocity);
 			});
 
-		DrawComponent<CharacterComponent>("CharacterComponent", entity, [](CharacterComponent& component)
+		EditorStructControls::DrawComponent<CharacterComponent>("CharacterComponent", entity, [](CharacterComponent& component)
 			{
 				ImGui::Checkbox("Active", &component.Active);
 			});

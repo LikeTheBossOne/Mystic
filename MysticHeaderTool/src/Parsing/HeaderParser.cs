@@ -1,99 +1,125 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Text.RegularExpressions;
+using MysticHeaderTool.Parsing.Exceptions;
+using MysticHeaderTool.Reflection;
 
 namespace MysticHeaderTool.Parsing
 {
     internal class HeaderParser
     {
+        #region Fields
+
+        private MReflectionContext MReflectionContext { get; }
+
+        #endregion
+
+        #region Properties
+
+
+
+        #endregion
+
+        #region Private Static Readonly
         private static readonly Dictionary<string, MPropertyType> MPropDict = new()
         {
             {"float", MPropertyType.Float},
             {"double", MPropertyType.Double},
+
             {"uint8_t", MPropertyType.UInt8},
             {"uint16_t", MPropertyType.UInt16},
             {"uint32_t", MPropertyType.UInt32},
             {"uint", MPropertyType.UInt32},
             {"uint64_t", MPropertyType.UInt64},
+
             {"int8_t", MPropertyType.Int8},
             {"int16_t", MPropertyType.UInt16},
             {"int32_t", MPropertyType.UInt32},
             {"int", MPropertyType.Int32},
             {"int64_t", MPropertyType.UInt64},
+
             {"bool", MPropertyType.Bool},
-            {"std::string", MPropertyType.String}
+
+            {"std::string", MPropertyType.String},
+
+            {"vec3_t", MPropertyType.Vec3},
+            {"vec4_t", MPropertyType.Vec4},
+            {"mat4_t", MPropertyType.Mat4}
         };
 
-        private static readonly Regex MStructClassifier = new(@"struct\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
+        private static readonly Regex MStructClassifier = new(@"\s*MSTRUCT\((?'meta'.*?)\)\s*struct\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
         private static readonly Regex MClassClassifier = new(@"class\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
-        private static readonly Regex MStructLineFinder = new(@"^\s*MSTRUCT\((.*?)\)\s*$");
+        private static readonly Regex MGeneratedInfoLineFinder = new(@"^\s*MGENERATED_INFO\((.*?)\)\s*$");
 
         private static readonly Regex MPropertyClassifier = new(@"MPROPERTY\((?'meta'.*?)\)\s*(?'declaration'.*?);\s");
         private static readonly Regex MPropertyDeclarationParser =
             new(@"^\s*(?'isConst'const)?\s*(?'type'[\w\d:_*]+)\s*(?'name'[\w\d_*]+)\{?(?:.*?)\}?$");
+        #endregion
 
-        private Dictionary<string, MProperty> _properties;
-
-        public HeaderParser(HeaderParserSettings settings)
+        public HeaderParser(HeaderParserSettings settings, MReflectionContext mReflectionContext)
         {
-            
+            MReflectionContext = mReflectionContext;
         }
 
-        public void Parse(string headerPath)
+        public MStruct ParseHeader(string headerPath)
         {
-            Regex propertyAndVariable = new Regex(@"MPROPERTY\((.*)\)\s*(.*);\s");
-            Regex propertyFinder = new Regex(@"MPROPERTY\((?:(.*),)*(.*)\)");
-
             string headerContents = File.ReadAllText(headerPath);
 
             // First find all MStructs
-            List<MStruct> mstructs = FindMStructs(headerContents);
+            MStruct mstruct = FindMStruct(headerPath, headerContents);
 
-            // Find all MClasses
-
+            return mstruct;
         }
 
 
-        private List<MStruct> FindMStructs(string fileContents)
+        private MStruct FindMStruct(string headerPath, string fileContents)
         {
-            var mstructs = new List<MStruct>();
-
-            // Get MSTRUCT line numbers and match them to declarations
-            string[] lines = fileContents.Split('\n');
-            var mstructLineNumbers = new Queue<uint>();
-            for (uint i = 1; i <= lines.Length; i++)
-            {
-                if (MStructLineFinder.IsMatch(lines[i]))
-                {
-                    mstructLineNumbers.Enqueue(i);
-                }
-            }
-
-
             MatchCollection matches = MStructClassifier.Matches(fileContents);
-            foreach (Match match in matches)
+            if (matches.Count > 1)
             {
-                GroupCollection groupCollection = match.Groups;
-
-                Group typenameGroup = groupCollection["typename"];
-                Group contentsGroup = groupCollection["contents"];
-                if (typenameGroup.Success && contentsGroup.Success)
-                {
-                    mstructs.Add(ParseMStruct(typenameGroup.Value, contentsGroup.Value, mstructLineNumbers.Dequeue()));
-                }
-                else
-                {
-                    throw new Exception("Bad regex group");
-                }
+                throw new Exception($"Too many structs in file: {headerPath}");
             }
+            else if (matches.Count == 0)
+            {
+                return null;
+            }
+            
+            GroupCollection groupCollection = matches[0].Groups;
 
-            return mstructs;
+            Group typenameGroup = groupCollection["typename"];
+            Group contentsGroup = groupCollection["contents"];
+            if (typenameGroup.Success && contentsGroup.Success)
+            {
+                // Get MGENERATED_BODY line number
+                string[] lines = fileContents.Split('\n');
+                uint line = 0;
+                for (uint i = 0; i < lines.Length; i++)
+                {
+                    if (MGeneratedInfoLineFinder.IsMatch(lines[i]))
+                    {
+                        line = i + 1;
+                        break;
+                    }
+                }
+
+                if (line == 0)
+                {
+                    throw new Exception("Could not find MGENERATED_INFO()");
+                }
+
+                return ParseMStruct(typenameGroup.Value, contentsGroup.Value, headerPath, line);
+            }
+            else
+            {
+                throw new Exception("Bad regex group");
+            }
         }
 
-        private MStruct ParseMStruct(string typeName, string structContents, uint lineNumber)
+        private MStruct ParseMStruct(string typeName, string structContents, string headerPath, uint lineNumber)
         {
-            var mstruct = new MStruct(typeName, lineNumber)
+            var mstruct = new MStruct(typeName, headerPath, lineNumber)
             {
                 Properties = FindMProperties(structContents),
             };
@@ -144,9 +170,22 @@ namespace MysticHeaderTool.Parsing
                 throw new Exception("Failed parsing MPROPERTY with declaration: " + declaration.Trim());
             }
 
-            var mprop = new MProperty();
+            MProperty mProp;
+            
+            if (MPropDict.ContainsKey(typeGroup.Value))
+            {
+                mProp = new MProperty(nameGroup.Value, MPropDict[typeGroup.Value], isConstGroup.Success);
+            }
+            else if (MReflectionContext.MStructDictionary.ContainsKey(typeGroup.Value))
+            {
+                mProp = new MPropertyStructType(nameGroup.Value, typeGroup.Value, isConstGroup.Success);
+            }
+            else
+            {
+                throw new InvalidMPropertyTypeException("Invalid type: " + typeGroup.Value, typeGroup.Value);
+            }
 
-            return null;
+            return mProp;
         }
     }
 }

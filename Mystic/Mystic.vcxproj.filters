@@ -1566,6 +1566,9 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\Objects\MObject.h" />
+    <ClInclude Include="src\Mystic\Objects\MStruct.h" />
+    <ClInclude Include="src\Mystic\Objects\MClass.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mystic\Assets\AssetLibrary.cpp">

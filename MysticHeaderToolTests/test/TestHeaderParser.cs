@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using MysticHeaderTool.Parsing;
+using MysticHeaderTool.Reflection;
 
 namespace MysticHeaderToolTests
 {
@@ -6,11 +8,27 @@ namespace MysticHeaderToolTests
     public class TestHeaderParser
     {
         [TestMethod]
-        public void TestMethod1()
+        public void ParseHeader_SingleMStructTest()
         {
-            HeaderParser hp = new HeaderParser(new HeaderParserSettings());
+            // Expected
+            var expected = new MStruct("TransformComponent", @"testfiles/ComponentTestValid.h.test", 9);
+            expected.Properties.AddRange(new List<MProperty>
+                {
+                    new("Position", MPropertyType.Vec3, false),
+                    new("Rotation", MPropertyType.Vec4, false),
+                    new("Scale", MPropertyType.Vec3, false)
+                }
+            );
 
-            hp.Parse(@"testfiles/ComponentTestValid.h.test");
+
+            // Actual
+            var refContext = new MReflectionContext();
+            var hp = new HeaderParser(new HeaderParserSettings(), refContext);
+            MStruct actual = hp.ParseHeader(@"testfiles/ComponentTestValid.h.test");
+
+
+            // Compare
+            Assert.AreEqual(expected, actual);
         }
     }
 }

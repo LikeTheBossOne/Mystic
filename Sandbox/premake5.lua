@@ -20,6 +20,7 @@ project "Sandbox"
 		"%{wks.location}/Mystic/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.GeneratedHeaderFiles}",
 	}
 
 	links

@@ -1,7 +1,13 @@
 #pragma once
 
+#define MSTRUCT(...)
+
+#define MPROPERTY(...)
+
 #define CURRENT_FILE_PATH Path_To_File_h
 
-#define COMBINE_MACRO_3(A,B,C) A##B##C
+#define COMBINE_MACRO_4_INNER(A,B,C,D) A##B##C##D 
 
-#define MSTRUCT(...) COMBINE_MACRO_3(CURRENT_FILE_PATH,_,__LINE__)
+#define COMBINE_MACRO_4(A,B,C,D) COMBINE_MACRO_4_INNER(A,B,C,D)
+
+#define MGENERATED_INFO(...) COMBINE_MACRO_4(CURRENT_FILE_PATH,_,__LINE__,_MGENERATED_INFO);

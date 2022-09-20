@@ -4,22 +4,24 @@
 
 namespace Mystic
 {
+	MSTRUCT(blah, blah)
 	struct TransformComponent
-	{
+	{	
+		GENERATED_BODY()
 
 		MPROPERTY(meta1 = meta1val, meta2 = blah.meta2val, meta3 = meta3val)
-		glm::vec3 Position;
+		vec3_t Position;
 		MPROPERTY()
-		glm::quat Rotation;
+		vec4_t Rotation;
 		MPROPERTY(meta1)
-		glm::vec3 Scale;
+		vec3_t Scale;
 
 		TransformComponent() : Position(0, 0, 0), Rotation(0, 0, 0, 1), Scale(1, 1, 1) {}
 		TransformComponent(glm::vec3 position, glm::quat rotation, glm::vec3 scale) : Position(position), Rotation(rotation), Scale(scale) {}
 		TransformComponent(const TransformComponent&) = default;
 
 
-		glm::mat4 GetTransform() const
+		mat4_t GetTransform() const
 		{
 			glm::mat4 rotation = glm::toMat4(Rotation);
 
