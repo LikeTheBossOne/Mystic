@@ -7,7 +7,7 @@
 
 namespace Mystic {
 
-	class KeyEvent : public Event
+	class MYSTIC_API KeyEvent : public Event
 	{
 	public:
 		KeyCode GetKeyCode() const { return m_KeyCode; }

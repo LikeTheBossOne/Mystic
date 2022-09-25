@@ -6,8 +6,10 @@
 #include <backends/imgui_impl_opengl3.h>
 #include <ImGuizmo.h>
 
+#include "singleton.h"
 #include "GLFW/glfw3.h"
 #include "Mystic/Core/Application.h"
+#include "Mystic/Core/ServiceLocator.h"
 #include "Mystic/Core/Window.h"
 
 namespace Mystic
@@ -20,7 +22,10 @@ namespace Mystic
 	{
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
-		ImGui::CreateContext();
+		ImGuiContext* imguiContext = ImGui::CreateContext();
+		ServiceLocator& locator = singleton<ServiceLocator>();
+		locator.SetImGuiContext(imguiContext);
+
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
 		//io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
@@ -43,8 +48,8 @@ namespace Mystic
 			style.WindowRounding = 0.0f;
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
-
-		Application& app = Application::Get();
+		
+		Application& app = singleton<ServiceLocator>().GetApplication();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 		// Setup Platform/Renderer bindings
@@ -80,7 +85,7 @@ namespace Mystic
 	void ImGuiLayer::End()
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		Application& app = Application::Get();
+		Application& app = singleton<ServiceLocator>().GetApplication();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
 		// Rendering

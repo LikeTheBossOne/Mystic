@@ -1,6 +1,7 @@
 #pragma once
 
 #include "glm/vec4.hpp"
+#include "Mystic/Core/Application.h"
 #include "Mystic/Core/Layer.h"
 #include "Mystic/Scene/RuntimeScene.h"
 

@@ -40,7 +40,7 @@ namespace Mystic {
 		std::vector<FramebufferTextureSpecification> Attachments;
 	};
 
-	struct FramebufferSpecification
+	struct MYSTIC_API FramebufferSpecification
 	{
 		uint32_t Width = 0, Height = 0;
 		FramebufferAttachmentSpecification Attachments;
@@ -49,7 +49,7 @@ namespace Mystic {
 		bool SwapChainTarget = false;
 	};
 
-	class Framebuffer
+	class MYSTIC_API Framebuffer
 	{
 	public:
 		virtual ~Framebuffer() = default;

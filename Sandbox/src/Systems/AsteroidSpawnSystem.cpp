@@ -9,7 +9,7 @@
 
 AsteroidSpawnSystem::AsteroidSpawnSystem()
 {
-	_asteroidTexture = Mystic::Texture2D::Create("assets/textures/asteroid.png");
+	//_asteroidTexture = Mystic::Texture2D::Create("assets/textures/asteroid.png");
 }
 
 void AsteroidSpawnSystem::OnUpdate(Mystic::Scene* scene, entt::registry& registry, float deltaTime)

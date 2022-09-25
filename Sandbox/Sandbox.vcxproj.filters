@@ -4,6 +4,9 @@
     <Filter Include="Components">
       <UniqueIdentifier>{6B7DD516-5735-1764-C03C-F0BFAC13B254}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Generated">
+      <UniqueIdentifier>{3416FE7D-A080-B2F4-E9BE-639A55689049}</UniqueIdentifier>
+    </Filter>
     <Filter Include="Systems">
       <UniqueIdentifier>{1DDE831B-89BD-02B7-92D5-8D8DFE336918}</UniqueIdentifier>
     </Filter>
@@ -20,6 +23,12 @@
     </ClInclude>
     <ClInclude Include="src\Components\PlayerComponent.h">
       <Filter>Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Generated\Init.h">
+      <Filter>Generated</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Generated\LaserComponent.Gen.h">
+      <Filter>Generated</Filter>
     </ClInclude>
     <ClInclude Include="src\SandboxLayer.h" />
     <ClInclude Include="src\Systems\AsteroidDeathSystem.h">

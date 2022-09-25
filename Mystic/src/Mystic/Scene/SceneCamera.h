@@ -4,7 +4,7 @@
 
 namespace Mystic {
 
-	class SceneCamera : public Camera
+	class MYSTIC_API SceneCamera : public Camera
 	{
 	public:
 		enum class ProjectionType { Perspective = 0, Orthographic = 1 };

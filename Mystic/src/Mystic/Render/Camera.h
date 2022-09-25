@@ -1,10 +1,11 @@
 #pragma once
 
 #include <glm/glm.hpp>
+#include "Mystic/Core/Core.h"
 
 namespace Mystic {
 
-	class Camera
+	class MYSTIC_API Camera
 	{
 	public:
 		Camera() = default;

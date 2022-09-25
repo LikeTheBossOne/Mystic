@@ -10,10 +10,12 @@
 #include "Mystic/Scene/ProjectScene.h"
 
 #include "ImGuizmo.h"
+#include "singleton.h"
 #include "glm/gtc/type_ptr.hpp"
 #include "Mystic/Assets/FBXImporter.h"
 #include "Mystic/Core/Application.h"
 #include "Mystic/Core/Input.h"
+#include "Mystic/Core/ServiceLocator.h"
 #include "Mystic/ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
 #include "Mystic/Render/RenderCommand.h"
@@ -21,13 +23,14 @@
 #include "Mystic/ImGui/ImGuiLayer.h"
 #include "Mystic/Render/Mesh.h"
 #include "Mystic/Render/Renderer3D.h"
+#include "Mystic/Core/ServiceLocator.h"
 
 namespace Mystic {
 
 	extern const std::string g_AssetPath = "assets";
 
 	EditorLayer::EditorLayer()
-		: m_CameraController(1280.0f / 720.0f), _squareColor({ 0.2f, 0.3f, 0.8f, 1.0f })
+		: _cameraController(1280.0f / 720.0f), _squareColor({0.2f, 0.3f, 0.8f, 1.0f})
 	{
 	}
 
@@ -45,7 +48,7 @@ namespace Mystic {
 		_activeProjectScene = std::make_shared<ProjectScene>();
 		_activeScene = _activeProjectScene;
 
-		auto commandLineArgs = Application::Get().GetCommandLineArgs();
+		auto commandLineArgs = singleton<ServiceLocator>().GetApplication().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
 		{
 			std::string sceneFilePath = commandLineArgs[1];
@@ -77,7 +80,7 @@ namespace Mystic {
 			(spec.Width != _viewportSize.x || spec.Height != _viewportSize.y))
 		{
 			_framebuffer->Resize((uint32_t)_viewportSize.x, (uint32_t)_viewportSize.y);
-			m_CameraController.OnResize(_viewportSize.x, _viewportSize.y);
+			_cameraController.OnResize(_viewportSize.x, _viewportSize.y);
 			_editorCamera.SetViewportSize(_viewportSize.x, _viewportSize.y);
 			_activeScene->OnViewportResize((uint32_t)_viewportSize.x, (uint32_t)_viewportSize.y);
 		}
@@ -96,7 +99,7 @@ namespace Mystic {
 			case SceneState::Edit:
 			{
 				if (_viewportFocused)
-					m_CameraController.OnUpdate(deltaTime);
+					_cameraController.OnUpdate(deltaTime);
 
 				_editorCamera.OnUpdate(deltaTime);
 
@@ -110,6 +113,7 @@ namespace Mystic {
 			}
 		}
 
+		ImGui::SetCurrentContext(&singleton<ServiceLocator>().GetImGuiContext());
 		auto[mx, my] = ImGui::GetMousePos();
 		mx -= _viewportBounds[0].x;
 		my -= _viewportBounds[0].y;
@@ -129,6 +133,8 @@ namespace Mystic {
 
 	void EditorLayer::OnImGuiRender()
 	{
+		//ImGui::SetCurrentContext(&singleton<ServiceLocator>().GetImGuiContext());
+
 		// Note: Switch this to true to enable dockspace
 		static bool dockspaceOpen = true;
 		static bool opt_fullscreen_persistant = true;
@@ -195,7 +201,7 @@ namespace Mystic {
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
 
-				if (ImGui::MenuItem("Exit")) Application::Get().Close();
+				if (ImGui::MenuItem("Exit")) singleton<ServiceLocator>().GetApplication().Close();
 				ImGui::EndMenu();
 			}
 
@@ -232,7 +238,7 @@ namespace Mystic {
 
 		_viewportFocused = ImGui::IsWindowFocused();
 		_viewportHovered = ImGui::IsWindowHovered();
-		Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused && !_viewportHovered);
+		singleton<ServiceLocator>().GetApplication().GetImGuiLayer()->BlockEvents(!_viewportFocused && !_viewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		_viewportSize = { viewportPanelSize.x, viewportPanelSize.y };
@@ -342,7 +348,7 @@ namespace Mystic {
 
 	void EditorLayer::OnEvent(Event& e)
 	{
-		m_CameraController.OnEvent(e);
+		_cameraController.OnEvent(e);
 		_editorCamera.OnEvent(e);
 
 		EventDispatcher dispatcher(e);
@@ -457,7 +463,7 @@ namespace Mystic {
 	void EditorLayer::SaveSceneAs()
 	{
 		std::string sceneFilePath;
-		auto commandLineArgs = Application::Get().GetCommandLineArgs();
+		auto commandLineArgs = singleton<ServiceLocator>().GetApplication().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
 		{
 			sceneFilePath = commandLineArgs[1];

@@ -5,8 +5,6 @@
 
 namespace Mystic {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
-
 	Unique<RendererAPI> RendererAPI::Create()
 	{
 		switch (s_API)

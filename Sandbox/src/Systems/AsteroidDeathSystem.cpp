@@ -9,7 +9,7 @@
 
 AsteroidDeathSystem::AsteroidDeathSystem()
 {
-	_asteroidTexture = Mystic::Texture2D::Create("assets/textures/asteroid.png");
+	//_asteroidTexture = Mystic::Texture2D::Create("assets/textures/asteroid.png");
 }
 
 void AsteroidDeathSystem::OnUpdate(Mystic::Scene* scene, entt::registry& registry, float deltaTime)

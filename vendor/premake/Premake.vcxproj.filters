@@ -16,11 +16,17 @@
     <Filter Include="..\Mystic\vendor\Glad">
       <UniqueIdentifier>{ED4D9B66-59BA-5661-22AE-EEBE8ED978C9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Mystic\vendor\ImGuizmo">
+      <UniqueIdentifier>{668C81A8-D24E-B532-1BFF-43BF87008E10}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Mystic\vendor\OpenFBX">
       <UniqueIdentifier>{C7BBEB40-B3E0-3AC1-DC2B-2051C8AF39DF}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Mystic\vendor\imgui">
       <UniqueIdentifier>{30F56C3C-1CEF-958E-055C-2C9FF1F4FBFA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Mystic\vendor\singleton-cpp">
+      <UniqueIdentifier>{3871641A-2497-2E81-0DDD-B34CF9A1534D}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Mystic\vendor\yaml-cpp">
       <UniqueIdentifier>{B880FEB0-2443-323B-6DF3-C0C7D9F40A19}</UniqueIdentifier>
@@ -48,11 +54,17 @@
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua">
       <Filter>..\Mystic\vendor\Glad</Filter>
     </None>
+    <None Include="..\..\Mystic\vendor\ImGuizmo\premake5.lua">
+      <Filter>..\Mystic\vendor\ImGuizmo</Filter>
+    </None>
     <None Include="..\..\Mystic\vendor\OpenFBX\premake5.lua">
       <Filter>..\Mystic\vendor\OpenFBX</Filter>
     </None>
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua">
       <Filter>..\Mystic\vendor\imgui</Filter>
+    </None>
+    <None Include="..\..\Mystic\vendor\singleton-cpp\premake5.lua">
+      <Filter>..\Mystic\vendor\singleton-cpp</Filter>
     </None>
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Mystic\vendor\yaml-cpp</Filter>

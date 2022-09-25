@@ -7,7 +7,7 @@
 
 namespace Mystic {
 
-	class OrthographicCameraController
+	class MYSTIC_API OrthographicCameraController
 	{
 	public:
 		OrthographicCameraController(float aspectRatio, bool rotation = false);

@@ -1,5 +1,5 @@
 project "Mystic"
-	kind "StaticLib"
+	kind "SharedLib"
 	language "C++"
 	cppdialect "C++latest"
 	staticruntime "off"
@@ -40,7 +40,8 @@ project "Mystic"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
 		"%{IncludeDir.ImGuizmo}",
-		"%{IncludeDir.OpenFBX}"
+		"%{IncludeDir.OpenFBX}",
+		"%{IncludeDir.singleton_cpp}",
 	}
 
 	links
@@ -50,10 +51,17 @@ project "Mystic"
 		"ImGui",
 		"yaml-cpp",
 		"opengl32.lib",
-		"OpenFBX"
+		"OpenFBX",
+		"singleton-cpp"
 	}
 
 	flags { "NoPCH" }
+
+	postbuildmessage "Copying DLL to MysticEditor bin location"
+	postbuildcommands
+	{
+		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\Mystic.dll\"",
+	}
 
 	filter "system:windows"
 		systemversion "latest"

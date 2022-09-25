@@ -7,6 +7,7 @@
 #include "Components/LaserComponent.h"
 #include "Components/PlayerComponent.h"
 #include "Mystic/Core/Application.h"
+#include "Mystic/Core/ServiceLocator.h"
 #include "Mystic/ECS/ComponentRegistry.h"
 #include "Mystic/ECS/SystemRegistry.h"
 #include "Mystic/ECS/Components/CharacterComponent.h"
@@ -18,6 +19,7 @@
 #include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Scene/ProjectScene.h"
 #include "Mystic/Scene/ProjectSerializer.h"
+#include "singleton-cpp/singleton.h"
 #include "Systems/AsteroidDeathSystem.h"
 #include "Systems/AsteroidSpawnSystem.h"
 #include "Systems/LaserSpawnSystem.h"
@@ -49,7 +51,8 @@ SandboxLayer::SandboxLayer()
 	serializer.DeserializeProject("assets/scenes/asteroids.myst");
 
 	_scene = projScene->CreateRuntimeScene();
-	Mystic::Application& app = Mystic::Application::Get();
+	Mystic::ServiceLocator& locator = singleton<Mystic::ServiceLocator>();
+	Mystic::Application& app = locator.GetApplication();
 	_scene->OnViewportResize(app.GetWindow().GetWidth(), app.GetWindow().GetHeight());
 
 	Mystic::Entity playerEnt = _scene->CreateEntity("Player");
@@ -58,9 +61,9 @@ SandboxLayer::SandboxLayer()
 	_scene->EntityAddComponent<Mystic::VelocityComponent>(playerEnt);
 	_scene->EntityAddComponent<Mystic::RigidBodyComponent>(playerEnt);
 	_scene->EntityAddComponent<Mystic::CharacterComponent>(playerEnt, true);
-	Mystic::Ref<Mystic::Texture2D> shipTex = Mystic::Texture2D::Create("assets/textures/ship.png");
+	//Mystic::Ref<Mystic::Texture2D> shipTex = Mystic::Texture2D::Create("assets/textures/ship.png");
 	Mystic::SpriteRendererComponent& sprite = _scene->EntityAddComponent<Mystic::SpriteRendererComponent>(playerEnt);
-	sprite.Texture = shipTex;
+	//sprite.Texture = shipTex;
 	_scene->EntityAddComponent<PlayerComponent>(playerEnt);
 	_scene->EntityAddComponent<Mystic::ThrusterComponent>(playerEnt, 5.f, 10.f );
 

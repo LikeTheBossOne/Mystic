@@ -1,5 +1,5 @@
 project "Sandbox"
-	kind "ConsoleApp"
+	kind "SharedLib"
 	language "C++"
 	cppdialect "C++latest"
 	staticruntime "off"

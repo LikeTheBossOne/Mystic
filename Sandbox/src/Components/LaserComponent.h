@@ -5,7 +5,7 @@
 MSTRUCT()
 struct LaserComponent
 {
-	MGENERATED_INFO()
+	//MGENERATED_INFO()
 
 
 	MPROPERTY()
