@@ -17,3 +17,6 @@
 [submodule "Mystic/vendor/OpenFBX"]
 	path = Mystic/vendor/OpenFBX
 	url = https://github.com/LikeTheBossOne/OpenFBX
+[submodule "Mystic/vendor/singleton-cpp"]
+	path = Mystic/vendor/singleton-cpp
+	url = https://github.com/LikeTheBossOne/singleton-cpp
