@@ -26,7 +26,7 @@ extern "C" namespace Mystic
 			}
 		}
 
-		extern "C" __declspec(dllexport) void UpdateComponent(float dt, Ref<Scene> scene)
+		extern "C" __declspec(dllexport) void UpdateComponents(float dt, Scene* scene)
 		{
 			{
 				auto view = registry.view<LaserComponent>();

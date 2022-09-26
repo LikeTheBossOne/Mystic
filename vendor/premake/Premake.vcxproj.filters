@@ -4,6 +4,12 @@
     <Filter Include="..">
       <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Game">
+      <UniqueIdentifier>{AAEE7E47-16CE-FDE2-1FE6-88B98B446444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\GameCode">
+      <UniqueIdentifier>{85D670B5-F18B-E9AA-7A80-E381E634E0AE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Mystic">
       <UniqueIdentifier>{0919AA32-7583-5EA9-BEC1-0F4F2A6B3CFE}</UniqueIdentifier>
     </Filter>
@@ -40,11 +46,14 @@
     <Filter Include="..\MysticHeaderToolTests">
       <UniqueIdentifier>{8362BBAC-6F87-0A2D-98D2-EFBC8456094B}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Sandbox">
-      <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Game\premake5.lua">
+      <Filter>..\Game</Filter>
+    </None>
+    <None Include="..\..\GameCode\premake5.lua">
+      <Filter>..\GameCode</Filter>
+    </None>
     <None Include="..\..\Mystic\premake5.lua">
       <Filter>..\Mystic</Filter>
     </None>
@@ -77,9 +86,6 @@
     </None>
     <None Include="..\..\MysticHeaderToolTests\premake5.lua">
       <Filter>..\MysticHeaderToolTests</Filter>
-    </None>
-    <None Include="..\..\Sandbox\premake5.lua">
-      <Filter>..\Sandbox</Filter>
     </None>
     <None Include="..\..\premake5.lua">
       <Filter>..</Filter>

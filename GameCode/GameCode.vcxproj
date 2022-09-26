@@ -15,27 +15,27 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{65D1D007-5134-60AC-FAB9-9862E6FB2B2F}</ProjectGuid>
+    <ProjectGuid>{DAF35232-C6C0-AD3D-EFD9-9BE5DB05E3CB}</ProjectGuid>
     <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
     <Keyword>Win32Proj</Keyword>
-    <RootNamespace>MysticEditor</RootNamespace>
+    <RootNamespace>GameCode</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>DynamicLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <CharacterSet>Unicode</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
@@ -55,31 +55,31 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>..\bin\Debug-windows-x86_64\MysticEditor\</OutDir>
-    <IntDir>..\bin-int\Debug-windows-x86_64\MysticEditor\</IntDir>
-    <TargetName>MysticEditor</TargetName>
-    <TargetExt>.exe</TargetExt>
+    <OutDir>..\bin\Debug-windows-x86_64\GameCode\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\GameCode\</IntDir>
+    <TargetName>GameCode</TargetName>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Release-windows-x86_64\MysticEditor\</OutDir>
-    <IntDir>..\bin-int\Release-windows-x86_64\MysticEditor\</IntDir>
-    <TargetName>MysticEditor</TargetName>
-    <TargetExt>.exe</TargetExt>
+    <OutDir>..\bin\Release-windows-x86_64\GameCode\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\GameCode\</IntDir>
+    <TargetName>GameCode</TargetName>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>..\bin\Dist-windows-x86_64\MysticEditor\</OutDir>
-    <IntDir>..\bin-int\Dist-windows-x86_64\MysticEditor\</IntDir>
-    <TargetName>MysticEditor</TargetName>
-    <TargetExt>.exe</TargetExt>
+    <OutDir>..\bin\Dist-windows-x86_64\GameCode\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\GameCode\</IntDir>
+    <TargetName>GameCode</TargetName>
+    <TargetExt>.dll</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\ImGuizmo;..\Mystic\vendor\imgui;..\Mystic\vendor\singleton-cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -88,12 +88,14 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ImportLibrary>..\bin\Debug-windows-x86_64\GameCode\GameCode.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy /b "$(SolutionDir)Mystic\vendor\singleton-cpp\bin\Debug-windows-x86_64\singleton-cpp\singleton-cpp.dll" "$(SolutionDir)bin\Debug-windows-x86_64\MysticEditor\singleton-cpp.dll"</Command>
-      <Message>Copying singleton-cpp.dll to MysticEditor bin location</Message>
+      <Command>copy /b "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Debug-windows-x86_64\MysticEditor\GameCode.dll"
+copy /b "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Debug-windows-x86_64\Game\GameCode.dll"</Command>
+      <Message>Copying DLL to MysticEditor bin location</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -101,7 +103,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\ImGuizmo;..\Mystic\vendor\imgui;..\Mystic\vendor\singleton-cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -112,13 +114,15 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>..\bin\Release-windows-x86_64\GameCode\GameCode.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy /b "$(SolutionDir)Mystic\vendor\singleton-cpp\bin\Release-windows-x86_64\singleton-cpp\singleton-cpp.dll" "$(SolutionDir)bin\Release-windows-x86_64\MysticEditor\singleton-cpp.dll"</Command>
-      <Message>Copying singleton-cpp.dll to MysticEditor bin location</Message>
+      <Command>copy /b "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Release-windows-x86_64\MysticEditor\GameCode.dll"
+copy /b "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Release-windows-x86_64\Game\GameCode.dll"</Command>
+      <Message>Copying DLL to MysticEditor bin location</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
@@ -126,7 +130,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\ImGuizmo;..\Mystic\vendor\imgui;..\Mystic\vendor\singleton-cpp;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -137,24 +141,28 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
+      <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
+      <ImportLibrary>..\bin\Dist-windows-x86_64\GameCode\GameCode.lib</ImportLibrary>
     </Link>
     <PostBuildEvent>
-      <Command>copy /b "$(SolutionDir)Mystic\vendor\singleton-cpp\bin\Dist-windows-x86_64\singleton-cpp\singleton-cpp.dll" "$(SolutionDir)bin\Dist-windows-x86_64\MysticEditor\singleton-cpp.dll"</Command>
-      <Message>Copying singleton-cpp.dll to MysticEditor bin location</Message>
+      <Command>copy /b "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Dist-windows-x86_64\MysticEditor\GameCode.dll"
+copy /b "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Dist-windows-x86_64\Game\GameCode.dll"</Command>
+      <Message>Copying DLL to MysticEditor bin location</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="src\EditorLayer.h" />
-    <ClInclude Include="src\Panels\SceneHierarchyPanel.h" />
-    <ClInclude Include="src\Utility\EditorStructControls.h" />
+    <ClInclude Include="src\Components\AsteroidComponent.h" />
+    <ClInclude Include="src\Components\AsteroidSpawner.h" />
+    <ClInclude Include="src\Components\LaserComponent.h" />
+    <ClInclude Include="src\Components\PlayerComponent.h" />
+    <ClInclude Include="src\Generated\Init.h" />
+    <ClInclude Include="src\Generated\LaserComponent.Gen.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\EditorLayer.cpp" />
-    <ClCompile Include="src\MysticEditorApp.cpp" />
-    <ClCompile Include="src\Panels\SceneHierarchyPanel.cpp" />
+    <ClCompile Include="src\Components\LaserComponent.cpp" />
+    <ClCompile Include="src\Generated\init.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Mystic\Mystic.vcxproj">
@@ -162,12 +170,6 @@
     </ProjectReference>
     <ProjectReference Include="..\Mystic\vendor\imgui\ImGui.vcxproj">
       <Project>{C0FF640D-2C14-8DBE-F595-301E616989EF}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Mystic\vendor\ImGuizmo\ImGuizmo.vcxproj">
-      <Project>{36FD234F-22CA-7E5A-4BE3-6C02370FB4E8}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\Mystic\vendor\singleton-cpp\singleton-cpp.vcxproj">
-      <Project>{08E43D5D-74A4-B993-3DDF-0211A95EFE6F}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

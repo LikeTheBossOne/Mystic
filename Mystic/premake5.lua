@@ -57,10 +57,11 @@ project "Mystic"
 
 	flags { "NoPCH" }
 
-	postbuildmessage "Copying DLL to MysticEditor bin location"
+	postbuildmessage "Copying DLL to MysticEditor & Game bin location"
 	postbuildcommands
 	{
 		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\Mystic.dll\"",
+		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\Game\\Mystic.dll\"",
 	}
 
 	filter "system:windows"

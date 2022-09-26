@@ -50,19 +50,24 @@ namespace Mystic
 		{
 			if (!FreeGameCodeLibrary()) return;
 		}
-
-		std::string pathToDLL = std::filesystem::current_path().string() + "GameCode.dll";
-		if (!FileExists(pathToDLL))
+		
+		WCHAR pBuf[256];
+		size_t len = sizeof(pBuf);
+		int bytes = GetModuleFileName(NULL, pBuf, len);
+		std::wstring ws(pBuf);
+		std::string path(ws.begin(), ws.end());
+		path = path.substr(0, path.find_last_of("\\/")) + "\\GameCode.dll";
+		if (!FileExists(path))
 		{
-			std::cout << "Reloading GameCode -- Could not find DLL at path: " << pathToDLL;
+			std::cout << "Reloading GameCode -- Could not find DLL at path: " << path;
 			return;
 		}
 
-		_module = LoadLibraryA(pathToDLL.c_str());
+		_module = LoadLibraryA(path.c_str());
 
 		if (!_module)
 		{
-			std::cout << "Failed to load module: " << pathToDLL;
+			std::cout << "Failed to load module: " << path;
 			return;
 		}
 
@@ -77,6 +82,30 @@ namespace Mystic
 		if (_initComponentsFn)
 		{
 			_initComponentsFn();
+		}
+	}
+
+	void GameCodeLoader::Update(float dt, Ref<Scene> scene)
+	{
+		if (_updateComponentsFn)
+		{
+			_updateComponentsFn(dt, scene.get());
+		}
+	}
+
+	void GameCodeLoader::ImGui(entt::entity entity)
+	{
+		if (_imGuiFn)
+		{
+			_imGuiFn(entity);
+		}
+	}
+
+	void GameCodeLoader::AddComponentFromString(std::string className, entt::entity entity, entt::registry& registry)
+	{
+		if (_addComponentFromStringFn)
+		{
+			_addComponentFromStringFn(className, entity, registry);
 		}
 	}
 

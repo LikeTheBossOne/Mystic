@@ -15,13 +15,18 @@ namespace Mystic
     //typedef void (*EditorUpdateScriptFn)(float, Scene*);
     typedef void (*AddComponentFromStringFn)(std::string, entt::entity, entt::registry&);
 
-	class GameCodeLoader
+	class MYSTIC_API GameCodeLoader
 	{
 	public:
         ~GameCodeLoader();
 
         void Start();
         void Reload();
+        
+        virtual void Update(float dt, Ref<Scene> scene);
+        void ImGui(entt::entity entity);
+        
+        void AddComponentFromString(std::string className, entt::entity entity, entt::registry& registry);
 
 	private:
         bool FreeGameCodeLibrary();

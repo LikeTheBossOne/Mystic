@@ -1,15 +1,13 @@
 #pragma once
 #include "Mystic/Core/MMacros.h"
-#include "LaserComponent.generated.h"
 
 MSTRUCT()
 struct LaserComponent
 {
-	//MGENERATED_INFO()
-
-
 	MPROPERTY()
 	float Damage;
+
+	void Update();
 
 	LaserComponent() : Damage(0.0f) {}
 	LaserComponent(float damage) : Damage(damage) {}

@@ -1,0 +1,95 @@
+Scene: Untitled
+Assets:
+  Meshes:
+    - Path: MystData\assets\crate1.mysta
+      Name: crate1
+  Shaders:
+    - Path: assets\shaders\3DTexture.glsl
+      Name: 3DTexture.glsl
+      BufferLayout:
+        - Name: a_Position
+          Type: Float3
+        - Name: a_UV
+          Type: Float2
+        - Name: a_TexIndex
+          Type: Float
+        - Name: a_EntityID
+          Type: Int
+  Textures:
+    - Path: assets\textures\crate_1.jpg
+      Name: crate_1
+Entities:
+  - Entity: 6B29FC40-CA47-1067-B31D-00DD010662DD
+    TagComponent:
+      Tag: Green Square
+    TransformComponent:
+      Position: [0.400000095, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [0, 1, 0, 1]
+    VelocityComponent:
+      Velocity: [0.5, -0.100000001, 0]
+    CharacterComponent:
+      Active: false
+  - Entity: 6B29FC40-CA47-1067-B31D-00DD010662DC
+    TagComponent:
+      Tag: Red Square
+    TransformComponent:
+      Position: [0, 0.100000016, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    SpriteRendererComponent:
+      Color: [1, 0, 0, 1]
+    VelocityComponent:
+      Velocity: [0.00999999978, 0, 0]
+    CharacterComponent:
+      Active: true
+  - Entity: 6B29FC40-CA47-1067-B31D-00DD010662DB
+    TagComponent:
+      Tag: Camera A
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: true
+      FixedAspectRatio: false
+  - Entity: 6B29FC40-CA47-1067-B31D-00DD010662DA
+    TagComponent:
+      Tag: Camera B
+    TransformComponent:
+      Position: [0, 0, 0]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    CameraComponent:
+      Camera:
+        ProjectionType: 1
+        PerspectiveFOV: 0.785398185
+        PerspectiveNear: 0.00999999978
+        PerspectiveFar: 1000
+        OrthographicSize: 10
+        OrthographicNear: -1
+        OrthographicFar: 1
+      Primary: false
+      FixedAspectRatio: false
+  - Entity: 6B29FC40-CA47-1067-B31D-00DD010662DE
+    TagComponent:
+      Tag: Crate 1
+    TransformComponent:
+      Position: [0, 0, -3]
+      Rotation: [0, 0, 0, 1]
+      Scale: [1, 1, 1]
+    MeshRendererComponent:
+      MeshName: crate1
+      ShaderName: 3DTexture.glsl
+      TextureName: crate_1
+      Color: [1, 0, 0, 1]

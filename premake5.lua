@@ -33,10 +33,16 @@ group "Dependencies"
 	include "Mystic/vendor/yaml-cpp"
 	include "Mystic/vendor/OpenFBX"
 	include "Mystic/vendor/singleton-cpp"
+
+group "Tools"
+	include "MysticHeaderTool"
+	include "MysticHeaderToolTests"
+
+group "Engine"
+	include "Mystic"
+	include "MysticEditor"
+	include "Game"
+
 group ""
 
-include "Mystic"
-include "Sandbox"
-include "MysticEditor"
-include "MysticHeaderTool"
-include "MysticHeaderToolTests"
+include "GameCode"

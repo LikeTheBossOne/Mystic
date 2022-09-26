@@ -93,6 +93,11 @@
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Debug-windows-x86_64\Mystic\Mystic.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /b "$(SolutionDir)bin\Debug-windows-x86_64\Mystic\Mystic.dll" "$(SolutionDir)bin\Debug-windows-x86_64\MysticEditor\Mystic.dll"
+copy /b "$(SolutionDir)bin\Debug-windows-x86_64\Mystic\Mystic.dll" "$(SolutionDir)bin\Debug-windows-x86_64\Game\Mystic.dll"</Command>
+      <Message>Copying DLL to MysticEditor &amp; Game bin location</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -116,6 +121,11 @@
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Release-windows-x86_64\Mystic\Mystic.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /b "$(SolutionDir)bin\Release-windows-x86_64\Mystic\Mystic.dll" "$(SolutionDir)bin\Release-windows-x86_64\MysticEditor\Mystic.dll"
+copy /b "$(SolutionDir)bin\Release-windows-x86_64\Mystic\Mystic.dll" "$(SolutionDir)bin\Release-windows-x86_64\Game\Mystic.dll"</Command>
+      <Message>Copying DLL to MysticEditor &amp; Game bin location</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <ClCompile>
@@ -139,6 +149,11 @@
       <AdditionalDependencies>opengl32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <ImportLibrary>..\bin\Dist-windows-x86_64\Mystic\Mystic.lib</ImportLibrary>
     </Link>
+    <PostBuildEvent>
+      <Command>copy /b "$(SolutionDir)bin\Dist-windows-x86_64\Mystic\Mystic.dll" "$(SolutionDir)bin\Dist-windows-x86_64\MysticEditor\Mystic.dll"
+copy /b "$(SolutionDir)bin\Dist-windows-x86_64\Mystic\Mystic.dll" "$(SolutionDir)bin\Dist-windows-x86_64\Game\Mystic.dll"</Command>
+      <Message>Copying DLL to MysticEditor &amp; Game bin location</Message>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="src\Mystic.h" />

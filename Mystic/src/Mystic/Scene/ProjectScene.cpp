@@ -36,15 +36,15 @@ namespace Mystic
 			{ ShaderDataType::Int,  "a_TexIndex" },
 			{ ShaderDataType::Int,    "a_EntityID" }
 		};
-		Renderer3D::RegisterBatch(
+		/*Renderer3D::RegisterBatch(
 			"3DTexture", 
 			"assets/shaders/3DTexture.glsl", 
 			"crateMesh",
 			"MystData/assets/crate1.mysta", 
 			layout
-		);
+		);*/
 		//_mesh = Mesh::CreateMeshFromMystAsset("MystData/assets/crate1.mysta");
-		_texture = Texture2D::Create("crate", "assets/textures/crate_1.jpg");
+		//_texture = Texture2D::Create("crate", "assets/textures/crate_1.jpg");
 	}
 
 	ProjectScene::~ProjectScene()
