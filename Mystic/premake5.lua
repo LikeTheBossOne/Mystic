@@ -1,5 +1,5 @@
 project "Mystic"
-	kind "SharedLib"
+	kind "StaticLib"
 	language "C++"
 	cppdialect "C++latest"
 	staticruntime "off"
@@ -57,12 +57,12 @@ project "Mystic"
 
 	flags { "NoPCH" }
 
-	postbuildmessage "Copying DLL to MysticEditor & Game bin location"
-	postbuildcommands
-	{
-		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\Mystic.dll\"",
-		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\Game\\Mystic.dll\"",
-	}
+	--postbuildmessage "Copying DLL to MysticEditor & Game bin location"
+	--postbuildcommands
+	--{
+	--	"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\Mystic.dll\"",
+	--	"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\Game\\Mystic.dll\"",
+	--}
 
 	filter "system:windows"
 		systemversion "latest"

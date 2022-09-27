@@ -31,9 +31,6 @@
     <Filter Include="src\Mystic\ImGui">
       <UniqueIdentifier>{3FD7B8E5-2BD0-D737-5402-BDBC405AB743}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Mystic\Objects">
-      <UniqueIdentifier>{0EDAF0ED-FABD-B143-631E-AC964F219CC5}</UniqueIdentifier>
-    </Filter>
     <Filter Include="src\Mystic\Render">
       <UniqueIdentifier>{248356B1-9099-5447-D910-E068456625CF}</UniqueIdentifier>
     </Filter>
@@ -200,15 +197,6 @@
     </ClInclude>
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h">
       <Filter>src\Mystic\ImGui</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mystic\Objects\MClass.h">
-      <Filter>src\Mystic\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mystic\Objects\MObject.h">
-      <Filter>src\Mystic\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Mystic\Objects\MStruct.h">
-      <Filter>src\Mystic\Objects</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Render\Buffer.h">
       <Filter>src\Mystic\Render</Filter>

@@ -25,24 +25,24 @@ namespace Mystic
 		_assetLibrary = std::make_shared<AssetLibrary>();
 
 		std::unordered_map<FBXAssetType, std::unordered_map<std::string, std::string>> map;
-		/*FBXImporter::Import("../Sandbox/assets/fbx/BaseCharacter.fbx", map);
+		//FBXImporter::Import("../Game/assets/fbx/BaseCharacter.fbx", map);
 		for (auto filePair : map[FBXAssetType::MESH])
 		{
 			_mesh = Mesh::CreateMeshFromMystAsset(filePair.second);
-		}*/
+		}
 		BufferLayout layout{
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_UV" },
 			{ ShaderDataType::Int,  "a_TexIndex" },
 			{ ShaderDataType::Int,    "a_EntityID" }
 		};
-		/*Renderer3D::RegisterBatch(
+		Renderer3D::RegisterBatch(
 			"3DTexture", 
 			"assets/shaders/3DTexture.glsl", 
 			"crateMesh",
 			"MystData/assets/crate1.mysta", 
 			layout
-		);*/
+		);
 		//_mesh = Mesh::CreateMeshFromMystAsset("MystData/assets/crate1.mysta");
 		//_texture = Texture2D::Create("crate", "assets/textures/crate_1.jpg");
 	}
@@ -56,6 +56,7 @@ namespace Mystic
 		Ref<RuntimeScene> runtimeScene = std::make_shared<RuntimeScene>();
 
 		runtimeScene->_name = _name;
+		runtimeScene->_assetLibrary = _assetLibrary;
 
 		std::unordered_map<GUID, entt::entity> uuidToEntMap;
 

@@ -2,7 +2,9 @@
 
 #include "singleton.h"
 #include "Mystic/Core/ServiceLocator.h"
+#include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Scene/ProjectScene.h"
+#include "Mystic/Scene/ProjectSerializer.h"
 
 namespace Game
 {
@@ -18,13 +20,16 @@ namespace Game
 
 		Mystic::Ref<Mystic::ProjectScene> projScene = std::make_shared<Mystic::ProjectScene>();
 
-		// TODO: Load level
-		//
-		//
-		//
-		//
+		auto commandLineArgs = locator.GetApplication().GetCommandLineArgs();
+		if (commandLineArgs.Count > 1)
+		{
+			std::string sceneFilePath = commandLineArgs[1];
+			Mystic::ProjectSerializer serializer(projScene);
+			serializer.DeserializeProject(sceneFilePath);
+		}
 
 		_scene = projScene->CreateRuntimeScene();
+		_scene->OnViewportResize(app.GetWindow().GetWidth(),app.GetWindow().GetHeight());
 
 		_gameCodeLoader = std::make_shared<Mystic::GameCodeLoader>();
 		_gameCodeLoader->Start();
@@ -37,6 +42,9 @@ namespace Game
 
 	void GameLayer::OnUpdate(float deltaTime)
 	{
+		Mystic::RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.3f, 1 });
+		Mystic::RenderCommand::Clear();
+
 		_scene->OnUpdate(deltaTime);
 		_gameCodeLoader->Update(deltaTime, _scene);
 	}
