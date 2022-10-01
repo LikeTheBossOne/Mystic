@@ -1,8 +1,10 @@
 #pragma once
 
+#include "Mystic/Scripting/NativeScriptComponent.h"
+
 namespace Mystic
 {
-	struct CharacterComponent
+	struct CharacterComponent : NativeScriptComponent
 	{
 		bool Active;
 

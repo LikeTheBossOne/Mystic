@@ -30,9 +30,10 @@ namespace Game
 
 		_scene = projScene->CreateRuntimeScene();
 		_scene->OnViewportResize(app.GetWindow().GetWidth(),app.GetWindow().GetHeight());
+		Mystic::Entity ent = _scene->CreateEntity("NewEnt");
+		_scene->EntityAddComponentByName(ent.EntId, "LaserComponent");
 
-		_gameCodeLoader = std::make_shared<Mystic::GameCodeLoader>();
-		_gameCodeLoader->Start();
+		
 	}
 
 	void GameLayer::OnDetach()
@@ -46,6 +47,6 @@ namespace Game
 		Mystic::RenderCommand::Clear();
 
 		_scene->OnUpdate(deltaTime);
-		_gameCodeLoader->Update(deltaTime, _scene);
+		_scene->Render();
 	}
 }

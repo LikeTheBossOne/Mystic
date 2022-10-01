@@ -16,7 +16,7 @@ namespace Mystic
 		~RuntimeScene() override;
 
 		void OnUpdate(float deltaTime);
-
+		void Render();
 
 	private:
 		Ref<AssetLibrary> _assetLibrary;

@@ -12,6 +12,7 @@
 
 #include "Mystic/ECS/SystemRegistry.h"
 #include "Mystic/ECS/Components/MeshRendererComponent.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 #include "Mystic/Render/Renderer3D.h"
 
 namespace Mystic
@@ -36,6 +37,8 @@ namespace Mystic
 			"MystData/assets/crate1.mysta",
 			layout
 		);*/
+
+		GameCodeSystem::Start(_registry);
 	}
 
 	RuntimeScene::~RuntimeScene()
@@ -43,6 +46,11 @@ namespace Mystic
 	}
 
 	void RuntimeScene::OnUpdate(float deltaTime)
+	{
+		GameCodeSystem::Update(deltaTime, this);
+	}
+
+	void RuntimeScene::Render()
 	{
 		// Render 2D
 		Camera* mainCamera = nullptr;

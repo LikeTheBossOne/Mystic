@@ -192,7 +192,7 @@
     <ClInclude Include="src\Mystic\Events\MouseEvent.h">
       <Filter>src\Mystic\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\GameCode\GameCodeLoader.h">
+    <ClInclude Include="src\Mystic\GameCode\GameCodeSystem.h">
       <Filter>src\Mystic\GameCode</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h">
@@ -1575,6 +1575,8 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h" />
+    <ClInclude Include="src\Mystic\Core\exportimport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mystic\Assets\AssetLibrary.cpp">
@@ -1610,7 +1612,7 @@
     <ClCompile Include="src\Mystic\ECS\Systems\VelocitySystem.cpp">
       <Filter>src\Mystic\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\GameCode\GameCodeLoader.cpp">
+    <ClCompile Include="src\Mystic\GameCode\GameCodeSystem.cpp">
       <Filter>src\Mystic\GameCode</Filter>
     </ClCompile>
     <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp">
@@ -1727,5 +1729,6 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp" />
   </ItemGroup>
 </Project>

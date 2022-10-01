@@ -82,9 +82,9 @@ namespace Mystic
 		{
 			const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
 			Scene* scene = entity.OwningScene;
-			if (scene->EntityHasComponent<T>(entity))
+			if (scene->EntityHasComponent<T>(entity.EntId))
 			{
-				T& component = scene->EntityGetComponent<T>(entity);
+				T& component = scene->EntityGetComponent<T>(entity.EntId);
 				ImVec2 contentRegionAvailable = ImGui::GetContentRegionAvail();
 
 				ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, ImVec2{ 4, 4 });
@@ -115,7 +115,7 @@ namespace Mystic
 				}
 
 				if (removeComponent)
-					scene->EntityRemoveComponent<T>(entity);
+					scene->EntityRemoveComponent<T>(entity.EntId);
 			}
 		}
 	};

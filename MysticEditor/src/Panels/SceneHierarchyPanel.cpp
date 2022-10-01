@@ -105,9 +105,9 @@ namespace Mystic
 	//TODO: ECS-ify this. This should theoretically act like a pure ECS system instead of this
 	void SceneHierarchyPanel::DrawComponents(Entity entity)
 	{
-		if (_sceneContext->EntityHasComponent<TagComponent>(entity))
+		if (_sceneContext->EntityHasComponent<TagComponent>(entity.EntId))
 		{
-			auto& tagComp = _sceneContext->EntityGetComponent<TagComponent>(entity);
+			auto& tagComp = _sceneContext->EntityGetComponent<TagComponent>(entity.EntId);
 			std::string tag = tagComp.Tag;
 
 			char buffer[256];
@@ -129,8 +129,8 @@ namespace Mystic
 		{
 			if (ImGui::MenuItem("CameraComponent"))
 			{
-				if (!_sceneContext->EntityHasComponent<CameraComponent>(_selectionContext))
-					_sceneContext->EntityAddComponent<CameraComponent>(entity);
+				if (!_sceneContext->EntityHasComponent<CameraComponent>(_selectionContext.EntId))
+					_sceneContext->EntityAddComponent<CameraComponent>(entity.EntId);
 				//else
 					//HZ_CORE_WARN("This entity already has the Camera Component!");
 				ImGui::CloseCurrentPopup();
@@ -138,8 +138,8 @@ namespace Mystic
 
 			if (ImGui::MenuItem("SpriteRendererComponent"))
 			{
-				if (!_sceneContext->EntityHasComponent<SpriteRendererComponent>(_selectionContext))
-					_sceneContext->EntityAddComponent<SpriteRendererComponent>(_selectionContext);
+				if (!_sceneContext->EntityHasComponent<SpriteRendererComponent>(_selectionContext.EntId))
+					_sceneContext->EntityAddComponent<SpriteRendererComponent>(_selectionContext.EntId);
 				//else
 					//HZ_CORE_WARN("This entity already has the Sprite Renderer Component!");
 				ImGui::CloseCurrentPopup();
@@ -147,8 +147,8 @@ namespace Mystic
 
 			if (ImGui::MenuItem("VelocityComponent"))
 			{
-				if (!_sceneContext->EntityHasComponent<VelocityComponent>(_selectionContext))
-					_sceneContext->EntityAddComponent<VelocityComponent>(_selectionContext);
+				if (!_sceneContext->EntityHasComponent<VelocityComponent>(_selectionContext.EntId))
+					_sceneContext->EntityAddComponent<VelocityComponent>(_selectionContext.EntId);
 				//else
 					//HZ_CORE_WARN("This entity already has the Velocity Component!");
 				ImGui::CloseCurrentPopup();
@@ -156,8 +156,8 @@ namespace Mystic
 
 			if (ImGui::MenuItem("CharacterComponent"))
 			{
-				if (!_sceneContext->EntityHasComponent<CharacterComponent>(_selectionContext))
-					_sceneContext->EntityAddComponent<CharacterComponent>(_selectionContext);
+				if (!_sceneContext->EntityHasComponent<CharacterComponent>(_selectionContext.EntId))
+					_sceneContext->EntityAddComponent<CharacterComponent>(_selectionContext.EntId);
 				//else
 					//HZ_CORE_WARN("This entity already has the Character Component!");
 				ImGui::CloseCurrentPopup();

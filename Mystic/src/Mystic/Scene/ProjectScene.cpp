@@ -12,6 +12,7 @@
 #include "Mystic/ECS/ComponentRegistry.h"
 #include "Mystic/ECS/Components/MeshRendererComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 #include "Mystic/Render/Renderer2D.h"
 #include "Mystic/Render/Renderer3D.h"
 
@@ -73,21 +74,13 @@ namespace Mystic
 		return runtimeScene;
 	}
 	
-	void ProjectScene::OnUpdate(EditorCamera& camera)
+	void ProjectScene::OnUpdate(float deltaTime)
 	{
-		/*Renderer2D::BeginScene(camera);
 
-		auto group = _registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
-		{
-			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+	}
 
-			Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-		}
-
-		Renderer2D::EndScene();*/
-
-
+	void ProjectScene::OnRender(EditorCamera& camera)
+	{
 		//TODO: Before every render, check and see if any batches need to be registered. In the future, we should find a way to make this cost not at runtime.
 		auto group = _registry.group<TransformComponent, MeshRendererComponent>();
 		for (auto entity : group)

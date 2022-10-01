@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Mystic/Core/Layer.h"
-#include "Mystic/GameCode/GameCodeLoader.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 #include "Mystic/Scene/RuntimeScene.h"
 
 namespace Game
@@ -18,6 +18,5 @@ namespace Game
 		void OnUpdate(float deltaTime) override;
 	private:
 		Mystic::Ref<Mystic::RuntimeScene> _scene;
-		Mystic::Ref<Mystic::GameCodeLoader> _gameCodeLoader;
 	};
 }

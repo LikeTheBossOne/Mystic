@@ -1,9 +1,10 @@
 #pragma once
 #include "glm/vec3.hpp"
+#include "Mystic/Scripting/NativeScriptComponent.h"
 
 namespace Mystic
 {
-	struct VelocityComponent
+	struct VelocityComponent : NativeScriptComponent
 	{
 		glm::vec3 Velocity;
 

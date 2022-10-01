@@ -7,40 +7,35 @@ extern "C" namespace Mystic
 {
 	extern "C" namespace Init
 	{
-		inline entt::registry registry = entt::registry();
-
-		extern "C" __declspec(dllexport) void AddComponent(std::string className, entt::entity entity)
+		extern "C" __declspec(dllexport) void AddComponent(entt::registry& registryRef, std::string className, entt::entity entity, Scene* scene)
 		{
-			if (!registry.valid(entity))
-			{
-				registry.create(entity);
-			}
+			assert(registryRef.valid(entity), "attempted to add a component to an entity that did not exist");
 
 			for (auto strClass : ReflectLaserComponent::stringToMap)
 			{
 				if (strClass.first == className)
 				{
-					ReflectLaserComponent::AddComponent(className, entity, registry);
+					ReflectLaserComponent::AddComponent(className, entity, scene, registryRef);
 					return;
 				}
 			}
 		}
 
-		extern "C" __declspec(dllexport) void UpdateComponents(float dt, Scene* scene)
+		extern "C" __declspec(dllexport) void UpdateComponents(entt::registry& registryRef, float dt)
 		{
 			{
-				auto view = registry.view<LaserComponent>();
+				auto view = registryRef.view<LaserComponent>();
 				for (auto [entity, comp] : view.each())
 				{
-					//comp.Update()
+					comp.Update();
 				}
 			}
 		}
 
-		extern "C" __declspec(dllexport) void InitComponents()
+		extern "C" __declspec(dllexport) void InitComponents(entt::registry& registryRef)
 		{
 			//log
-			ReflectLaserComponent::Init();
+			ReflectLaserComponent::Init(registryRef);
 		}
 
 		extern "C" __declspec(dllexport) void InitImGui(ImGuiContext* ctx)
@@ -48,14 +43,14 @@ extern "C" namespace Mystic
 			ImGui::SetCurrentContext(ctx);
 		}
 
-		extern "C" __declspec(dllexport) void ImGui(entt::entity entity)
+		extern "C" __declspec(dllexport) void ImGui(entt::registry& registryRef, entt::entity entity)
 		{
-			ReflectLaserComponent::ImGui(entity, registry);
+			ReflectLaserComponent::ImGui(entity, registryRef);
 		}
 
-		extern "C" __declspec(dllexport) void DeleteComponents()
+		extern "C" __declspec(dllexport) void DeleteComponents(entt::registry& registryRef)
 		{
-			ReflectLaserComponent::DeleteComponents(registry);
+			ReflectLaserComponent::DeleteComponents(registryRef);
 		}
 
 	}

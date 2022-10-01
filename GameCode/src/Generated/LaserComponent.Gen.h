@@ -5,6 +5,7 @@
 #include "imgui/imgui.h"
 
 #include "../Components/LaserComponent.h"
+#include "Mystic/ECS/Entity.h"
 
 namespace Mystic
 {
@@ -28,7 +29,7 @@ namespace Mystic
 			{ "LaserComponent", entt::type_id<LaserComponent>().hash()}
 		};
 
-		void Init()
+		void Init(entt::registry& registryRef)
 		{
 			if (initialized) return;
 			initialized = true;
@@ -38,11 +39,11 @@ namespace Mystic
 				.type();
 		}
 
-		void AddComponent(std::string className, entt::entity entity, entt::registry& registry)
+		void AddComponent(std::string className, entt::entity entity, Scene* scene, entt::registry& registryRef)
 		{
 			if (className == "LaserComponent")
 			{
-				registry.emplace<LaserComponent>(entity);
+				registryRef.emplace<LaserComponent>(entity, entity, scene);
 			}
 		}
 
@@ -69,21 +70,21 @@ namespace Mystic
 			}
 		}
 
-		void ImGui(entt::entity entity, entt::registry& registry)
+		void ImGui(entt::entity entity, entt::registry& registryRef)
 		{
-			if (!registry.valid(entity))
+			if (!registryRef.valid(entity))
 				return;
-			if (registry.all_of<LaserComponent>(entity))
+			if (registryRef.all_of<LaserComponent>(entity))
 			{
-				LaserComponent& comp = registry.get<LaserComponent>(entity);
+				LaserComponent& comp = registryRef.get<LaserComponent>(entity);
 				ImGuiAny({ comp }, comp);
 			}
 		}
 
-		void DeleteComponents(entt::registry& registry)
+		void DeleteComponents(entt::registry& registryRef)
 		{
 			{
-				registry.clear<LaserComponent>();
+				registryRef.clear<LaserComponent>();
 			}
 		}
 	}

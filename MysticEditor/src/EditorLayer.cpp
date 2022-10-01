@@ -103,7 +103,7 @@ namespace Mystic {
 
 				_editorCamera.OnUpdate(deltaTime);
 
-				_activeProjectScene->OnUpdate(_editorCamera);
+				_activeProjectScene->OnUpdate(deltaTime);
 				break;
 			}
 			case SceneState::Play:
@@ -215,7 +215,7 @@ namespace Mystic {
 
 		std::string name = "None";
 		if (_hoveredEntity)
-			name = _activeScene->EntityGetComponent<TagComponent>(_hoveredEntity).Tag;
+			name = _activeScene->EntityGetComponent<TagComponent>(_hoveredEntity.EntId).Tag;
 		ImGui::Text("Hovered Entity: %s", name.c_str());
 
 		auto stats = Renderer2D::GetStats();

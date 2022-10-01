@@ -3,6 +3,7 @@
 #include "../ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 
 namespace Mystic
 {
@@ -44,6 +45,11 @@ namespace Mystic
 	void Scene::DestroyEntity(Entity& entity)
 	{
 		_registry.destroy(entity.EntId);
+	}
+
+	void Scene::EntityAddComponentByName(entt::entity e, std::string componentName)
+	{
+		GameCodeSystem::AddComponentFromString(componentName, e, _registry, this);
 	}
 
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)

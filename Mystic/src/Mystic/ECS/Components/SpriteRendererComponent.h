@@ -4,9 +4,11 @@
 #include "Mystic/Core/Core.h"
 #include "Mystic/Render/Texture.h"
 
+#include "Mystic/Scripting/NativeScriptComponent.h"
+
 namespace Mystic
 {
-	struct SpriteRendererComponent
+	struct SpriteRendererComponent : NativeScriptComponent
 	{
 		SpriteRendererComponent() = default;
 		SpriteRendererComponent(const SpriteRendererComponent&) = default;

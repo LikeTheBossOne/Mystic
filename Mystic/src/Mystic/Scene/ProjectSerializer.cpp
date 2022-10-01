@@ -263,7 +263,7 @@ namespace Mystic
 				if (transformComponent)
 				{
 					// Entities always have transforms
-					TransformComponent& tc = _scene->EntityGetComponent<TransformComponent>(deserializedEntity);
+					TransformComponent& tc = _scene->EntityGetComponent<TransformComponent>(deserializedEntity.EntId);
 					tc.Position = transformComponent["Position"].as<glm::vec3>();
 					tc.Rotation = transformComponent["Rotation"].as<glm::quat>();
 					tc.Scale = transformComponent["Scale"].as<glm::vec3>();

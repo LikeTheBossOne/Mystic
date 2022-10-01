@@ -27,6 +27,7 @@
     <ClInclude Include="src\Generated\LaserComponent.Gen.h">
       <Filter>Generated</Filter>
     </ClInclude>
+    <ClInclude Include="src\Generated\NativeScriptTemplates.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\LaserComponent.cpp">

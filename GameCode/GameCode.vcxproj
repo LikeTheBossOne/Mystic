@@ -159,6 +159,7 @@ copy /b "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(Solutio
     <ClInclude Include="src\Components\PlayerComponent.h" />
     <ClInclude Include="src\Generated\Init.h" />
     <ClInclude Include="src\Generated\LaserComponent.Gen.h" />
+    <ClInclude Include="src\Generated\NativeScriptTemplates.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\LaserComponent.cpp" />

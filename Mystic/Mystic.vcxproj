@@ -148,6 +148,7 @@
     <ClInclude Include="src\Mystic\Core\Application.h" />
     <ClInclude Include="src\Mystic\Core\Core.h" />
     <ClInclude Include="src\Mystic\Core\EntryPoint.h" />
+    <ClInclude Include="src\Mystic\Core\exportimport.h" />
     <ClInclude Include="src\Mystic\Core\Input.h" />
     <ClInclude Include="src\Mystic\Core\KeyCodes.h" />
     <ClInclude Include="src\Mystic\Core\Layer.h" />
@@ -179,7 +180,7 @@
     <ClInclude Include="src\Mystic\Events\Event.h" />
     <ClInclude Include="src\Mystic\Events\KeyEvent.h" />
     <ClInclude Include="src\Mystic\Events\MouseEvent.h" />
-    <ClInclude Include="src\Mystic\GameCode\GameCodeLoader.h" />
+    <ClInclude Include="src\Mystic\GameCode\GameCodeSystem.h" />
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Mystic\Render\Buffer.h" />
     <ClInclude Include="src\Mystic\Render\Camera.h" />
@@ -206,6 +207,7 @@
     <ClInclude Include="src\Mystic\Scene\RuntimeScene.h" />
     <ClInclude Include="src\Mystic\Scene\Scene.h" />
     <ClInclude Include="src\Mystic\Scene\SceneCamera.h" />
+    <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h" />
     <ClInclude Include="src\Mystic\Utility\utilities.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLFWRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
@@ -653,7 +655,7 @@
     <ClCompile Include="src\Mystic\ECS\Systems\CharacterMovementSystem.cpp" />
     <ClCompile Include="src\Mystic\ECS\Systems\ThrusterMovementSystem.cpp" />
     <ClCompile Include="src\Mystic\ECS\Systems\VelocitySystem.cpp" />
-    <ClCompile Include="src\Mystic\GameCode\GameCodeLoader.cpp" />
+    <ClCompile Include="src\Mystic\GameCode\GameCodeSystem.cpp" />
     <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp" />
     <ClCompile Include="src\Mystic\Render\Buffer.cpp" />
     <ClCompile Include="src\Mystic\Render\EditorCamera.cpp" />
@@ -678,6 +680,7 @@
     <ClCompile Include="src\Mystic\Scene\RuntimeScene.cpp" />
     <ClCompile Include="src\Mystic\Scene\Scene.cpp" />
     <ClCompile Include="src\Mystic\Scene\SceneCamera.cpp" />
+    <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />
