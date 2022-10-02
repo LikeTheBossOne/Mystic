@@ -46,6 +46,8 @@ namespace Mystic
 		);
 		//_mesh = Mesh::CreateMeshFromMystAsset("MystData/assets/crate1.mysta");
 		//_texture = Texture2D::Create("crate", "assets/textures/crate_1.jpg");
+
+		//GameCodeSystem::ReloadGameCode(_registry);
 	}
 
 	ProjectScene::~ProjectScene()
@@ -87,9 +89,9 @@ namespace Mystic
 		{
 			auto [transform, meshRenderer] = group.get<TransformComponent, MeshRendererComponent>(entity);
 
-			assert(_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader");
-			assert(_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture");
-			assert(_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh");
+			assert((_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader"));
+			assert((_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture"));
+			assert((_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh"));
 
 			if (!Renderer3D::BatchExists(meshRenderer.ShaderName, meshRenderer.MeshName))
 			{

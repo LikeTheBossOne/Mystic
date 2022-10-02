@@ -272,5 +272,7 @@ namespace Mystic
 			{
 				ImGui::Checkbox("Active", &component.Active);
 			});
+
+		_sceneContext->GameCodeImGui(entity.EntId);
 	}
 }

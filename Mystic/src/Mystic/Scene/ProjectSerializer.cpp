@@ -17,6 +17,7 @@
 #include "Mystic/ECS/Components/VelocityComponent.h"
 #include "yaml-cpp/yaml.h"
 #include "Mystic/Assets/AssetLibrary.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 
 namespace YAML
 {
@@ -338,6 +339,8 @@ namespace Mystic
 
 					_scene->_registry.emplace<MeshRendererComponent>(deserializedEntity.EntId, mrc);
 				}
+
+				GameCodeSystem::DeserializeEntity(_scene->_registry, entity, deserializedEntity.EntId, _scene.get());
 			}
 		}
 

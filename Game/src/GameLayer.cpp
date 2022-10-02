@@ -28,7 +28,10 @@ namespace Game
 			serializer.DeserializeProject(sceneFilePath);
 		}
 
+		projScene->ReloadGameCode();
+
 		_scene = projScene->CreateRuntimeScene();
+		//_scene->ReloadGameCode();
 		_scene->OnViewportResize(app.GetWindow().GetWidth(),app.GetWindow().GetHeight());
 		Mystic::Entity ent = _scene->CreateEntity("NewEnt");
 		_scene->EntityAddComponentByName(ent.EntId, "LaserComponent");

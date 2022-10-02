@@ -2,6 +2,7 @@
 #include <entt.hpp>
 #include "LaserComponent.Gen.h"
 #include "Mystic/Scene/Scene.h"
+#include "yaml-cpp/node/iterator.h"
 
 extern "C" namespace Mystic
 {
@@ -9,7 +10,7 @@ extern "C" namespace Mystic
 	{
 		extern "C" __declspec(dllexport) void AddComponent(entt::registry& registryRef, std::string className, entt::entity entity, Scene* scene)
 		{
-			assert(registryRef.valid(entity), "attempted to add a component to an entity that did not exist");
+			assert((registryRef.valid(entity), "attempted to add a component to an entity that did not exist"));
 
 			for (auto strClass : ReflectLaserComponent::stringToMap)
 			{
@@ -38,12 +39,17 @@ extern "C" namespace Mystic
 			ReflectLaserComponent::Init(registryRef);
 		}
 
+		extern "C" __declspec(dllexport) void DeserializeEntity(entt::registry& registryRef, YAML::detail::iterator_value& entityNode, entt::entity entity, Scene* scene)
+		{
+			ReflectLaserComponent::DeserializeEntity(registryRef, entityNode, entity, scene);
+		}
+
 		extern "C" __declspec(dllexport) void InitImGui(ImGuiContext* ctx)
 		{
 			ImGui::SetCurrentContext(ctx);
 		}
 
-		extern "C" __declspec(dllexport) void ImGui(entt::registry& registryRef, entt::entity entity)
+		extern "C" __declspec(dllexport) void ImGui(entt::registry & registryRef, entt::entity entity)
 		{
 			ReflectLaserComponent::ImGui(entity, registryRef);
 		}

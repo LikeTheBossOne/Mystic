@@ -52,6 +52,16 @@ namespace Mystic
 		GameCodeSystem::AddComponentFromString(componentName, e, _registry, this);
 	}
 
+	void Scene::ReloadGameCode()
+	{
+		GameCodeSystem::Reload(_registry);
+	}
+
+	void Scene::GameCodeImGui(entt::entity entity)
+	{
+		GameCodeSystem::ImGui(_registry, entity);
+	}
+
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
 		_viewportWidth = width;

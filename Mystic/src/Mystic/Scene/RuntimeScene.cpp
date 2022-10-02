@@ -38,7 +38,7 @@ namespace Mystic
 			layout
 		);*/
 
-		GameCodeSystem::Start(_registry);
+		//ReloadGameCode();
 	}
 
 	RuntimeScene::~RuntimeScene()
@@ -77,9 +77,9 @@ namespace Mystic
 		{
 			auto [transform, meshRenderer] = group.get<TransformComponent, MeshRendererComponent>(entity);
 
-			assert(_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader");
-			assert(_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture");
-			assert(_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh");
+			assert((_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader"));
+			assert((_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture"));
+			assert((_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh"));
 
 			if (!Renderer3D::BatchExists(meshRenderer.ShaderName, meshRenderer.MeshName))
 			{

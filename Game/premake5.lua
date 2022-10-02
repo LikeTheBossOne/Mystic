@@ -20,7 +20,8 @@ project "Game"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.singleton_cpp}"
+		"%{IncludeDir.singleton_cpp}",
+		"%{IncludeDir.yaml_cpp}",
 	}
 
 	links

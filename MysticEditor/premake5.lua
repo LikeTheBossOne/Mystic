@@ -21,7 +21,8 @@ project "MysticEditor"
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.ImGuizmo}",
 		"%{IncludeDir.ImGui}",
-		"%{IncludeDir.singleton_cpp}"
+		"%{IncludeDir.singleton_cpp}",
+		"%{IncludeDir.yaml_cpp}",
 	}
 
 	links

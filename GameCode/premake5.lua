@@ -20,12 +20,14 @@ project "GameCode"
 		"%{wks.location}/Mystic/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
+		"%{IncludeDir.yaml_cpp}",
 	}
 
 	links
 	{
 		"Mystic",
 		"ImGui",
+		"yaml-cpp"
 	}
 
 	postbuildmessage "Copying DLL to MysticEditor bin location"

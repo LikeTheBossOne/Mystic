@@ -10,6 +10,7 @@ namespace Mystic
 	static void DeleteComponentStub(entt::registry&) {}
 	static void InitComponentsStub(entt::registry&) {}
 	static void InitImGuiStub(ImGuiContext*) {}
+	static void DeserializeEntityStub(entt::registry&, YAML::detail::iterator_value&, entt::entity, Scene*) {}
 	//static void SaveScriptStub(json&) {}
 	//static void LoadScriptStub(json&, Entity) {}
 	static void ImGuiStub(entt::registry&,entt::entity) {}
@@ -32,7 +33,8 @@ namespace Mystic
 
 	void GameCodeSystem::Start(entt::registry& registry)
 	{
-		Reload(registry);
+		if (!s_isLoaded)
+			Reload(registry);
 	}
 
 	static bool FileExists(const std::string& name) {
@@ -48,7 +50,7 @@ namespace Mystic
 		}
 		
 		WCHAR pBuf[256];
-		size_t len = sizeof(pBuf);
+		DWORD len = sizeof(pBuf);
 		int bytes = GetModuleFileName(NULL, pBuf, len);
 		std::wstring ws(pBuf);
 		std::string path(ws.begin(), ws.end());
@@ -73,7 +75,8 @@ namespace Mystic
 		s_initComponentsFn = (InitComponentsFn)TryLoadFunction(s_module, "InitComponents");
 		s_updateComponentsFn = (UpdateComponentsFn)TryLoadFunction(s_module, "UpdateComponents");
 		s_addComponentFromStringFn = (AddComponentFromStringFn)TryLoadFunction(s_module, "AddComponent");
-		s_deleteComponentFn = (DeleteComponentFn)TryLoadFunction(s_module, "DeleteComponent");
+		s_deleteComponentsFn = (DeleteComponentsFn)TryLoadFunction(s_module, "DeleteComponents");
+		s_deserializeEntityFn = (DeserializeEntityFn)TryLoadFunction(s_module, "DeserializeEntity");
 
 		if (s_initComponentsFn)
 		{
@@ -86,6 +89,23 @@ namespace Mystic
 		if (s_updateComponentsFn)
 		{
 			s_updateComponentsFn(scene->_registry, dt);
+		}
+	}
+
+	void GameCodeSystem::DeserializeEntity(entt::registry& registryRef, YAML::detail::iterator_value& entityNode,
+		entt::entity entity, Scene* scene)
+	{
+		if (s_deserializeEntityFn)
+		{
+			s_deserializeEntityFn(registryRef, entityNode, entity, scene);
+		}
+	}
+
+	void GameCodeSystem::InitImGui(ImGuiContext* context)
+	{
+		if (s_initImGuiFn)
+		{
+			s_initImGuiFn(context);
 		}
 	}
 
@@ -107,15 +127,16 @@ namespace Mystic
 
 	bool GameCodeSystem::FreeGameCodeLibrary(entt::registry& registry)
 	{
-		if (s_deleteComponentFn)
+		if (s_deleteComponentsFn)
 		{
-			s_deleteComponentFn(registry);
+			s_deleteComponentsFn(registry);
 		}
 		
-		s_deleteComponentFn = DeleteComponentStub;
+		s_deleteComponentsFn = DeleteComponentStub;
 		s_updateComponentsFn = UpdateComponentsStub;
 		s_addComponentFromStringFn = AddComponentFromStringStub;
 		s_initComponentsFn = InitComponentsStub;
+		s_deserializeEntityFn = DeserializeEntityStub;
 		s_initImGuiFn = InitImGuiStub;
 		s_imGuiFn = ImGuiStub;
 

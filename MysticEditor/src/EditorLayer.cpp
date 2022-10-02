@@ -24,6 +24,7 @@
 #include "Mystic/Render/Mesh.h"
 #include "Mystic/Render/Renderer3D.h"
 #include "Mystic/Core/ServiceLocator.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 
 namespace Mystic {
 
@@ -47,6 +48,7 @@ namespace Mystic {
 
 		_activeProjectScene = std::make_shared<ProjectScene>();
 		_activeScene = _activeProjectScene;
+		_activeProjectScene->ReloadGameCode();
 
 		auto commandLineArgs = singleton<ServiceLocator>().GetApplication().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
@@ -55,6 +57,9 @@ namespace Mystic {
 			ProjectSerializer serializer(_activeProjectScene);
 			serializer.DeserializeProject(sceneFilePath);
 		}
+
+		
+		GameCodeSystem::InitImGui(ImGui::GetCurrentContext());
 
 		_editorCamera = EditorCamera(30.0f, 1.778f, 0.001f, 1000.0f);
 

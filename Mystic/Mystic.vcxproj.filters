@@ -37,6 +37,9 @@
     <Filter Include="src\Mystic\Scene">
       <UniqueIdentifier>{32CF68E6-1EC8-8738-47FA-6CBD33526744}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mystic\Scripting">
+      <UniqueIdentifier>{97D9D45D-8368-5E27-2C87-722218F56ECD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mystic\Utility">
       <UniqueIdentifier>{98F9BCE5-84DD-7D3B-ED3D-788ED94068BD}</UniqueIdentifier>
     </Filter>
@@ -121,6 +124,9 @@
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Core\Window.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\exportimport.h">
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ECS\ComponentRegistry.h">
@@ -272,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="src\Mystic\Scene\SceneCamera.h">
       <Filter>src\Mystic\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h">
+      <Filter>src\Mystic\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Utility\utilities.h">
       <Filter>src\Mystic\Utility</Filter>
@@ -1575,8 +1584,6 @@
     <ClInclude Include="vendor\stb_image\stb_image.h">
       <Filter>vendor\stb_image</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h" />
-    <ClInclude Include="src\Mystic\Core\exportimport.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Mystic\Assets\AssetLibrary.cpp">
@@ -1687,6 +1694,9 @@
     <ClCompile Include="src\Mystic\Scene\SceneCamera.cpp">
       <Filter>src\Mystic\Scene</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp">
+      <Filter>src\Mystic\Scripting</Filter>
+    </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
@@ -1729,6 +1739,5 @@
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp" />
   </ItemGroup>
 </Project>

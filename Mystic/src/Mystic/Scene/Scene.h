@@ -36,14 +36,14 @@ namespace Mystic
 		template <typename T>
 		void EntityRemoveComponent(entt::entity e)
 		{
-			assert(EntityHasComponent<T>(e), "Entity does not have component");
+			assert((EntityHasComponent<T>(e), "Entity does not have component"));
 			_registry.remove<T>(e);
 		}
 
 		template <typename T, typename... Args>
 		T& EntityAddComponent(entt::entity e, Args&&... args)
 		{
-			assert(!EntityHasComponent<T>(e), "Entity already has component!");
+			assert((!EntityHasComponent<T>(e), "Entity already has component!"));
 			T& component = _registry.emplace<T>(e, std::forward<Args>(args)...);
 			//OnComponentAdded<Component>(*this, component);
 			return component;
@@ -54,7 +54,7 @@ namespace Mystic
 		template <class TComponentType>
 		TComponentType& EntityAddNativeScriptComponent(entt::entity e)
 		{
-			assert(!EntityHasComponent<TComponentType>(e), "Entity already has component!");
+			assert((!EntityHasComponent<TComponentType>(e), "Entity already has component!"));
 			static_assert(std::is_base_of_v<NativeScriptComponent, TComponentType>, "Attempted to create a non NativeScriptComponent as a component");
 			TComponentType& component = _registry.emplace<TComponentType>(e);
 
@@ -69,9 +69,12 @@ namespace Mystic
 		template <typename T>
 		T& EntityGetComponent(entt::entity e)
 		{
-			assert(EntityHasComponent<T>(e), "Entity does not have component");
+			assert((EntityHasComponent<T>(e), "Entity does not have component"));
 			return _registry.get<T>(e);
 		}
+
+		void ReloadGameCode();
+		void GameCodeImGui(entt::entity entity);
 
 		void OnViewportResize(uint32_t width, uint32_t height);
 

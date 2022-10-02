@@ -25,6 +25,9 @@ public:
 	MPROPERTY()
 	float Damage = 0.0f;
 
+	MPROPERTY()
+	int TestInt = 10;
+
 	void Start();
 	void Update();
 
