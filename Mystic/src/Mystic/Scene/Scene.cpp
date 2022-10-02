@@ -82,7 +82,7 @@ namespace Mystic
 	{
 		GUID entGuid;
 		HRESULT result = CoCreateGuid(&entGuid);
-		assert(result == S_OK, "GUID Creation failed");
+		assert((result == S_OK, "GUID Creation failed"));
 		
 		return CreateEntity(name, entGuid);
 	}

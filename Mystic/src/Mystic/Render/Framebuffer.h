@@ -21,7 +21,7 @@ namespace Mystic {
 		Depth = DEPTH24STENCIL8
 	};
 
-	struct FramebufferTextureSpecification
+	struct MYSTIC_API FramebufferTextureSpecification
 	{
 		FramebufferTextureSpecification() = default;
 		FramebufferTextureSpecification(FramebufferTextureFormat format)
@@ -31,7 +31,7 @@ namespace Mystic {
 		// TODO: filtering/wrap
 	};
 
-	struct FramebufferAttachmentSpecification
+	struct MYSTIC_API FramebufferAttachmentSpecification
 	{
 		FramebufferAttachmentSpecification() = default;
 		FramebufferAttachmentSpecification(std::initializer_list<FramebufferTextureSpecification> attachments)
