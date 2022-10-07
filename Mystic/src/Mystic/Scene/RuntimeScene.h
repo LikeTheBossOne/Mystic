@@ -5,6 +5,7 @@
 
 namespace Mystic
 {
+	class AssetLibrary;
 	struct Renderable;
 	struct TransformComponent;
 
@@ -15,7 +16,10 @@ namespace Mystic
 		~RuntimeScene() override;
 
 		void OnUpdate(float deltaTime);
+		void Render();
 
+	private:
+		Ref<AssetLibrary> _assetLibrary;
 
 		friend class ProjectScene;
 

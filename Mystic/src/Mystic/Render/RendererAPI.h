@@ -6,7 +6,7 @@
 
 namespace Mystic {
 
-	class RendererAPI
+	class MYSTIC_API RendererAPI
 	{
 	public:
 		enum class API
@@ -26,7 +26,7 @@ namespace Mystic {
 		static API GetAPI() { return s_API; }
 		static Unique<RendererAPI> Create();
 	private:
-		static API s_API;
+		inline static API s_API = API::OpenGL;
 	};
 
 }

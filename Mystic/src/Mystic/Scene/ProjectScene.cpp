@@ -12,6 +12,7 @@
 #include "Mystic/ECS/ComponentRegistry.h"
 #include "Mystic/ECS/Components/MeshRendererComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 #include "Mystic/Render/Renderer2D.h"
 #include "Mystic/Render/Renderer3D.h"
 
@@ -25,11 +26,11 @@ namespace Mystic
 		_assetLibrary = std::make_shared<AssetLibrary>();
 
 		std::unordered_map<FBXAssetType, std::unordered_map<std::string, std::string>> map;
-		/*FBXImporter::Import("../Sandbox/assets/fbx/BaseCharacter.fbx", map);
+		//FBXImporter::Import("../Game/assets/fbx/BaseCharacter.fbx", map);
 		for (auto filePair : map[FBXAssetType::MESH])
 		{
 			_mesh = Mesh::CreateMeshFromMystAsset(filePair.second);
-		}*/
+		}
 		BufferLayout layout{
 			{ ShaderDataType::Float3, "a_Position" },
 			{ ShaderDataType::Float2, "a_UV" },
@@ -44,7 +45,9 @@ namespace Mystic
 			layout
 		);
 		//_mesh = Mesh::CreateMeshFromMystAsset("MystData/assets/crate1.mysta");
-		_texture = Texture2D::Create("crate", "assets/textures/crate_1.jpg");
+		//_texture = Texture2D::Create("crate", "assets/textures/crate_1.jpg");
+
+		//GameCodeSystem::ReloadGameCode(_registry);
 	}
 
 	ProjectScene::~ProjectScene()
@@ -56,6 +59,7 @@ namespace Mystic
 		Ref<RuntimeScene> runtimeScene = std::make_shared<RuntimeScene>();
 
 		runtimeScene->_name = _name;
+		runtimeScene->_assetLibrary = _assetLibrary;
 
 		std::unordered_map<GUID, entt::entity> uuidToEntMap;
 
@@ -72,30 +76,22 @@ namespace Mystic
 		return runtimeScene;
 	}
 	
-	void ProjectScene::OnUpdate(EditorCamera& camera)
+	void ProjectScene::OnUpdate(float deltaTime)
 	{
-		/*Renderer2D::BeginScene(camera);
 
-		auto group = _registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
-		for (auto entity : group)
-		{
-			auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+	}
 
-			Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
-		}
-
-		Renderer2D::EndScene();*/
-
-
+	void ProjectScene::OnRender(EditorCamera& camera)
+	{
 		//TODO: Before every render, check and see if any batches need to be registered. In the future, we should find a way to make this cost not at runtime.
 		auto group = _registry.group<TransformComponent, MeshRendererComponent>();
 		for (auto entity : group)
 		{
 			auto [transform, meshRenderer] = group.get<TransformComponent, MeshRendererComponent>(entity);
 
-			assert(_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader");
-			assert(_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture");
-			assert(_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh");
+			assert((_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader"));
+			assert((_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture"));
+			assert((_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh"));
 
 			if (!Renderer3D::BatchExists(meshRenderer.ShaderName, meshRenderer.MeshName))
 			{

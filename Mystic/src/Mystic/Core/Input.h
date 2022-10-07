@@ -1,13 +1,13 @@
 #pragma once
 
 #include "glm/vec2.hpp"
-
+#include "Mystic/Core/Core.h"
 #include "Mystic/Core/KeyCodes.h"
 #include "Mystic/Core/MouseCodes.h"
 
 namespace Mystic {
 
-	class Input
+	class MYSTIC_API Input
 	{
 	public:
 		static bool IsKeyPressed(KeyCode key);

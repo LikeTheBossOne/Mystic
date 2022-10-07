@@ -3,6 +3,7 @@
 #include "../ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
 
 namespace Mystic
 {
@@ -46,6 +47,21 @@ namespace Mystic
 		_registry.destroy(entity.EntId);
 	}
 
+	void Scene::EntityAddComponentByName(entt::entity e, std::string componentName)
+	{
+		GameCodeSystem::AddComponentFromString(componentName, e, _registry, this);
+	}
+
+	void Scene::ReloadGameCode()
+	{
+		GameCodeSystem::Reload(_registry);
+	}
+
+	void Scene::GameCodeImGui(entt::entity entity)
+	{
+		GameCodeSystem::ImGui(_registry, entity);
+	}
+
 	void Scene::OnViewportResize(uint32_t width, uint32_t height)
 	{
 		_viewportWidth = width;
@@ -66,7 +82,7 @@ namespace Mystic
 	{
 		GUID entGuid;
 		HRESULT result = CoCreateGuid(&entGuid);
-		assert(result == S_OK, "GUID Creation failed");
+		assert((result == S_OK, "GUID Creation failed"));
 		
 		return CreateEntity(name, entGuid);
 	}

@@ -1,8 +1,9 @@
 ﻿#pragma once
+#include "Mystic/Scripting/NativeScriptComponent.h"
 
 namespace Mystic
 {
-	struct ThrusterComponent
+	struct ThrusterComponent : NativeScriptComponent
 	{
 		float Thrust;
 		// Rads/s

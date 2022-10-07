@@ -4,6 +4,12 @@
     <Filter Include="..">
       <UniqueIdentifier>{61705900-4DFC-870B-B6AA-880BA255880B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Game">
+      <UniqueIdentifier>{AAEE7E47-16CE-FDE2-1FE6-88B98B446444}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\GameCode">
+      <UniqueIdentifier>{85D670B5-F18B-E9AA-7A80-E381E634E0AE}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Mystic">
       <UniqueIdentifier>{0919AA32-7583-5EA9-BEC1-0F4F2A6B3CFE}</UniqueIdentifier>
     </Filter>
@@ -16,11 +22,17 @@
     <Filter Include="..\Mystic\vendor\Glad">
       <UniqueIdentifier>{ED4D9B66-59BA-5661-22AE-EEBE8ED978C9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="..\Mystic\vendor\ImGuizmo">
+      <UniqueIdentifier>{668C81A8-D24E-B532-1BFF-43BF87008E10}</UniqueIdentifier>
+    </Filter>
     <Filter Include="..\Mystic\vendor\OpenFBX">
       <UniqueIdentifier>{C7BBEB40-B3E0-3AC1-DC2B-2051C8AF39DF}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Mystic\vendor\imgui">
       <UniqueIdentifier>{30F56C3C-1CEF-958E-055C-2C9FF1F4FBFA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="..\Mystic\vendor\singleton-cpp">
+      <UniqueIdentifier>{3871641A-2497-2E81-0DDD-B34CF9A1534D}</UniqueIdentifier>
     </Filter>
     <Filter Include="..\Mystic\vendor\yaml-cpp">
       <UniqueIdentifier>{B880FEB0-2443-323B-6DF3-C0C7D9F40A19}</UniqueIdentifier>
@@ -31,11 +43,17 @@
     <Filter Include="..\MysticHeaderTool">
       <UniqueIdentifier>{506BBA6F-BCCC-977D-453A-DE2FB19ACE3C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="..\Sandbox">
-      <UniqueIdentifier>{3F7B6B1D-2B33-AD6A-943A-86C68011485B}</UniqueIdentifier>
+    <Filter Include="..\MysticHeaderToolTests">
+      <UniqueIdentifier>{8362BBAC-6F87-0A2D-98D2-EFBC8456094B}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Game\premake5.lua">
+      <Filter>..\Game</Filter>
+    </None>
+    <None Include="..\..\GameCode\premake5.lua">
+      <Filter>..\GameCode</Filter>
+    </None>
     <None Include="..\..\Mystic\premake5.lua">
       <Filter>..\Mystic</Filter>
     </None>
@@ -45,11 +63,17 @@
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua">
       <Filter>..\Mystic\vendor\Glad</Filter>
     </None>
+    <None Include="..\..\Mystic\vendor\ImGuizmo\premake5.lua">
+      <Filter>..\Mystic\vendor\ImGuizmo</Filter>
+    </None>
     <None Include="..\..\Mystic\vendor\OpenFBX\premake5.lua">
       <Filter>..\Mystic\vendor\OpenFBX</Filter>
     </None>
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua">
       <Filter>..\Mystic\vendor\imgui</Filter>
+    </None>
+    <None Include="..\..\Mystic\vendor\singleton-cpp\premake5.lua">
+      <Filter>..\Mystic\vendor\singleton-cpp</Filter>
     </None>
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua">
       <Filter>..\Mystic\vendor\yaml-cpp</Filter>
@@ -60,8 +84,8 @@
     <None Include="..\..\MysticHeaderTool\premake5.lua">
       <Filter>..\MysticHeaderTool</Filter>
     </None>
-    <None Include="..\..\Sandbox\premake5.lua">
-      <Filter>..\Sandbox</Filter>
+    <None Include="..\..\MysticHeaderToolTests\premake5.lua">
+      <Filter>..\MysticHeaderToolTests</Filter>
     </None>
     <None Include="..\..\premake5.lua">
       <Filter>..</Filter>

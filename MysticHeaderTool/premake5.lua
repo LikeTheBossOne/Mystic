@@ -22,13 +22,17 @@ project "MysticHeaderTool"
 		"**/bin-int/**",
 	}
 
+	nuget
+	{
+		"System.Text.RegularExpressions:4.3.1"
+	}
+
 	filter "system:windows"
 		systemversion "latest"
 
 		defines
 		{
-			"MYST_PLATFORM_WINDOWS",
-			"MYST_BUILD_DLL"
+			"MYST_PLATFORM_WINDOWS"
 		}
 
 	filter "configurations:Debug"

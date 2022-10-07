@@ -9,7 +9,7 @@
 namespace Mystic {
 	class VertexArray;
 
-	class Renderer
+	class MYSTIC_API Renderer
 	{
 	public:
 		static void Init();

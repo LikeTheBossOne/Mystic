@@ -1,4 +1,6 @@
 #include "EditorLayer.h"
+#include "imgui.h"
+#include "singleton.h"
 #include "Mystic/Core/Application.h"
 
 #include "Mystic/Core/EntryPoint.h"

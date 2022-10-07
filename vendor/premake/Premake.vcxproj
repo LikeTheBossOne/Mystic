@@ -60,32 +60,36 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <PostBuildEvent>
-      <Command>"$(ProjectDir)bin/premake5" vs2022 --file="$(SolutionDir)premake5.lua"</Command>
+      <Command>"$(ProjectDir)bin\premake5" vs2022 --file="$(SolutionDir)premake5.lua"</Command>
       <Message>Regenerating project files with Premake5!</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <PostBuildEvent>
-      <Command>"$(ProjectDir)bin/premake5" vs2022 --file="$(SolutionDir)premake5.lua"</Command>
+      <Command>"$(ProjectDir)bin\premake5" vs2022 --file="$(SolutionDir)premake5.lua"</Command>
       <Message>Regenerating project files with Premake5!</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
     <PostBuildEvent>
-      <Command>"$(ProjectDir)bin/premake5" vs2022 --file="$(SolutionDir)premake5.lua"</Command>
+      <Command>"$(ProjectDir)bin\premake5" vs2022 --file="$(SolutionDir)premake5.lua"</Command>
       <Message>Regenerating project files with Premake5!</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <None Include="..\..\Game\premake5.lua" />
+    <None Include="..\..\GameCode\premake5.lua" />
     <None Include="..\..\Mystic\premake5.lua" />
     <None Include="..\..\Mystic\vendor\GLFW\premake5.lua" />
     <None Include="..\..\Mystic\vendor\Glad\premake5.lua" />
+    <None Include="..\..\Mystic\vendor\ImGuizmo\premake5.lua" />
     <None Include="..\..\Mystic\vendor\OpenFBX\premake5.lua" />
     <None Include="..\..\Mystic\vendor\imgui\premake5.lua" />
+    <None Include="..\..\Mystic\vendor\singleton-cpp\premake5.lua" />
     <None Include="..\..\Mystic\vendor\yaml-cpp\premake5.lua" />
     <None Include="..\..\MysticEditor\premake5.lua" />
     <None Include="..\..\MysticHeaderTool\premake5.lua" />
-    <None Include="..\..\Sandbox\premake5.lua" />
+    <None Include="..\..\MysticHeaderToolTests\premake5.lua" />
     <None Include="..\..\premake5.lua" />
     <None Include="premake5.lua" />
   </ItemGroup>

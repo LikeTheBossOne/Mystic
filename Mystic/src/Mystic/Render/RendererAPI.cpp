@@ -5,8 +5,6 @@
 
 namespace Mystic {
 
-	RendererAPI::API RendererAPI::s_API = RendererAPI::API::OpenGL;
-
 	Unique<RendererAPI> RendererAPI::Create()
 	{
 		switch (s_API)
@@ -14,7 +12,7 @@ namespace Mystic {
 		case RendererAPI::API::OpenGL:  return std::make_unique<OpenGLRendererAPI>();
 		}
 
-		assert(false, "Unknown RendererAPI!");
+		assert((false, "Unknown RendererAPI!"));
 		return nullptr;
 	}
 

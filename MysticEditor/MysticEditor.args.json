@@ -4,7 +4,7 @@
   "Items": [
     {
       "Id": "884e05b7-0384-4bba-a3b5-c0bcc2ccd570",
-      "Command": "assets/scenes/Example.myst"
+      "Command": "assets/scenes/GameCodeExample.myst"
     }
   ]
 }

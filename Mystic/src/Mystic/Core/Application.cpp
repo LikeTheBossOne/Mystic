@@ -1,5 +1,6 @@
 #include "Application.h"
 
+#include "ServiceLocator.h"
 #include "Window.h"
 #include "GLFW/glfw3.h"
 #include "Mystic/Render/Renderer.h"
@@ -22,18 +23,15 @@
 #include "Mystic/ECS/Systems/ThrusterMovementSystem.h"
 #include "Mystic/ECS/Systems/VelocitySystem.h"
 #include "Mystic/Events/ApplicationEvent.h"
+#include "singleton.h"
 
 namespace Mystic
 {
-	Application* Application::s_Instance = nullptr;
-
 	Application::Application(const std::string& name, ApplicationCommandLineArgs args) : _running(true), _minimized(false), _lastFrameTime(0.0f), _commandLineArgs(args)
 	{
+		ServiceLocator& locator = singleton<ServiceLocator>();
+		locator.SetApplication(this);
 
-		assert(!s_Instance, "Application already exists");
-
-		s_Instance = this;
-		
 		_window = Window::Create();
 		_window->SetEventCallback(MYST_BIND_EVENT_FN(Application::OnEvent));
 

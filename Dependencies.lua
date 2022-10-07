@@ -10,3 +10,6 @@ IncludeDir["glm"] = "%{wks.location}/Mystic/vendor/glm"
 IncludeDir["entt"] = "%{wks.location}/Mystic/vendor/entt/include"
 IncludeDir["ImGuizmo"] = "%{wks.location}/Mystic/vendor/ImGuizmo"
 IncludeDir["OpenFBX"] = "%{wks.location}/Mystic/vendor/OpenFBX/src"
+IncludeDir["singleton_cpp"] = "%{wks.location}/Mystic/vendor/singleton-cpp"
+
+IncludeDir["GeneratedHeaderFiles"] = "%{wks.location}/Intermediate/Generated_H"

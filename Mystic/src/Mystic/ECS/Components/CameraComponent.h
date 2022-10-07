@@ -1,9 +1,10 @@
 #pragma once
 #include "Mystic/Scene/SceneCamera.h"
+#include "Mystic/Scripting/NativeScriptComponent.h"
 
 namespace Mystic
 {
-	struct CameraComponent
+	struct CameraComponent : NativeScriptComponent
 	{
 		SceneCamera Camera;
 		bool Primary = true; // TODO: think about moving to Scene

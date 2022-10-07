@@ -15,20 +15,32 @@ project "MysticEditor"
 
 	includedirs
 	{
-		"%{wks.location}/Mystic/vendor/spdlog/include",
 		"%{wks.location}/Mystic/src",
 		"%{wks.location}/Mystic/vendor",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
-		"%{IncludeDir.ImGuizmo}"
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.ImGui}",
+		"%{IncludeDir.singleton_cpp}",
+		"%{IncludeDir.yaml_cpp}",
 	}
 
 	links
 	{
-		"Mystic"
+		"Mystic",
+		"ImGui",
+		"ImGuizmo",
+		"singleton-cpp",
 	}
 
 	filter "system:windows"
+		postbuildmessage "Copying singleton-cpp.dll to MysticEditor bin location"
+		postbuildcommands
+		{
+			--"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\Mystic.dll\"",
+			"copy /b \"%{wks.location}Mystic\\vendor\\singleton-cpp\\bin\\" .. outputdir .. "\\singleton-cpp\\singleton-cpp.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\singleton-cpp.dll\""
+		}
+
 		systemversion "latest"
 
 		defines

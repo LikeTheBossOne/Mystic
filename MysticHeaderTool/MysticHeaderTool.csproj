@@ -22,7 +22,7 @@
     <OutputPath>..\bin\Debug-windows-x86_64\MysticHeaderTool\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Debug-windows-x86_64\MysticHeaderTool\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DEBUG</DefineConstants>
+    <DefineConstants>MYST_PLATFORM_WINDOWS;MYST_DEBUG</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -34,7 +34,7 @@
     <OutputPath>..\bin\Release-windows-x86_64\MysticHeaderTool\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Release-windows-x86_64\MysticHeaderTool\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_RELEASE</DefineConstants>
+    <DefineConstants>MYST_PLATFORM_WINDOWS;MYST_RELEASE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -46,7 +46,7 @@
     <OutputPath>..\bin\Dist-windows-x86_64\MysticHeaderTool\</OutputPath>
     <BaseIntermediateOutputPath>..\bin-int\Dist-windows-x86_64\MysticHeaderTool\</BaseIntermediateOutputPath>
     <IntermediateOutputPath>$(BaseIntermediateOutputPath)</IntermediateOutputPath>
-    <DefineConstants>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DIST</DefineConstants>
+    <DefineConstants>MYST_PLATFORM_WINDOWS;MYST_DIST</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -57,16 +57,28 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Generation\CodeGenerator.cs" />
+    <Compile Include="src\FileUtils\FileFinder.cs" />
+    <Compile Include="src\Generation\GenDLLExportFile.cs" />
+    <Compile Include="src\Generation\GenGameCodeExternFile.cs" />
+    <Compile Include="src\Generation\GenMComponentHeaderFile.cs" />
+    <Compile Include="src\Generation\GenMComponentReflectionFile.cs" />
+    <Compile Include="src\Generation\GenScriptTemplatesFile.cs" />
+    <Compile Include="src\Generation\GeneratedFile.cs" />
+    <Compile Include="src\Generation\MCodeGenerator.cs" />
     <Compile Include="src\MysticHeaderTool.cs" />
+    <Compile Include="src\Parsing\Exceptions\InvalidMPropertyTypeException.cs" />
     <Compile Include="src\Parsing\HeaderParser.cs" />
     <Compile Include="src\Parsing\HeaderParserSettings.cs" />
     <Compile Include="src\Parsing\MClass.cs" />
+    <Compile Include="src\Parsing\MComponent.cs" />
     <Compile Include="src\Parsing\MProperty.cs" />
-    <Compile Include="src\Parsing\MStruct.cs" />
     <Compile Include="src\Parsing\PropertyParser.cs" />
+    <Compile Include="src\Reflection\MReflectionContext.cs" />
   </ItemGroup>
   <ItemGroup>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1"/>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.

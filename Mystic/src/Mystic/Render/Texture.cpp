@@ -10,7 +10,7 @@ namespace Mystic {
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None:    assert(false, "RendererAPI::None is currently not supported!"); return nullptr;
+			case RendererAPI::API::None:    assert((false, "RendererAPI::None is currently not supported")); return nullptr;
 			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLTexture2D>(name, width, height);
 		}
 
@@ -22,7 +22,7 @@ namespace Mystic {
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None:    assert(false, "RendererAPI::None is currently not supported!"); return nullptr;
+			case RendererAPI::API::None:    assert((false, "RendererAPI::None is currently not supported")); return nullptr;
 			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLTexture2D>(name, path);
 		}
 
@@ -32,7 +32,7 @@ namespace Mystic {
 
 	void Texture2DLibrary::Add(const std::string& name, const Ref<Texture2D>& texture)
 	{
-		assert(!Exists(name), "Texture already exists!");
+		assert((!Exists(name), "Texture already exists!"));
 		_textures[name] = texture;
 	}
 
@@ -52,7 +52,7 @@ namespace Mystic {
 
 	Ref<Texture2D> Texture2DLibrary::Get(const std::string& name)
 	{
-		assert(Exists(name), "Shader not found!");
+		assert((Exists(name), "Shader not found!"));
 		return _textures[name];
 	}
 

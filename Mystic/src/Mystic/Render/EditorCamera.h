@@ -8,7 +8,7 @@
 
 namespace Mystic {
 
-	class EditorCamera : public Camera
+	class MYSTIC_API EditorCamera : public Camera
 	{
 	public:
 		EditorCamera() = default;

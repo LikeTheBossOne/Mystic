@@ -11,7 +11,7 @@
 
 namespace Mystic {
 
-	class Renderer2D
+	class MYSTIC_API Renderer2D
 	{
 	public:
 		static void Init();

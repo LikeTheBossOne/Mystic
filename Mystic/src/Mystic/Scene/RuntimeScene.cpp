@@ -5,11 +5,15 @@
 #include "Mystic/ECS/Components/Renderable.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
 #include "glm/ext/matrix_clip_space.hpp"
+#include "Mystic/Assets/AssetLibrary.h"
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/SpriteRendererComponent.h"
 #include "Mystic/Render/Renderer2D.h"
 
 #include "Mystic/ECS/SystemRegistry.h"
+#include "Mystic/ECS/Components/MeshRendererComponent.h"
+#include "Mystic/GameCode/GameCodeSystem.h"
+#include "Mystic/Render/Renderer3D.h"
 
 namespace Mystic
 {
@@ -18,6 +22,23 @@ namespace Mystic
 	{
 		_registry = entt::registry();
 		_mainCamera = std::make_shared<Camera>();
+		_assetLibrary = std::make_shared<AssetLibrary>();
+
+		/*BufferLayout layout{
+			{ ShaderDataType::Float3, "a_Position" },
+			{ ShaderDataType::Float2, "a_UV" },
+			{ ShaderDataType::Int,  "a_TexIndex" },
+			{ ShaderDataType::Int,    "a_EntityID" }
+		};
+		Renderer3D::RegisterBatch(
+			"3DTexture",
+			"assets/shaders/3DTexture.glsl",
+			"crateMesh",
+			"MystData/assets/crate1.mysta",
+			layout
+		);*/
+
+		//ReloadGameCode();
 	}
 
 	RuntimeScene::~RuntimeScene()
@@ -26,14 +47,11 @@ namespace Mystic
 
 	void RuntimeScene::OnUpdate(float deltaTime)
 	{
-		for (auto system: SystemRegistry::s_systems)
-		{
-			if (system.second.second)
-			{
-				system.second.first->OnUpdate(this, _registry, deltaTime);
-			}
-		}
+		GameCodeSystem::Update(deltaTime, this);
+	}
 
+	void RuntimeScene::Render()
+	{
 		// Render 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
@@ -46,25 +64,47 @@ namespace Mystic
 				if (camera.Primary)
 				{
 					mainCamera = &camera.Camera;
+					camera.Camera.SetPerspectiveVerticalFOV(30);
 					cameraTransform = transform.GetTransform();
 					break;
 				}
 			}
 		}
 
+		//TODO: Before every render, check and see if any batches need to be registered. In the future, we should find a way to make this cost not at runtime.
+		auto group = _registry.group<TransformComponent, MeshRendererComponent>();
+		for (auto entity : group)
+		{
+			auto [transform, meshRenderer] = group.get<TransformComponent, MeshRendererComponent>(entity);
+
+			assert((_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader"));
+			assert((_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture"));
+			assert((_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh"));
+
+			if (!Renderer3D::BatchExists(meshRenderer.ShaderName, meshRenderer.MeshName))
+			{
+				Renderer3D::RegisterBatch(_assetLibrary->Shaders[meshRenderer.ShaderName], _assetLibrary->Meshes[meshRenderer.MeshName]);
+			}
+		}
+
 		if (mainCamera)
 		{
-			Renderer2D::BeginScene(*mainCamera, cameraTransform);
+			Renderer3D::BeginScene(*mainCamera, cameraTransform);
 
-			auto group = _registry.group<TransformComponent>(entt::get<SpriteRendererComponent>);
 			for (auto entity : group)
 			{
-				auto [transform, sprite] = group.get<TransformComponent, SpriteRendererComponent>(entity);
+				auto [transform, meshRenderer] = group.get<TransformComponent, MeshRendererComponent>(entity);
 
-				Renderer2D::DrawSprite(transform.GetTransform(), sprite, (int)entity);
+				Renderer3D::DrawModel(
+					transform.GetTransform(),
+					meshRenderer.ShaderName,
+					meshRenderer.MeshName,
+					_assetLibrary->Textures[meshRenderer.TextureName],
+					(int)entity
+				);
 			}
 
-			Renderer2D::EndScene();
+			Renderer3D::EndScene();
 		}
 	}
 }

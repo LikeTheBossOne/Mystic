@@ -1,5 +1,6 @@
 ## Brendan's custom ignores
 bin-int/
+Intermediate/*
 
 
 

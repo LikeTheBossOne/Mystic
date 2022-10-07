@@ -1,8 +1,26 @@
-﻿
+﻿using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
+using MysticHeaderTool.FileUtils;
+using MysticHeaderTool.Generation;
+using MysticHeaderTool.Parsing;
+using MysticHeaderTool.Parsing.Exceptions;
+using MysticHeaderTool.Reflection;
+
+[assembly: InternalsVisibleTo("MysticHeaderToolTests")]
+
 namespace MysticHeaderTool
 {
     internal class MysticHeaderTool
     {
+        private static readonly string GenReflectionHeaderPath = Path.Combine("Intermediate", "Reflection");
+        private static readonly string GenHeaderPath = Path.Combine("Intermediate","Generated_H");
+        private static readonly string GenEditorPath = Path.Combine("Intermediate", "Generated_Editor");
+
         /*
          * This should run when Mystic or MysticEditor BUILDS.
          *
@@ -10,12 +28,61 @@ namespace MysticHeaderTool
          */
         static void Main(string[] args)
         {
-            // Loop through header files that have .generated.h files attached to them.
-            // // If file has MCOMPONENT, mark the class attached to it as a component needing code
-            // // an MPROPERTY tags, ascertain the type of the component, and generate ImGui Editor code, and generate
-            // 
-            // // If file has MSTRUCT, add struct to dictionary as a type that can have ImGui code generated for it.
+            if (args.Length < 4)
+            {
+                throw new ArgumentException("usage: MysticHeaderTool.exe <path-to-parse> <path-to-root> <path-to-output> <last-build(YYYY-MM-DD:hh-mm-ss)>");
+            }
 
+            string pathToParse = args[0];
+            string pathToRoot = args[1];
+            string pathToOutput = args[2];
+            string lastBuildStr = args[3];
+
+            DirectoryInfo parseDir = new DirectoryInfo(pathToParse);
+            DirectoryInfo outputDir = new DirectoryInfo(pathToOutput);
+            string format = "dd/MM/yyyy-HH:mm:ss.ffffff";
+            DateTime lastBuildTime = DateTime.ParseExact(lastBuildStr, format, CultureInfo.CurrentCulture);
+
+
+            // DO HEADER PARSING
+
+            MReflectionContext context = new MReflectionContext();
+            HeaderParser headerParser = new HeaderParser(new HeaderParserSettings(), context);
+
+            List<FileInfo> filesToParse = FileFinder.GetFilesByModifiedTime(parseDir, lastBuildTime);
+            foreach (FileInfo file in filesToParse)
+            {
+                MComponent component;
+                try
+                {
+                    component = headerParser.ParseHeader(file.FullName);
+                }
+                catch (InvalidMPropertyTypeException e)
+                {
+                    continue;
+                }
+
+                if (component != null)
+                {
+                    //context.MClassDictionary.Add(mstruct.Name, mstruct);
+                    context.MComponents.Add(component);
+                }
+            }
+
+            // DO CODE GEN
+            var generator = new MCodeGenerator(context);
+
+            var headerGenDir = new DirectoryInfo(Path.Combine(pathToRoot, GenHeaderPath));
+            if (!headerGenDir.Exists)
+            {
+                headerGenDir.Create();
+            }
+
+            generator.GenerateMComponentBodyHeaderFiles(headerGenDir);
+
+            generator.GenerateReflectionFiles(outputDir);
+
+            generator.GenerateNativeScriptFiles(outputDir);
         }
     }
 }

@@ -7,7 +7,7 @@
 namespace Mystic {
 	class VertexArray;
 
-	class RenderCommand
+	class MYSTIC_API RenderCommand
 	{
 	public:
 		static void Init()
@@ -35,7 +35,7 @@ namespace Mystic {
 			s_rendererAPI->DrawIndexed(vertexArray, count);
 		}
 	private:
-		static Unique<RendererAPI> s_rendererAPI;
+		inline static Unique<RendererAPI> s_rendererAPI = RendererAPI::Create();;
 	};
 
 }

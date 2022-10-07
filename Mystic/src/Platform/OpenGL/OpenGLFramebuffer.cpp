@@ -173,7 +173,7 @@ namespace Mystic {
 			glDrawBuffer(GL_NONE);
 		}
 
-		assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
+		assert((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!"));
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}

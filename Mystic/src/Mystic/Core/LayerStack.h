@@ -1,11 +1,13 @@
 #pragma once
+#include "Core.h"
+
 #include <vector>
 
 namespace Mystic
 {
 	class Layer;
 
-	class LayerStack
+	class MYSTIC_API LayerStack
 	{
 	public:
 		LayerStack() = default;

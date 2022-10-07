@@ -25,6 +25,9 @@
     <Filter Include="src\Mystic\Events">
       <UniqueIdentifier>{99503294-0567-302A-4EDE-BB4BBA3301B2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mystic\GameCode">
+      <UniqueIdentifier>{F90EF103-6570-CE11-EEDD-14C45A3E05D1}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mystic\ImGui">
       <UniqueIdentifier>{3FD7B8E5-2BD0-D737-5402-BDBC405AB743}</UniqueIdentifier>
     </Filter>
@@ -33,6 +36,9 @@
     </Filter>
     <Filter Include="src\Mystic\Scene">
       <UniqueIdentifier>{32CF68E6-1EC8-8738-47FA-6CBD33526744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\Scripting">
+      <UniqueIdentifier>{97D9D45D-8368-5E27-2C87-722218F56ECD}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Mystic\Utility">
       <UniqueIdentifier>{98F9BCE5-84DD-7D3B-ED3D-788ED94068BD}</UniqueIdentifier>
@@ -108,10 +114,19 @@
     <ClInclude Include="src\Mystic\Core\LayerStack.h">
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\Core\MMacros.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mystic\Core\MouseCodes.h">
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\Core\ServiceLocator.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mystic\Core\Window.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\exportimport.h">
       <Filter>src\Mystic\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ECS\ComponentRegistry.h">
@@ -182,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="src\Mystic\Events\MouseEvent.h">
       <Filter>src\Mystic\Events</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\GameCode\GameCodeSystem.h">
+      <Filter>src\Mystic\GameCode</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h">
       <Filter>src\Mystic\ImGui</Filter>
@@ -260,6 +278,9 @@
     </ClInclude>
     <ClInclude Include="src\Mystic\Scene\SceneCamera.h">
       <Filter>src\Mystic\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h">
+      <Filter>src\Mystic\Scripting</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Utility\utilities.h">
       <Filter>src\Mystic\Utility</Filter>
@@ -1598,6 +1619,9 @@
     <ClCompile Include="src\Mystic\ECS\Systems\VelocitySystem.cpp">
       <Filter>src\Mystic\ECS\Systems</Filter>
     </ClCompile>
+    <ClCompile Include="src\Mystic\GameCode\GameCodeSystem.cpp">
+      <Filter>src\Mystic\GameCode</Filter>
+    </ClCompile>
     <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp">
       <Filter>src\Mystic\ImGui</Filter>
     </ClCompile>
@@ -1669,6 +1693,9 @@
     </ClCompile>
     <ClCompile Include="src\Mystic\Scene\SceneCamera.cpp">
       <Filter>src\Mystic\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp">
+      <Filter>src\Mystic\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp">
       <Filter>src\Platform\OpenGL</Filter>

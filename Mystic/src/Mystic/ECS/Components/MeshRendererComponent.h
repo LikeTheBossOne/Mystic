@@ -2,12 +2,12 @@
 #include <string>
 
 #include "glm/vec4.hpp"
-#include "Mystic/Render/Mesh.h"
-#include "Mystic/Render/Texture.h"
+#include "Mystic/Scripting/NativeScriptComponent.h"
+
 
 namespace Mystic
 {
-	struct MeshRendererComponent
+	struct MeshRendererComponent : NativeScriptComponent
 	{
 		std::string MeshName;
 

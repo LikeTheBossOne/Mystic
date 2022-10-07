@@ -1,5 +1,6 @@
 #pragma once
 
+#include "Mystic/Core/Application.h"
 #include "Mystic/Core/Layer.h"
 #include "Mystic/Events/KeyEvent.h"
 
@@ -13,7 +14,6 @@
 #include "Panels/SceneHierarchyPanel.h"
 
 namespace Mystic {
-
 	class EditorLayer : public Layer
 	{
 	public:
@@ -43,7 +43,7 @@ namespace Mystic {
 	private:
 		SceneHierarchyPanel _sceneHierarchyPanel;
 
-		OrthographicCameraController m_CameraController;
+		OrthographicCameraController _cameraController;
 
 		// Temp
 		Ref<VertexArray> _squareVA;

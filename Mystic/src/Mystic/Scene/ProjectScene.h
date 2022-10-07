@@ -20,7 +20,8 @@ namespace Mystic
 		Ref<RuntimeScene> CreateRuntimeScene();
 
 	public:
-		void OnUpdate(EditorCamera& camera);
+		void OnUpdate(float deltaTime);
+		void OnRender(EditorCamera& camera);
 
 		friend class ProjectSerializer;
 

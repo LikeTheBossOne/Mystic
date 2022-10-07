@@ -1,0 +1,13 @@
+#pragma once
+
+#define MCOMPONENT(...)
+
+#define MPROPERTY(...)
+
+#define CURRENT_FILE_PATH Path_To_File_h
+
+#define COMBINE_MACRO_4_INNER(A,B,C,D) A##B##C##D 
+
+#define COMBINE_MACRO_4(A,B,C,D) COMBINE_MACRO_4_INNER(A,B,C,D)
+
+#define MGENERATED_INFO(...) COMBINE_MACRO_4(CURRENT_FILE_PATH,_,__LINE__,_MGENERATED_INFO);

@@ -7,6 +7,10 @@
 
 #include "Core.h"
 #include "LayerStack.h"
+#include "MMacros.h"
+
+
+
 
 int main(int argc, char** argv);
 
@@ -32,7 +36,7 @@ namespace Mystic
 		}
 	};
 
-	class Application
+	class MYSTIC_API Application
 	{
 	public:
 		Application(const std::string& name = "Mystic Game", ApplicationCommandLineArgs args = ApplicationCommandLineArgs());
@@ -66,17 +70,11 @@ namespace Mystic
 		Unique<Window> _window;
 		ApplicationCommandLineArgs _commandLineArgs;
 
-
-		//STATIC
-	public:
-		static Application& Get() { return *s_Instance; }
-
 	private:
-		static Application* s_Instance;
 		friend int ::main(int argc, char** argv);
 	};
 
 	// To be defined in client
-	Application* CreateApplication(ApplicationCommandLineArgs args);
+	Mystic::Application* CreateApplication(ApplicationCommandLineArgs args);
 }
 
