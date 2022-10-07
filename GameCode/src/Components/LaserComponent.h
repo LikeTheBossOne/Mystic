@@ -1,25 +1,12 @@
 #pragma once
 #include "Mystic/Core/MMacros.h"
 #include "Mystic/Scripting/NativeScriptComponent.h"
+#include "LaserComponent.generated.h"
 
-MSTRUCT()
+MCOMPONENT()
 class LaserComponent : Mystic::NativeScriptComponent
 {
-	//MGENERATED_BODY()
-	// This will expand to
-	// public:
-	//   LaserComponent(Mystic::Entity* e)
-	//   }
-	//       _owningEntity = e;
-	//   }
-public:
-	LaserComponent(entt::entity e, Mystic::Scene* scene)
-	{
-		_ent = e;
-		_owningScene = scene;
-	}
-
-
+	MGENERATED_INFO()
 
 public:
 	MPROPERTY()

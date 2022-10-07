@@ -57,7 +57,10 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="test\TestGeneratedHeaderFile.cs" />
+    <Compile Include="test\TestGenGameCodeExternFile.cs" />
+    <Compile Include="test\TestGenMComponentHeaderFile.cs" />
+    <Compile Include="test\TestGenMComponentReflectionFile.cs" />
+    <Compile Include="test\TestGenScriptTemplatesFile.cs" />
     <Compile Include="test\TestHeaderParser.cs" />
     <Compile Include="test\Usings.cs" />
   </ItemGroup>

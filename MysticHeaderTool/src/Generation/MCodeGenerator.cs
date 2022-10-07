@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Text;
 using MysticHeaderTool.Parsing;
 using MysticHeaderTool.Reflection;
 
@@ -20,11 +21,11 @@ namespace MysticHeaderTool.Generation
             MReflectionContext = context;
         }
 
-        public void GenerateHeaderFiles(DirectoryInfo outputDir)
+        public void GenerateMComponentBodyHeaderFiles(DirectoryInfo outputDir)
         {
-            foreach (MStruct mStruct in MReflectionContext.MStructDictionary.Values)
+            foreach (MComponent component in MReflectionContext.MComponents)
             {
-                string headerName = Path.GetFileName(mStruct.SourceFilePath);
+                string headerName = Path.GetFileName(component.SourceFilePath);
                 
                 int hIndex = headerName.LastIndexOf(".h", StringComparison.Ordinal);
 
@@ -38,15 +39,41 @@ namespace MysticHeaderTool.Generation
                     pathToGen = Path.Combine(outputDir.FullName, headerName.Substring(0, hIndex) + ".generated.h");
                 }
 
-                var genFile = new GenMStructHeaderFile(mStruct, pathToGen);
+                var genFile = new GenMComponentHeaderFile(pathToGen, component);
                 genFile.Generate();
             }
         }
 
-        public void GenerateEditorFiles(DirectoryInfo outputDir)
+        public void GenerateReflectionFiles(DirectoryInfo outputDir)
         {
-            var componentsFile = new GenEditorDrawComponentsFile(MReflectionContext, Path.Combine(outputDir.FullName, "DrawComponents.Generated.h"));
-            componentsFile.Generate();
+            var fileNamesToComponents = new List<KeyValuePair<string,MComponent>>();
+            foreach (MComponent component in MReflectionContext.MComponents)
+            {
+                StringBuilder fileNameBuilder = new StringBuilder();
+                fileNameBuilder
+                    .Append("Reflect")
+                    .Append(component.Name)
+                    .Append(".generated.h");
+                string fileName = fileNameBuilder.ToString();
+
+                fileNamesToComponents.Add(new KeyValuePair<string, MComponent>(fileName, component));
+
+                var genComponentReflectionFile = new GenMComponentReflectionFile(Path.Combine(outputDir.FullName, fileName), component);
+                genComponentReflectionFile.Generate();
+            }
+
+            string externFilePath = Path.Combine(outputDir.FullName, "Init.h");
+
+            var genExternFile = new GenGameCodeExternFile(externFilePath, fileNamesToComponents);
+            genExternFile.Generate();
+        }
+
+        public void GenerateNativeScriptFiles(DirectoryInfo outputDir)
+        {
+            string outputPath = Path.Combine(outputDir.FullName, "NativeScriptTemplates.h");
+
+            var genTemplatesFile = new GenScriptTemplatesFile(outputPath, MReflectionContext.MComponents);
+            genTemplatesFile.Generate();
         }
     }
 }

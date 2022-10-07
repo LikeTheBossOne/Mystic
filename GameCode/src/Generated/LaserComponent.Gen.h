@@ -4,9 +4,8 @@
 #include "entt.hpp"
 #include "imgui/imgui.h"
 
-#include "../Components/LaserComponent.h"
+#include "Components/LaserComponent.h"
 #include "imgui/imgui_internal.h"
-#include "Mystic/ECS/Entity.h"
 #include "yaml-cpp/node/iterator.h"
 
 namespace Mystic
@@ -15,9 +14,7 @@ namespace Mystic
 	{
 		inline bool initialized = false;
 
-
 		const ImGuiTreeNodeFlags treeNodeFlags = ImGuiTreeNodeFlags_DefaultOpen | ImGuiTreeNodeFlags_Framed | ImGuiTreeNodeFlags_SpanAvailWidth | ImGuiTreeNodeFlags_AllowItemOverlap | ImGuiTreeNodeFlags_FramePadding;
-		
 
 		std::vector<entt::id_type> ids =
 		{

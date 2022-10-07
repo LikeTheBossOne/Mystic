@@ -2,7 +2,7 @@
 #include <entt.hpp>
 #include "LaserComponent.Gen.h"
 #include "Mystic/Scene/Scene.h"
-#include "yaml-cpp/node/iterator.h"
+#include <yaml-cpp/node/iterator.h>
 
 extern "C" namespace Mystic
 {

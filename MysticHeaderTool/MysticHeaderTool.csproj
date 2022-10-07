@@ -57,17 +57,21 @@
   <ItemGroup Condition=" '$(Configuration)|$(Platform)' == 'Dist|x64' ">
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Generation\GenEditorDrawComponentsFile.cs" />
-    <Compile Include="src\Generation\GenMStructHeaderFile.cs" />
-    <Compile Include="src\Generation\GenReflectionFile.cs" />
+    <Compile Include="src\FileUtils\FileFinder.cs" />
+    <Compile Include="src\Generation\GenDLLExportFile.cs" />
+    <Compile Include="src\Generation\GenGameCodeExternFile.cs" />
+    <Compile Include="src\Generation\GenMComponentHeaderFile.cs" />
+    <Compile Include="src\Generation\GenMComponentReflectionFile.cs" />
+    <Compile Include="src\Generation\GenScriptTemplatesFile.cs" />
+    <Compile Include="src\Generation\GeneratedFile.cs" />
     <Compile Include="src\Generation\MCodeGenerator.cs" />
     <Compile Include="src\MysticHeaderTool.cs" />
     <Compile Include="src\Parsing\Exceptions\InvalidMPropertyTypeException.cs" />
     <Compile Include="src\Parsing\HeaderParser.cs" />
     <Compile Include="src\Parsing\HeaderParserSettings.cs" />
     <Compile Include="src\Parsing\MClass.cs" />
+    <Compile Include="src\Parsing\MComponent.cs" />
     <Compile Include="src\Parsing\MProperty.cs" />
-    <Compile Include="src\Parsing\MStruct.cs" />
     <Compile Include="src\Parsing\PropertyParser.cs" />
     <Compile Include="src\Reflection\MReflectionContext.cs" />
   </ItemGroup>

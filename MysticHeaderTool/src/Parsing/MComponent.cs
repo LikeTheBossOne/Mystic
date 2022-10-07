@@ -1,29 +1,38 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MysticHeaderTool.Parsing
 {
-    public class MStruct
+    public class MComponent
     {
-        public MStruct(string name, string sourceFilePath, uint lineNumber)
-        {
-            Name = name;
-            Properties = new List<MProperty>();
-            SourceFilePath = sourceFilePath;
-            LineNumber = lineNumber;
-        }
+        private static readonly Regex ImGuiRegex = new Regex(@"
+                (?<=[A-Z])(?=[A-Z][a-z]) |
+                 (?<=[^A-Z])(?=[A-Z]) |
+                 (?<=[A-Za-z])(?=[^A-Za-z])", RegexOptions.IgnorePatternWhitespace);
 
         public string Name { get; set; }
         public List<MProperty> Properties { get; set; }
         public string SourceFilePath { get; set; }
         public uint LineNumber { get; set; }
+        public string ImGuiName { get; }
+
+        public MComponent(string name, string sourceFilePath, uint lineNumber)
+        {
+            Name = name;
+            Properties = new List<MProperty>();
+            SourceFilePath = sourceFilePath;
+            LineNumber = lineNumber;
+
+            ImGuiName = ImGuiRegex.Replace(name, " ");
+        }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as MStruct);
+            return Equals(obj as MComponent);
         }
 
-        public bool Equals(MStruct other)
+        public bool Equals(MComponent other)
         {
             return other != null &&
                    Name == other.Name && 

@@ -50,6 +50,7 @@ namespace MysticHeaderTool.Parsing
         };
 
         private static readonly Regex MStructClassifier = new(@"\s*MSTRUCT\((?'meta'.*?)\)\s*struct\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
+        private static readonly Regex MComponentClassifier = new(@"\s*MCOMPONENT\((?'meta'.*?)\)\s*class\s*(?'typename'\w*)\s*:\s*(?:Mystic::)?NativeScriptComponent\s*\{(?'contents'.*)(?=};)", RegexOptions.Singleline);
         private static readonly Regex MClassClassifier = new(@"class\s*(?'typename'\w*)\s*\{(?'contents'(?>\{(?<c>)|[^{}]+|\}(?<-c>))*(?(c)(?!)))\}");
         private static readonly Regex MGeneratedInfoLineFinder = new(@"^\s*MGENERATED_INFO\((.*?)\)\s*$");
 
@@ -63,23 +64,23 @@ namespace MysticHeaderTool.Parsing
             MReflectionContext = mReflectionContext;
         }
 
-        public MStruct ParseHeader(string headerPath)
+        public MComponent ParseHeader(string headerPath)
         {
             string headerContents = File.ReadAllText(headerPath);
 
-            // First find all MStructs
-            MStruct mstruct = FindMStruct(headerPath, headerContents);
+            // First find all MComponents
+            MComponent component = FindMComponent(headerPath, headerContents);
 
-            return mstruct;
+            return component;
         }
 
 
-        private MStruct FindMStruct(string headerPath, string fileContents)
+        private MComponent FindMComponent(string headerPath, string fileContents)
         {
-            MatchCollection matches = MStructClassifier.Matches(fileContents);
+            MatchCollection matches = MComponentClassifier.Matches(fileContents);
             if (matches.Count > 1)
             {
-                throw new Exception($"Too many structs in file: {headerPath}");
+                throw new Exception($"Too many MComponents in file: {headerPath}");
             }
             else if (matches.Count == 0)
             {
@@ -109,7 +110,7 @@ namespace MysticHeaderTool.Parsing
                     throw new Exception("Could not find MGENERATED_INFO()");
                 }
 
-                return ParseMStruct(typenameGroup.Value, contentsGroup.Value, headerPath, line);
+                return ParseMComponent(typenameGroup.Value, contentsGroup.Value, headerPath, line);
             }
             else
             {
@@ -117,14 +118,14 @@ namespace MysticHeaderTool.Parsing
             }
         }
 
-        private MStruct ParseMStruct(string typeName, string structContents, string headerPath, uint lineNumber)
+        private MComponent ParseMComponent(string typeName, string classContents, string headerPath, uint lineNumber)
         {
-            var mstruct = new MStruct(typeName, headerPath, lineNumber)
+            var component = new MComponent(typeName, headerPath, lineNumber)
             {
-                Properties = FindMProperties(structContents),
+                Properties = FindMProperties(classContents),
             };
 
-            return mstruct;
+            return component;
         }
 
         private List<MProperty> FindMProperties(string typeContents)
@@ -176,9 +177,9 @@ namespace MysticHeaderTool.Parsing
             {
                 mProp = new MProperty(nameGroup.Value, MPropDict[typeGroup.Value], isConstGroup.Success);
             }
-            else if (MReflectionContext.MStructDictionary.ContainsKey(typeGroup.Value))
+            else if (MReflectionContext.MClassDictionary.ContainsKey(typeGroup.Value))
             {
-                mProp = new MPropertyStructType(nameGroup.Value, typeGroup.Value, isConstGroup.Success);
+                mProp = new MPropertyClassType(nameGroup.Value, typeGroup.Value, isConstGroup.Success);
             }
             else
             {

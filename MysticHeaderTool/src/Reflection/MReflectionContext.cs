@@ -9,11 +9,13 @@ namespace MysticHeaderTool.Reflection
 {
     public class MReflectionContext
     {
-        public Dictionary<string, MStruct> MStructDictionary { get; } // <MStruct.Name, MStruct>
+        public Dictionary<string, MClass> MClassDictionary { get; } // <MComponent.Name, MComponent>
+        public List<MComponent> MComponents { get; }
 
         public MReflectionContext()
         {
-            MStructDictionary = new Dictionary<string, MStruct>();
+            MClassDictionary = new Dictionary<string, MClass>();
+            MComponents = new List<MComponent>();
         }
     }
 }

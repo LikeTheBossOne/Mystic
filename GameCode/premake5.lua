@@ -21,6 +21,7 @@ project "GameCode"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
+		"%{wks.location}/Intermediate/Generated_H"
 	}
 
 	links

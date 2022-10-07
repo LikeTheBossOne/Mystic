@@ -1,6 +1,6 @@
 #pragma once
 
-#define MSTRUCT(...)
+#define MCOMPONENT(...)
 
 #define MPROPERTY(...)
 

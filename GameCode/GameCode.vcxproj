@@ -79,7 +79,7 @@
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;..\Intermediate\Generated_H;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
       <Optimization>Disabled</Optimization>
       <MinimalRebuild>false</MinimalRebuild>
@@ -103,7 +103,7 @@ copy /b "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(Soluti
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;..\Intermediate\Generated_H;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
@@ -130,7 +130,7 @@ copy /b "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(Solu
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <PreprocessorDefinitions>MYST_PLATFORM_WINDOWS;MYST_BUILD_DLL;MYST_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>src;..\Mystic\src;..\Mystic\vendor;..\Mystic\vendor\glm;..\Mystic\vendor\entt\include;..\Mystic\vendor\yaml-cpp\include;..\Intermediate\Generated_H;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>

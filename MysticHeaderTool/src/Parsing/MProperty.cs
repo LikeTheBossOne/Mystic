@@ -108,35 +108,35 @@ namespace MysticHeaderTool.Parsing
         }
     }
 
-    public class MPropertyStructType : MProperty
+    public class MPropertyClassType : MProperty
     {
-        public MPropertyStructType(string name, string structTypeName, bool isConst) : base(name, MPropertyType.Struct, isConst)
+        public MPropertyClassType(string name, string classTypeName, bool isConst) : base(name, MPropertyType.Struct, isConst)
         {
-            StructTypeName = structTypeName;
+            ClassTypeName = classTypeName;
         }
 
-        public string StructTypeName { get; set; }
+        public string ClassTypeName { get; set; }
 
         public override string GetPropertyTypeDef()
         {
-            return $"Ref<{StructTypeName}>";
+            return $"Ref<{ClassTypeName}>";
         }
 
         public override bool Equals(object obj)
         {
-            return Equals(obj as MPropertyStructType);
+            return Equals(obj as MPropertyClassType);
         }
 
-        protected bool Equals(MPropertyStructType other)
+        protected bool Equals(MPropertyClassType other)
         {
-            return other != null && StructTypeName == other.StructTypeName && base.Equals(other);
+            return other != null && ClassTypeName == other.ClassTypeName && base.Equals(other);
         }
 
         public override int GetHashCode()
         {
             unchecked
             {
-                return (base.GetHashCode() * 397) ^ StructTypeName.GetHashCode();
+                return (base.GetHashCode() * 397) ^ ClassTypeName.GetHashCode();
             }
         }
     }

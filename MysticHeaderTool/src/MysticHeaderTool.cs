@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Runtime.CompilerServices;
+using MysticHeaderTool.FileUtils;
 using MysticHeaderTool.Generation;
 using MysticHeaderTool.Parsing;
 using MysticHeaderTool.Parsing.Exceptions;
@@ -26,34 +28,20 @@ namespace MysticHeaderTool
          */
         static void Main(string[] args)
         {
-            string binDir = Environment.CurrentDirectory;
-            DirectoryInfo baseDir = Directory.GetParent(binDir)?.Parent?.Parent;
-            if (baseDir == null || !baseDir.Exists)
+            if (args.Length < 4)
             {
-                throw new Exception("Could not find base directory");
+                throw new ArgumentException("usage: MysticHeaderTool.exe <path-to-parse> <path-to-root> <path-to-output> <last-build(YYYY-MM-DD:hh-mm-ss)>");
             }
 
-            DirectoryInfo srcDir = null;
-            foreach (DirectoryInfo projectDir in baseDir.EnumerateDirectories())
-            {
-                if (projectDir.Name == "Sandbox")
-                {
-                    foreach (DirectoryInfo dir in projectDir.EnumerateDirectories())
-                    {
-                        if (dir.Name == "src")
-                        {
-                            srcDir = projectDir;
-                            break;
-                        }
-                    }
-                    break;
-                }
-            }
+            string pathToParse = args[0];
+            string pathToRoot = args[1];
+            string pathToOutput = args[2];
+            string lastBuildStr = args[3];
 
-            if (srcDir == null)
-            {
-                throw new Exception("Could not find src directory for project");
-            }
+            DirectoryInfo parseDir = new DirectoryInfo(pathToParse);
+            DirectoryInfo outputDir = new DirectoryInfo(pathToOutput);
+            string format = "dd/MM/yyyy-HH:mm:ss.ffffff";
+            DateTime lastBuildTime = DateTime.ParseExact(lastBuildStr, format, CultureInfo.CurrentCulture);
 
 
             // DO HEADER PARSING
@@ -61,52 +49,40 @@ namespace MysticHeaderTool
             MReflectionContext context = new MReflectionContext();
             HeaderParser headerParser = new HeaderParser(new HeaderParserSettings(), context);
 
-            // Enumerate srcDirs for all .h files and try to grab MStructs (inefficient solution)
-            // TODO: Create solution that resolves via a dependency graph
-            var filePaths = new Queue<string>(srcDir.EnumerateFiles("*.h", SearchOption.AllDirectories).ToList().ConvertAll((fileInfo) => fileInfo.FullName));
-            
-            while (filePaths.Count > 0)
+            List<FileInfo> filesToParse = FileFinder.GetFilesByModifiedTime(parseDir, lastBuildTime);
+            foreach (FileInfo file in filesToParse)
             {
-                string headerPath = filePaths.Dequeue();
-
-                MStruct mstruct;
+                MComponent component;
                 try
                 {
-                    mstruct = headerParser.ParseHeader(headerPath);
+                    component = headerParser.ParseHeader(file.FullName);
                 }
                 catch (InvalidMPropertyTypeException e)
                 {
-                    // TODO: Use e.MPropertyTypeDef in dependency graph
-                    filePaths.Enqueue(headerPath);
                     continue;
                 }
-                
-                if (mstruct != null)
+
+                if (component != null)
                 {
-                    context.MStructDictionary.Add(mstruct.Name, mstruct);
+                    //context.MClassDictionary.Add(mstruct.Name, mstruct);
+                    context.MComponents.Add(component);
                 }
             }
-
 
             // DO CODE GEN
             var generator = new MCodeGenerator(context);
 
-            var headerGenDir = new DirectoryInfo(Path.Combine(baseDir.FullName, GenHeaderPath));
+            var headerGenDir = new DirectoryInfo(Path.Combine(pathToRoot, GenHeaderPath));
             if (!headerGenDir.Exists)
             {
                 headerGenDir.Create();
             }
 
-            generator.GenerateHeaderFiles(headerGenDir);
+            generator.GenerateMComponentBodyHeaderFiles(headerGenDir);
 
+            generator.GenerateReflectionFiles(outputDir);
 
-            //var editorGenDir = new DirectoryInfo(Path.Combine(baseDir.FullName, GenEditorPath));
-            //if (!editorGenDir.Exists)
-            //{
-            //    editorGenDir.Create();
-            //}
-
-            //generator.GenerateEditorFiles(editorGenDir);
+            generator.GenerateNativeScriptFiles(outputDir);
         }
     }
 }

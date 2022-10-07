@@ -11,7 +11,7 @@ namespace MysticHeaderToolTests
         public void ParseHeader_SingleMStructTest()
         {
             // Expected
-            var expected = new MStruct("TransformComponent", @"testfiles/ComponentTestValid.h.test", 9);
+            var expected = new MComponent("TransformComponent", @"testfiles/ComponentTestValid.h.test", 9);
             expected.Properties.AddRange(new List<MProperty>
                 {
                     new("Position", MPropertyType.Vec3, false),
@@ -24,7 +24,7 @@ namespace MysticHeaderToolTests
             // Actual
             var refContext = new MReflectionContext();
             var hp = new HeaderParser(new HeaderParserSettings(), refContext);
-            MStruct actual = hp.ParseHeader(@"testfiles/ComponentTestValid.h.test");
+            MComponent actual = hp.ParseHeader(@"testfiles/ComponentTestValid.h.test");
 
 
             // Compare
