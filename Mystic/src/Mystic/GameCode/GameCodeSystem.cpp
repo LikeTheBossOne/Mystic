@@ -5,6 +5,8 @@
 #include <fstream>
 #include <filesystem>
 
+#include "Mystic/Logging/Log.h"
+
 namespace Mystic
 {
 	static void DeleteComponentStub(entt::registry&) {}
@@ -24,7 +26,7 @@ namespace Mystic
 		if (func == NULL)
 		{
 			//Log::Warning("Could not load dll function '%s'", functionName);
-			std::cout << "Could not load dll function: \'" << functionName << '\'' << std::endl;
+			Log::Error("Could not load dll gunction: \'%s\'", functionName);
 		}
 
 		return func;
@@ -57,7 +59,7 @@ namespace Mystic
 		path = path.substr(0, path.find_last_of("\\/")) + "\\GameCode.dll";
 		if (!FileExists(path))
 		{
-			std::cout << "Reloading GameCode -- Could not find DLL at path: " << path;
+			Log::Error("Reloading GameCode -- Could not find DLL at path: %s", path);
 			return;
 		}
 
@@ -65,7 +67,7 @@ namespace Mystic
 
 		if (!s_module)
 		{
-			std::cout << "Failed to load module: " << path;
+			Log::Error("Failed to load module: %s", path);
 			return;
 		}
 
@@ -143,7 +145,7 @@ namespace Mystic
 		if (!FreeLibrary(s_module))
 		{
 			DWORD errorCode = GetLastError();
-			std::cout << "Could not free script dll. Error Code: " << errorCode;
+			Log::Error("Could not free script dll. Error Code: %lu", errorCode);
 			return false;
 		}
 

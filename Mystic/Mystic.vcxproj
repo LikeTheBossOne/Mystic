@@ -182,6 +182,7 @@
     <ClInclude Include="src\Mystic\Events\MouseEvent.h" />
     <ClInclude Include="src\Mystic\GameCode\GameCodeSystem.h" />
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h" />
+    <ClInclude Include="src\Mystic\Logging\Log.h" />
     <ClInclude Include="src\Mystic\Render\Buffer.h" />
     <ClInclude Include="src\Mystic\Render\Camera.h" />
     <ClInclude Include="src\Mystic\Render\EditorCamera.h" />
@@ -657,6 +658,7 @@
     <ClCompile Include="src\Mystic\ECS\Systems\VelocitySystem.cpp" />
     <ClCompile Include="src\Mystic\GameCode\GameCodeSystem.cpp" />
     <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp" />
+    <ClCompile Include="src\Mystic\Logging\Log.cpp" />
     <ClCompile Include="src\Mystic\Render\Buffer.cpp" />
     <ClCompile Include="src\Mystic\Render\EditorCamera.cpp" />
     <ClCompile Include="src\Mystic\Render\Framebuffer.cpp" />

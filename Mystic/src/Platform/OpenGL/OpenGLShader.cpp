@@ -1,5 +1,6 @@
 #include "mystpch.h"
 #include "OpenGLShader.h"
+#include "Mystic/Logging/Log.h"
 
 #include <filesystem>
 #include <fstream>
@@ -162,8 +163,8 @@ namespace Mystic {
 		if (!success)
 		{
 			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" <<
-				infoLog << std::endl;
+			Log::Error("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
+			Log::Error("%s", infoLog);
 		}
 
 		// fragment Shader
@@ -176,8 +177,8 @@ namespace Mystic {
 		if (!success)
 		{
 			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" <<
-				infoLog << std::endl;
+			Log::Error("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED");
+			Log::Error("%s", infoLog);
 		}
 
 
@@ -192,8 +193,8 @@ namespace Mystic {
 		if (!success)
 		{
 			glGetProgramInfoLog(program, 512, NULL, infoLog);
-			std::cout << "ERROR::SHADER::PROGRAM::LINKING_FAILED\n" <<
-				infoLog << std::endl;
+			Log::Error("ERROR::SHADER::PROGRAM::LINKING_FAILED");
+			Log::Error("%s", infoLog);
 		}
 
 		// Delete Shaders
