@@ -1,13 +1,12 @@
 #pragma once
 
-#include <cassert>
 #include <memory>
 #include <string>
 #include <vector>
 
 #include "Core.h"
 #include "LayerStack.h"
-#include "MMacros.h"
+#include "Mystic/Logging/Log.h"
 
 
 
@@ -31,7 +30,7 @@ namespace Mystic
 
 		const char* operator[](int index) const
 		{
-			assert(index < Count);
+			Log::Assert(index < Count, "Argument index out of bounds");
 			return Args[index];
 		}
 	};

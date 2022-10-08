@@ -14,15 +14,15 @@ namespace Mystic {
 		const char* message,
 		const void* userParam)
 	{
-		/*switch (severity)
+		switch (severity)
 		{
-		case GL_DEBUG_SEVERITY_HIGH:         HZ_CORE_CRITICAL(message); return;
-		case GL_DEBUG_SEVERITY_MEDIUM:       HZ_CORE_ERROR(message); return;
-		case GL_DEBUG_SEVERITY_LOW:          HZ_CORE_WARN(message); return;
-		case GL_DEBUG_SEVERITY_NOTIFICATION: HZ_CORE_TRACE(message); return;
-		}*/
+		case GL_DEBUG_SEVERITY_HIGH:         Log::Assert(false, message); return;
+		case GL_DEBUG_SEVERITY_MEDIUM:       Log::Error(message); return;
+		case GL_DEBUG_SEVERITY_LOW:          Log::Warning(message); return;
+		case GL_DEBUG_SEVERITY_NOTIFICATION: Log::Info(message); return;
+		}
 
-		//HZ_CORE_ASSERT(false, "Unknown severity level!");
+		Log::Assert(false, "Unknown severity level!");
 	}
 
 	void OpenGLRendererAPI::Init()

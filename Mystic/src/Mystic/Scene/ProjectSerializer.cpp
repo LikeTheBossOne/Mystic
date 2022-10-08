@@ -239,7 +239,7 @@ namespace Mystic
 		}
 		catch (YAML::BadFile& ex)
 		{
-			assert((false, "could not load yaml file"));
+			Log::Assert(false, "could not load yaml file: %s", filePath.c_str());
 			return false;
 		}
 

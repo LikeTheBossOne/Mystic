@@ -1,5 +1,6 @@
 #include "mystpch.h"
 #include "SceneCamera.h"
+#include "Mystic/Logging/Log.h"
 
 #include <glm/gtc/matrix_transform.hpp>
 
@@ -30,7 +31,7 @@ namespace Mystic {
 
 	void SceneCamera::SetViewportSize(uint32_t width, uint32_t height)
 	{
-		assert(width > 0 && height > 0);
+		Log::Assert(width > 0 && height > 0, "invalid viewport height or width");
 		_aspectRatio = (float)width / (float)height;
 		RecalculateProjection();
 	}

@@ -1,5 +1,6 @@
 #include "mystpch.h"
 #include "OpenGLFramebuffer.h"
+#include "Mystic/Logging/Log.h"
 
 #include <glad/glad.h>
 
@@ -84,7 +85,7 @@ namespace Mystic {
 			case FramebufferTextureFormat::RED_INTEGER: return GL_RED_INTEGER;
 			}
 
-			assert(false);
+			Log::Assert(false, "Invalid FramebufferTextureFormat");
 			return 0;
 		}
 
@@ -163,7 +164,7 @@ namespace Mystic {
 
 		if (_colorAttachments.size() > 1)
 		{
-			assert(_colorAttachments.size() <= 4);
+			Log::Assert(_colorAttachments.size() <= 4, "Invalid colorAttachments size");
 			GLenum buffers[4] = { GL_COLOR_ATTACHMENT0, GL_COLOR_ATTACHMENT1, GL_COLOR_ATTACHMENT2, GL_COLOR_ATTACHMENT3 };
 			glDrawBuffers(_colorAttachments.size(), buffers);
 		}
@@ -173,7 +174,7 @@ namespace Mystic {
 			glDrawBuffer(GL_NONE);
 		}
 
-		assert((glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!"));
+		Log::Assert(glCheckFramebufferStatus(GL_FRAMEBUFFER) == GL_FRAMEBUFFER_COMPLETE, "Framebuffer is incomplete!");
 
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
@@ -204,7 +205,7 @@ namespace Mystic {
 
 	int OpenGLFramebuffer::ReadPixel(uint32_t attachmentIndex, int x, int y)
 	{
-		assert(attachmentIndex < _colorAttachments.size());
+		Log::Assert(attachmentIndex < _colorAttachments.size(), "");
 
 		glReadBuffer(GL_COLOR_ATTACHMENT0 + attachmentIndex);
 		int pixelData;
@@ -215,7 +216,7 @@ namespace Mystic {
 
 	void OpenGLFramebuffer::ClearAttachment(uint32_t attachmentIndex, int value)
 	{
-		assert(attachmentIndex < _colorAttachments.size());
+		Log::Assert(attachmentIndex < _colorAttachments.size(), "");
 
 		auto& spec = _colorAttachmentSpecifications[attachmentIndex];
 		glClearTexImage(_colorAttachments[attachmentIndex], 0,

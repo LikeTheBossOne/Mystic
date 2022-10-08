@@ -19,7 +19,7 @@ namespace Mystic {
 			if (type == "fragment" || type == "pixel")
 				return GL_FRAGMENT_SHADER;
 
-			assert((false, "Unknown shader type"));
+			Log::Assert(false, "Unknown shader type");
 			return 0;
 		}
 
@@ -30,7 +30,7 @@ namespace Mystic {
 				case GL_VERTEX_SHADER:   return "GL_VERTEX_SHADER";
 				case GL_FRAGMENT_SHADER: return "GL_FRAGMENT_SHADER";
 			}
-			assert(false);
+			Log::Assert(false, "invalid shader type");
 			return nullptr;
 		}
 
@@ -54,7 +54,7 @@ namespace Mystic {
 				case GL_VERTEX_SHADER:    return ".cached_opengl.vert";
 				case GL_FRAGMENT_SHADER:  return ".cached_opengl.frag";
 			}
-			assert(false);
+			Log::Assert(false, "invalid shader type");
 			return "";
 		}
 	}
@@ -122,13 +122,13 @@ namespace Mystic {
 		while (pos != std::string::npos)
 		{
 			size_t eol = source.find_first_of("\r\n", pos); //End of shader type declaration line
-			assert((eol != std::string::npos, "Syntax error"));
+			Log::Assert(eol != std::string::npos, "Syntax error");
 			size_t begin = pos + typeTokenLength + 1; //Start of shader type name (after "#type " keyword)
 			std::string type = source.substr(begin, eol - begin);
-			assert((Utils::ShaderTypeFromString(type), "Invalid shader type specified"));
+			Log::Assert(Utils::ShaderTypeFromString(type), "Invalid shader type specified");
 
 			size_t nextLinePos = source.find_first_not_of("\r\n", eol); //Start of shader code after shader type declaration line
-			assert((nextLinePos != std::string::npos, "Syntax error"));
+			Log::Assert(nextLinePos != std::string::npos, "Syntax error");
 			pos = source.find(typeToken, nextLinePos); //Start of next shader type declaration line
 
 			shaderSources[Utils::ShaderTypeFromString(type)] = (pos == std::string::npos) ? source.substr(nextLinePos) : source.substr(nextLinePos, pos - nextLinePos);
@@ -141,11 +141,11 @@ namespace Mystic {
 	{
 		if (_openGLSourceCode.find(GL_VERTEX_SHADER) == _openGLSourceCode.end())
 		{
-			assert((false, "Did not find vertex shader code"));
+			Log::Assert(false, "Did not find vertex shader code");
 		}
 		if (_openGLSourceCode.find(GL_FRAGMENT_SHADER) == _openGLSourceCode.end())
 		{
-			assert((false, "Did not find fragment shader code"));
+			Log::Assert(false, "Did not find fragment shader code");
 		}
 
 		// Compile Shaders

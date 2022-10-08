@@ -1,5 +1,7 @@
 #include "Log.h"
 
+#include <cassert>
+
 #include "Mystic/Core/Application.h"
 
 #ifdef MYST_PLATFORM_WINDOWS
@@ -86,6 +88,7 @@ namespace Mystic
 
 				printf("\n");
 			}
+			assert(condition);
 		}
 	}
 }

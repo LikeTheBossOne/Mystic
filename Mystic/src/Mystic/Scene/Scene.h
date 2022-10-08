@@ -1,6 +1,7 @@
 #pragma once
-#include "../Core/Core.h"
-#include "../ECS/Entity.h"
+#include "Mystic/Core/Core.h"
+#include "Mystic/ECS/Entity.h"
+#include "Mystic/Logging/Log.h"
 #include <string>
 #include <entt.hpp>
 
@@ -36,14 +37,14 @@ namespace Mystic
 		template <typename T>
 		void EntityRemoveComponent(entt::entity e)
 		{
-			assert((EntityHasComponent<T>(e), "Entity does not have component"));
+			Log::Assert(EntityHasComponent<T>(e), "Entity does not have component");
 			_registry.remove<T>(e);
 		}
 
 		template <typename T, typename... Args>
 		T& EntityAddComponent(entt::entity e, Args&&... args)
 		{
-			assert((!EntityHasComponent<T>(e), "Entity already has component!"));
+			Log::Assert(!EntityHasComponent<T>(e), "Entity already has component!");
 			T& component = _registry.emplace<T>(e, std::forward<Args>(args)...);
 			//OnComponentAdded<Component>(*this, component);
 			return component;
@@ -54,7 +55,7 @@ namespace Mystic
 		template <class TComponentType>
 		TComponentType& EntityAddNativeScriptComponent(entt::entity e)
 		{
-			assert((!EntityHasComponent<TComponentType>(e), "Entity already has component!"));
+			Log::Assert(!EntityHasComponent<TComponentType>(e), "Entity already has component!");
 			static_assert(std::is_base_of_v<NativeScriptComponent, TComponentType>, "Attempted to create a non NativeScriptComponent as a component");
 			TComponentType& component = _registry.emplace<TComponentType>(e);
 
@@ -69,7 +70,7 @@ namespace Mystic
 		template <typename T>
 		T& EntityGetComponent(entt::entity e)
 		{
-			assert((EntityHasComponent<T>(e), "Entity does not have component"));
+			Log::Assert(EntityHasComponent<T>(e), "Entity does not have component");
 			return _registry.get<T>(e);
 		}
 

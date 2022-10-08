@@ -1,5 +1,6 @@
 #include "mystpch.h"
 #include "Window.h"
+#include "Mystic/Logging/Log.h"
 
 #ifdef MYST_PLATFORM_WINDOWS
 #include "Platform/Windows/WindowsWindow.h"
@@ -12,7 +13,7 @@ namespace Mystic
 #ifdef MYST_PLATFORM_WINDOWS
 		return std::make_unique<WindowsWindow>(props);
 #else
-		assert(false, "Unknown platform!");
+		Log::Assert(false, "Unknown platform!");
 		return nullptr;
 #endif
 	}

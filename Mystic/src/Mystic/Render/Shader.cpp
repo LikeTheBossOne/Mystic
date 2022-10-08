@@ -22,11 +22,11 @@ namespace Mystic {
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None:    assert((false, "RendererAPI::None is currently not supported")); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, filepath, bufferLayout);
+		case RendererAPI::API::None:    Log::Assert(false, "RendererAPI::None is currently not supported"); return nullptr;
+		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, filepath, bufferLayout);
 		}
 
-		assert(false, "Unknown RendererAPI!");
+		Log::Assert(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
@@ -34,17 +34,17 @@ namespace Mystic {
 	{
 		switch (Renderer::GetAPI())
 		{
-			case RendererAPI::API::None:    assert((false, "RendererAPI::None is currently not supported")); return nullptr;
-			case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc, bufferLayout);
+		case RendererAPI::API::None:    Log::Assert(false, "RendererAPI::None is currently not supported"); return nullptr;
+		case RendererAPI::API::OpenGL:  return std::make_shared<OpenGLShader>(name, vertexSrc, fragmentSrc, bufferLayout);
 		}
 
-		assert(false, "Unknown RendererAPI!");
+		Log::Assert(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 
 	void ShaderLibrary::Add(const std::string& name, const Ref<Shader>& shader)
 	{
-		assert((!Exists(name), "Shader already exists!"));
+		Log::Assert(!Exists(name), "Shader already exists!");
 		_shaders[name] = shader;
 	}
 
@@ -70,7 +70,7 @@ namespace Mystic {
 
 	Ref<Shader> ShaderLibrary::Get(const std::string& name)
 	{
-		assert((Exists(name), "Shader not found!"));
+		Log::Assert(Exists(name), "Shader not found!");
 		return _shaders[name];
 	}
 

@@ -101,7 +101,7 @@ namespace Mystic
 
 		if (s_Data.BatchMap[shaderName].contains(meshName))
 		{
-			assert(false, "Batch already exists for mesh");
+			Log::Assert(false, "Batch already exists for mesh");
 			return;
 		}
 
@@ -134,7 +134,7 @@ namespace Mystic
 
 		if (s_Data.BatchMap[shader->GetName()].contains(mesh->GetName()))
 		{
-			assert(false, "Batch already exists for mesh");
+			Log::Assert(false, "Batch already exists for mesh");
 			return;
 		}
 
@@ -236,12 +236,12 @@ namespace Mystic
 	{
 		// Find batch and add to it
 		bool foundBatch = s_Data.BatchMap.contains(shaderName);
-		assert(foundBatch, "Tried to access shader: " + shaderName + " that was not loaded.");
+		Log::Assert(foundBatch, "Tried to access shader: %s that was not loaded.", shaderName.c_str());
 		if (!foundBatch)
 			return;
 
 		foundBatch = s_Data.BatchMap[shaderName].contains(meshName);
-		assert(foundBatch, "Tried to access mesh: " + mesh->GetName() + " that was not loaded.");
+		Log::Assert(foundBatch, "Tried to access mesh: %s that was not loaded.", meshName.c_str());
 		if (!foundBatch)
 			return;
 
@@ -263,7 +263,7 @@ namespace Mystic
 			if (texIndex == 0.0f)
 			{
 				if (s_Data.TextureSlotIndex >= s_Data.TextureSlots.max_size())
-					assert(false, "Too many textures registererd");
+					Log::Assert(false, "Too many textures registererd");
 
 				texIndex = (float)s_Data.TextureSlotIndex;
 				s_Data.TextureSlots[s_Data.TextureSlotIndex] = texture;

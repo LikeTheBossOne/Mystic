@@ -1,9 +1,9 @@
 #pragma once
-#include <cassert>
 #include <vector>
 #include <string>
 
 #include "Mystic/Core/Core.h"
+#include "Mystic/Logging/Log.h"
 
 namespace Mystic {
 
@@ -29,7 +29,7 @@ namespace Mystic {
 		case ShaderDataType::Bool:     return 1;
 		}
 
-		assert((false, "Unknown ShaderDataType!"));
+		Log::Assert(false, "Unknown ShaderDataType!");
 		return 0;
 	}
 
@@ -50,7 +50,7 @@ namespace Mystic {
 		case ShaderDataType::Bool:     return "Bool";
 		}
 
-		assert((false, "Unknown ShaderDataType!"));
+		Log::Assert(false, "Unknown ShaderDataType!");
 		return "null";
 	}
 
@@ -114,7 +114,7 @@ namespace Mystic {
 			case ShaderDataType::Bool:    return 1;
 			}
 
-			assert((false, "Unknown ShaderDataType!"));
+			Log::Assert(false, "Unknown ShaderDataType!");
 			return 0;
 		}
 	};
