@@ -12,7 +12,7 @@ namespace Mystic {
 		case RendererAPI::API::OpenGL:  return std::make_unique<OpenGLRendererAPI>();
 		}
 
-		assert((false, "Unknown RendererAPI!"));
+		Log::Assert(false, "Unknown RendererAPI!");
 		return nullptr;
 	}
 

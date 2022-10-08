@@ -1,6 +1,5 @@
 #pragma once
-
-#include <cassert>
+#include "Mystic/Logging/Log.h"
 
 #include "Mystic/Render/Framebuffer.h"
 
@@ -22,7 +21,7 @@ namespace Mystic {
 
 		virtual void ClearAttachment(uint32_t attachmentIndex, int value) override;
 
-		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { assert(index < _colorAttachments.size()); return _colorAttachments[index]; }
+		virtual uint32_t GetColorAttachmentRendererID(uint32_t index = 0) const override { Log::Assert(index < _colorAttachments.size(), ""); return _colorAttachments[index]; }
 
 		virtual const FramebufferSpecification& GetSpecification() const override { return _specification; }
 	private:

@@ -77,9 +77,9 @@ namespace Mystic
 		{
 			auto [transform, meshRenderer] = group.get<TransformComponent, MeshRendererComponent>(entity);
 
-			assert((_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader"));
-			assert((_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture"));
-			assert((_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh"));
+			Log::Assert(_assetLibrary->Shaders.contains(meshRenderer.ShaderName), "Asset Library missing shader: %s", meshRenderer.ShaderName.c_str());
+			Log::Assert(_assetLibrary->Textures.contains(meshRenderer.TextureName), "Asset Library missing texture: %s", meshRenderer.TextureName.c_str());
+			Log::Assert(_assetLibrary->Meshes.contains(meshRenderer.MeshName), "Asset Library missing mesh: %s", meshRenderer.MeshName.c_str());
 
 			if (!Renderer3D::BatchExists(meshRenderer.ShaderName, meshRenderer.MeshName))
 			{

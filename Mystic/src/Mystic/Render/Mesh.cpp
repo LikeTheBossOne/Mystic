@@ -31,9 +31,9 @@ namespace Mystic
 		uint32_t UV = 0;
 		uint32_t Normal = 0;
 
-		constexpr uint32_t& operator[](std::size_t idx)
+		uint32_t& operator[](std::size_t idx)
 		{
-			assert((idx <= 2, "IndexFormat operator[] only supports args with values between 0 and 2"));
+			Log::Assert(idx <= 2, "IndexFormat operator[] only supports args with values between 0 and 2");
 			if (idx == 0)
 			{
 				return Vertex;
@@ -95,7 +95,7 @@ namespace Mystic
 	{
 		std::ifstream in;
 		in.open(assetPath);
-		assert((in.is_open(), "obj file was not opened"));
+		Log::Assert(in.is_open(), "obj file was not opened");
 
 		std::vector<glm::vec3> vertices;
 		std::vector<glm::vec3> normals;
@@ -112,7 +112,7 @@ namespace Mystic
 			// tokens
 			std::string type;
 			auto& b = std::getline(stream, type, ' ');
-			assert((b, "Type Token missing from obj file "));
+			Log::Assert(!!b, "Type Token missing from obj file ");
 
 			if (type == "v")
 			{
@@ -122,12 +122,12 @@ namespace Mystic
 				std::string val;
 				while (std::getline(stream, val, ' '))
 				{
-					assert((i < 3, "vertices only support three parameters (max)"));
+					Log::Assert(i < 3, "vertices only support three parameters (max)");
 
 					vec[i] = std::stof(val);
 					i++;
 				}
-				assert((i == 3, "vertices only support three parameters (min)"));
+				Log::Assert(i == 3, "vertices only support three parameters (min)");
 
 				vertices.emplace_back(vec);
 			}
@@ -139,12 +139,12 @@ namespace Mystic
 				std::string val;
 				while (std::getline(stream, val, ' '))
 				{
-					assert((i < 3, "normals only support three parameters (max)"));
+					Log::Assert(i < 3, "normals only support three parameters (max)");
 
 					vec[i] = std::stof(val);
 					i++;
 				}
-				assert((i == 3, "normals only support two parameters (min)"));
+				Log::Assert(i == 3, "normals only support two parameters (min)");
 
 				normals.emplace_back(vec);
 			}
@@ -156,12 +156,12 @@ namespace Mystic
 				std::string val;
 				while (std::getline(stream, val, ' '))
 				{
-					assert((i < 2, "UVs only support two parameters (max)"));
+					Log::Assert(i < 2, "UVs only support two parameters (max)");
 
 					vec[i] = std::stof(val);
 					i++;
 				}
-				assert((i == 2, "UVs only support two parameters (min)"));
+				Log::Assert(i == 2, "UVs only support two parameters (min)");
 
 				UVs.emplace_back(vec);
 			}
@@ -191,7 +191,7 @@ namespace Mystic
 			}
 			else
 			{
-				assert((false, "Unknown type"));
+				Log::Assert(false, "Unknown type");
 			}
 		}
 
@@ -280,7 +280,7 @@ namespace Mystic
 
 	void MeshLibrary::Add(const std::string& name, const Ref<Mesh>& mesh)
 	{
-		assert((!Exists(name), "Mesh already exists!"));
+		Log::Assert(!Exists(name), "Mesh already exists!");
 		_meshes[name] = mesh;
 	}
 
@@ -306,7 +306,7 @@ namespace Mystic
 
 	Ref<Mesh> MeshLibrary::Get(const std::string& name)
 	{
-		assert((Exists(name), "Mesh not found!"));
+		Log::Assert(Exists(name), "Mesh not found!");
 		return _meshes[name];
 	}
 

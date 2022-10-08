@@ -2,7 +2,9 @@
 #include <entt.hpp>
 #include "LaserComponent.Gen.h"
 #include "Mystic/Scene/Scene.h"
+#include "Mystic/Logging/Log.h"
 #include <yaml-cpp/node/iterator.h>
+
 
 extern "C" namespace Mystic
 {
@@ -10,7 +12,7 @@ extern "C" namespace Mystic
 	{
 		extern "C" __declspec(dllexport) void AddComponent(entt::registry& registryRef, std::string className, entt::entity entity, Scene* scene)
 		{
-			assert((registryRef.valid(entity), "attempted to add a component to an entity that did not exist"));
+			Log::Assert(registryRef.valid(entity), "Attempted to add a component to an entity %d that did not exist", entity);
 
 			for (auto strClass : ReflectLaserComponent::stringToMap)
 			{

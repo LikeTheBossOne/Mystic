@@ -31,6 +31,9 @@
     <Filter Include="src\Mystic\ImGui">
       <UniqueIdentifier>{3FD7B8E5-2BD0-D737-5402-BDBC405AB743}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mystic\Logging">
+      <UniqueIdentifier>{EB1B2025-D7FF-E07A-4060-DBCD2C63CBFC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mystic\Render">
       <UniqueIdentifier>{248356B1-9099-5447-D910-E068456625CF}</UniqueIdentifier>
     </Filter>
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h">
       <Filter>src\Mystic\ImGui</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Logging\Log.h">
+      <Filter>src\Mystic\Logging</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Render\Buffer.h">
       <Filter>src\Mystic\Render</Filter>
@@ -1624,6 +1630,9 @@
     </ClCompile>
     <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp">
       <Filter>src\Mystic\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Logging\Log.cpp">
+      <Filter>src\Mystic\Logging</Filter>
     </ClCompile>
     <ClCompile Include="src\Mystic\Render\Buffer.cpp">
       <Filter>src\Mystic\Render</Filter>

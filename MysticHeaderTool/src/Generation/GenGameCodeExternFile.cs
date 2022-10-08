@@ -66,6 +66,7 @@ extern ""C"" namespace Mystic
             includes.AppendLine("#include <entt.hpp>");
             includes.AppendLine(@"#include <yaml-cpp/node/iterator.h>");
             includes.AppendLine(@"#include ""Mystic/Scene/Scene.h""");
+            includes.AppendLine(@"#include ""Mystic/Logging/Log.h""");
             foreach (var pair in GenFileNameToComponents)
             {
                 includes.AppendLine($"#include \"{pair.Key}\"");
@@ -81,7 +82,7 @@ extern ""C"" namespace Mystic
             addComponent.Append(@"
         extern ""C"" __declspec(dllexport) void AddComponent(entt::registry& registryRef, std::string className, entt::entity entity, Scene* scene)
         {
-            assert((registryRef.valid(entity), ""attempted to add a component to an entity that did not exist""));
+            Log::Assert(registryRef.valid(entity), ""attempted to add a component to an entity %lu that did not exist"", entity);
 ");
             foreach (var pair in GenFileNameToComponents)
             {

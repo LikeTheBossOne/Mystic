@@ -22,7 +22,7 @@ namespace Mystic {
 		case ShaderDataType::Bool:     return GL_BOOL;
 		}
 
-		assert((false, "Unknown ShaderDataType"));
+		Log::Assert(false, "Unknown ShaderDataType");
 		return 0;
 	}
 
@@ -48,7 +48,7 @@ namespace Mystic {
 
 	void OpenGLVertexArray::AddVertexBuffer(const Ref<VertexBuffer>& vertexBuffer)
 	{
-		assert((vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!"));
+		Log::Assert(vertexBuffer->GetLayout().GetElements().size(), "Vertex Buffer has no layout!");
 
 		glBindVertexArray(_rendererID);
 		vertexBuffer->Bind();
@@ -107,7 +107,7 @@ namespace Mystic {
 				break;
 			}
 			default:
-				assert((false, "Unknown ShaderDataType!"));
+				Log::Assert(false, "Unknown ShaderDataType!");
 			}
 		}
 

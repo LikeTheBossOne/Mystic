@@ -10,20 +10,20 @@ namespace Mystic
 	public:
 		Application& GetApplication()
 		{
-			assert((_application, "Application is null"));
+			Log::Assert(!!_application, "Application is null");
 			return *_application;
 		}
 
 #ifndef NO_IMGUI
 		ImGuiContext& GetImGuiContext()
 		{
-			assert((_imguiContext, "ImGuiContext is null"));
+			Log::Assert(!!_imguiContext, "ImGuiContext is null");
 			return *_imguiContext;
 		}
 
 		void SetImGuiContext(ImGuiContext* imguiContext)
 		{
-			assert((!_imguiContext, "An ImGuiContext already exists in this runtime"));
+			Log::Assert(!_imguiContext, "An ImGuiContext already exists in this runtime");
 			_imguiContext = imguiContext;
 		}
 #endif
@@ -31,7 +31,7 @@ namespace Mystic
 	private:
 		void SetApplication(Application* application)
 		{
-			assert((!_application, "An application already exists in this runtime"));
+			Log::Assert(!_application, "An application already exists in this runtime");
 			_application = application;
 		}
 

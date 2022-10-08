@@ -4,6 +4,7 @@
 #include "Mystic/ECS/Components/CameraComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
 #include "Mystic/GameCode/GameCodeSystem.h"
+#include "Mystic/Logging/Log.h"
 
 namespace Mystic
 {
@@ -82,7 +83,7 @@ namespace Mystic
 	{
 		GUID entGuid;
 		HRESULT result = CoCreateGuid(&entGuid);
-		assert((result == S_OK, "GUID Creation failed"));
+		Log::Assert(result == S_OK, "GUID Creation failed");
 		
 		return CreateEntity(name, entGuid);
 	}
