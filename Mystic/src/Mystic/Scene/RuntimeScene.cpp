@@ -50,9 +50,9 @@ namespace Mystic
 		GameCodeSystem::Update(deltaTime, this);
 	}
 
-	void RuntimeScene::Render()
+	void RuntimeScene::OnRender()
 	{
-		// Render 2D
+		// OnRender 2D
 		Camera* mainCamera = nullptr;
 		glm::mat4 cameraTransform;
 		{

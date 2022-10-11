@@ -56,6 +56,10 @@ namespace Mystic
 		int bytes = GetModuleFileName(NULL, pBuf, len);
 		std::wstring ws(pBuf);
 		std::string path(ws.begin(), ws.end());
+
+		//uint64_t ms = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch()).count();
+
+		//path = path.substr(0, path.find_last_of("\\/")) + "\\GameCode" + std::to_string(ms) + ".dll";
 		path = path.substr(0, path.find_last_of("\\/")) + "\\GameCode.dll";
 		if (!FileExists(path))
 		{

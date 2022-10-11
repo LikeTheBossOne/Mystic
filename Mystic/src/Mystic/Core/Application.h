@@ -69,7 +69,12 @@ namespace Mystic
 		Unique<Window> _window;
 		ApplicationCommandLineArgs _commandLineArgs;
 
+		//STATIC
+	public:
+		static Application& Get() { return *s_Instance; }
+
 	private:
+		static Application* s_Instance;
 		friend int ::main(int argc, char** argv);
 	};
 

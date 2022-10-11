@@ -15,7 +15,6 @@
 #include "Mystic/Assets/FBXImporter.h"
 #include "Mystic/Core/Application.h"
 #include "Mystic/Core/Input.h"
-#include "Mystic/Core/ServiceLocator.h"
 #include "Mystic/ECS/Components/TagComponent.h"
 #include "Mystic/ECS/Components/TransformComponent.h"
 #include "Mystic/Render/RenderCommand.h"
@@ -23,7 +22,6 @@
 #include "Mystic/ImGui/ImGuiLayer.h"
 #include "Mystic/Render/Mesh.h"
 #include "Mystic/Render/Renderer3D.h"
-#include "Mystic/Core/ServiceLocator.h"
 #include "Mystic/GameCode/GameCodeSystem.h"
 
 namespace Mystic {
@@ -50,7 +48,7 @@ namespace Mystic {
 		_activeScene = _activeProjectScene;
 		_activeProjectScene->ReloadGameCode();
 
-		auto commandLineArgs = singleton<ServiceLocator>().GetApplication().GetCommandLineArgs();
+		auto commandLineArgs = Application::Get().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
 		{
 			std::string sceneFilePath = commandLineArgs[1];
@@ -90,7 +88,7 @@ namespace Mystic {
 			_activeScene->OnViewportResize((uint32_t)_viewportSize.x, (uint32_t)_viewportSize.y);
 		}
 
-		// Render
+		// OnRender
 		Renderer2D::ResetStats();
 		_framebuffer->Bind();
 		RenderCommand::SetClearColor({ 0.1f, 0.1f, 0.3f, 1 });
@@ -109,16 +107,18 @@ namespace Mystic {
 				_editorCamera.OnUpdate(deltaTime);
 
 				_activeProjectScene->OnUpdate(deltaTime);
+				_activeProjectScene->OnRender(_editorCamera);
 				break;
 			}
 			case SceneState::Play:
 			{
 				_activeRuntimeScene->OnUpdate(deltaTime);
+				_activeRuntimeScene->OnRender();
 				break;
 			}
 		}
 
-		ImGui::SetCurrentContext(&singleton<ServiceLocator>().GetImGuiContext());
+		//ImGui::SetCurrentContext(&singleton<ServiceLocator>().GetImGuiContext());
 		auto[mx, my] = ImGui::GetMousePos();
 		mx -= _viewportBounds[0].x;
 		my -= _viewportBounds[0].y;
@@ -206,7 +206,8 @@ namespace Mystic {
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
 
-				if (ImGui::MenuItem("Exit")) singleton<ServiceLocator>().GetApplication().Close();
+				if (ImGui::MenuItem("Exit"))
+					Application::Get().Close();
 				ImGui::EndMenu();
 			}
 
@@ -243,7 +244,7 @@ namespace Mystic {
 
 		_viewportFocused = ImGui::IsWindowFocused();
 		_viewportHovered = ImGui::IsWindowHovered();
-		singleton<ServiceLocator>().GetApplication().GetImGuiLayer()->BlockEvents(!_viewportFocused && !_viewportHovered);
+		Application::Get().GetImGuiLayer()->BlockEvents(!_viewportFocused && !_viewportHovered);
 
 		ImVec2 viewportPanelSize = ImGui::GetContentRegionAvail();
 		_viewportSize = { viewportPanelSize.x, viewportPanelSize.y };
@@ -468,7 +469,7 @@ namespace Mystic {
 	void EditorLayer::SaveSceneAs()
 	{
 		std::string sceneFilePath;
-		auto commandLineArgs = singleton<ServiceLocator>().GetApplication().GetCommandLineArgs();
+		auto commandLineArgs = Application::Get().GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
 		{
 			sceneFilePath = commandLineArgs[1];

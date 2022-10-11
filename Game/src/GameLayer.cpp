@@ -1,7 +1,7 @@
 #include "GameLayer.h"
 
 #include "singleton.h"
-#include "Mystic/Core/ServiceLocator.h"
+#include "Mystic/Core/Application.h"
 #include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Scene/ProjectScene.h"
 #include "Mystic/Scene/ProjectSerializer.h"
@@ -15,12 +15,11 @@ namespace Game
 
 	void GameLayer::OnAttach()
 	{
-		Mystic::ServiceLocator& locator = singleton<Mystic::ServiceLocator>();
-		Mystic::Application& app = locator.GetApplication();
+		Mystic::Application& app = Mystic::Application::Get();
 
 		Mystic::Ref<Mystic::ProjectScene> projScene = std::make_shared<Mystic::ProjectScene>();
 
-		auto commandLineArgs = locator.GetApplication().GetCommandLineArgs();
+		auto commandLineArgs = app.GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
 		{
 			std::string sceneFilePath = commandLineArgs[1];
@@ -50,6 +49,6 @@ namespace Game
 		Mystic::RenderCommand::Clear();
 
 		_scene->OnUpdate(deltaTime);
-		_scene->Render();
+		_scene->OnRender();
 	}
 }

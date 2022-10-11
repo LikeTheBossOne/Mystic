@@ -9,7 +9,6 @@
 #include "singleton.h"
 #include "GLFW/glfw3.h"
 #include "Mystic/Core/Application.h"
-#include "Mystic/Core/ServiceLocator.h"
 #include "Mystic/Core/Window.h"
 
 namespace Mystic
@@ -22,9 +21,9 @@ namespace Mystic
 	{
 		// Setup Dear ImGui context
 		IMGUI_CHECKVERSION();
-		ImGuiContext* imguiContext = ImGui::CreateContext();
-		ServiceLocator& locator = singleton<ServiceLocator>();
-		locator.SetImGuiContext(imguiContext);
+		ImGui::CreateContext();
+		//ServiceLocator& locator = singleton<ServiceLocator>();
+		//locator.SetImGuiContext(imguiContext);
 
 		ImGuiIO& io = ImGui::GetIO(); (void)io;
 		io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;       // Enable Keyboard Controls
@@ -49,7 +48,7 @@ namespace Mystic
 			style.Colors[ImGuiCol_WindowBg].w = 1.0f;
 		}
 		
-		Application& app = singleton<ServiceLocator>().GetApplication();
+		Application& app = Application::Get();
 		GLFWwindow* window = static_cast<GLFWwindow*>(app.GetWindow().GetNativeWindow());
 
 		// Setup Platform/Renderer bindings
@@ -85,7 +84,7 @@ namespace Mystic
 	void ImGuiLayer::End()
 	{
 		ImGuiIO& io = ImGui::GetIO();
-		Application& app = singleton<ServiceLocator>().GetApplication();
+		Application& app = Application::Get();
 		io.DisplaySize = ImVec2((float)app.GetWindow().GetWidth(), (float)app.GetWindow().GetHeight());
 
 		// Rendering
