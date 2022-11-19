@@ -1,0 +1,22 @@
+{
+  "FileVersion": 2,
+  "Id": "a50dbb74-9106-dac6-ba38-bf4ba690b9d2",
+  "Items": [
+    {
+      "Id": "70c2755c-30be-4300-95b0-48a6d444276c",
+      "Command": "C:\\Users\\brend\\source\\repos\\Mystic\\GameCode\\src\\Components"
+    },
+    {
+      "Id": "8bf773cd-88b2-4681-a988-3ce351e4df0a",
+      "Command": "C:\\Users\\brend\\source\\repos\\Mystic"
+    },
+    {
+      "Id": "95a4888e-1415-4b45-99de-56546cba015f",
+      "Command": "C:\\Users\\brend\\source\\repos\\Mystic\\bin\\Debug-windows-x86_64\\MysticHeaderTool\\testfiles"
+    },
+    {
+      "Id": "2875d6cd-b97f-4f54-9922-224b8137cdca",
+      "Command": "18/08/2015-06:30:15.006542"
+    }
+  ]
+}

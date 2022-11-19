@@ -7,23 +7,44 @@
     <Filter Include="src\Mystic">
       <UniqueIdentifier>{55B6A921-416E-EB6E-AA75-C4CA964C865F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mystic\Assets">
+      <UniqueIdentifier>{97EBAE8A-0302-AD20-4C79-3842B8CE7DA8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\Core">
+      <UniqueIdentifier>{CD17EBE7-39A3-58AC-42B4-DBA0AEBEB4AC}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mystic\ECS">
       <UniqueIdentifier>{1FCDB1B1-0B9B-A5B7-F42E-16DEE09B811C}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Mystic\ECS\Components">
       <UniqueIdentifier>{D4E07CCD-40A3-B057-8953-3FE4F5548935}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Mystic\Editor">
-      <UniqueIdentifier>{EBE1EE92-57F8-EC28-A06F-784A0CC5BDB0}</UniqueIdentifier>
+    <Filter Include="src\Mystic\ECS\Systems">
+      <UniqueIdentifier>{26D21A0C-12CC-435E-FB38-DA6EE7D1A9CA}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Mystic\Events">
       <UniqueIdentifier>{99503294-0567-302A-4EDE-BB4BBA3301B2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Mystic\GFX">
-      <UniqueIdentifier>{09D6B1B1-F5A3-A5B7-DE37-16DECAA4811C}</UniqueIdentifier>
+    <Filter Include="src\Mystic\GameCode">
+      <UniqueIdentifier>{F90EF103-6570-CE11-EEDD-14C45A3E05D1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\ImGui">
+      <UniqueIdentifier>{3FD7B8E5-2BD0-D737-5402-BDBC405AB743}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\Logging">
+      <UniqueIdentifier>{EB1B2025-D7FF-E07A-4060-DBCD2C63CBFC}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\Render">
+      <UniqueIdentifier>{248356B1-9099-5447-D910-E068456625CF}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Mystic\Scene">
       <UniqueIdentifier>{32CF68E6-1EC8-8738-47FA-6CBD33526744}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\Scripting">
+      <UniqueIdentifier>{97D9D45D-8368-5E27-2C87-722218F56ECD}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="src\Mystic\Utility">
+      <UniqueIdentifier>{98F9BCE5-84DD-7D3B-ED3D-788ED94068BD}</UniqueIdentifier>
     </Filter>
     <Filter Include="src\Platform">
       <UniqueIdentifier>{21CA02E5-0D2D-9289-B6B2-CA3FA2F45D0C}</UniqueIdentifier>
@@ -31,11 +52,14 @@
     <Filter Include="src\Platform\OpenGL">
       <UniqueIdentifier>{35A49437-A105-7245-2A73-B8F796D3A804}</UniqueIdentifier>
     </Filter>
-    <Filter Include="src\Utility">
-      <UniqueIdentifier>{70464FB2-DCFB-C7A7-65F0-C17ED1A4BEAB}</UniqueIdentifier>
+    <Filter Include="src\Platform\Windows">
+      <UniqueIdentifier>{5B054582-4794-CE4B-F0B2-E246DC20DFF1}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor">
       <UniqueIdentifier>{B3738122-9F15-ACF8-88D0-BF4C74113349}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="vendor\ImGuizmo">
+      <UniqueIdentifier>{73BF7F4C-DF4A-ED10-E85B-700554664911}</UniqueIdentifier>
     </Filter>
     <Filter Include="vendor\glm">
       <UniqueIdentifier>{829FC5A8-6E57-07F6-D75E-E051C335A2E6}</UniqueIdentifier>
@@ -63,70 +87,193 @@
     <ClInclude Include="src\Mystic.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Application.h">
-      <Filter>src\Mystic</Filter>
+    <ClInclude Include="src\Mystic\Assets\AssetLibrary.h">
+      <Filter>src\Mystic\Assets</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Core.h">
-      <Filter>src\Mystic</Filter>
+    <ClInclude Include="src\Mystic\Assets\AssetUtilities.h">
+      <Filter>src\Mystic\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Assets\FBXImporter.h">
+      <Filter>src\Mystic\Assets</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\Application.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\Core.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\EntryPoint.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\Input.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\KeyCodes.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\Layer.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\LayerStack.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\MMacros.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\MouseCodes.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\ServiceLocator.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\Window.h">
+      <Filter>src\Mystic\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Core\exportimport.h">
+      <Filter>src\Mystic\Core</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ECS\ComponentRegistry.h">
       <Filter>src\Mystic\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\CameraComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\CharacterComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mystic\ECS\Components\GUIDComponent.h">
       <Filter>src\Mystic\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\ECS\Components\InEditorNameComponent.h">
+    <ClInclude Include="src\Mystic\ECS\Components\MeshRendererComponent.h">
       <Filter>src\Mystic\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ECS\Components\Renderable.h">
       <Filter>src\Mystic\ECS\Components</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\ECS\Components\Transform.h">
+    <ClInclude Include="src\Mystic\ECS\Components\RigidBodyComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\SpriteRendererComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\TagComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\ThrusterComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\TransformComponent.h">
+      <Filter>src\Mystic\ECS\Components</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Components\VelocityComponent.h">
       <Filter>src\Mystic\ECS\Components</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\ECS\Entity.h">
       <Filter>src\Mystic\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Editor\Editor.h">
-      <Filter>src\Mystic\Editor</Filter>
+    <ClInclude Include="src\Mystic\ECS\System.h">
+      <Filter>src\Mystic\ECS</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\EntryPoint.h">
-      <Filter>src\Mystic</Filter>
+    <ClInclude Include="src\Mystic\ECS\SystemRegistry.h">
+      <Filter>src\Mystic\ECS</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Systems\AccelerationSystem.h">
+      <Filter>src\Mystic\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Systems\CharacterMovementSystem.h">
+      <Filter>src\Mystic\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Systems\ThrusterMovementSystem.h">
+      <Filter>src\Mystic\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\ECS\Systems\VelocitySystem.h">
+      <Filter>src\Mystic\ECS\Systems</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Events\ApplicationEvent.h">
+      <Filter>src\Mystic\Events</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Events\Event.h">
       <Filter>src\Mystic\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Events\EventSystem.h">
+    <ClInclude Include="src\Mystic\Events\KeyEvent.h">
       <Filter>src\Mystic\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Events\IEventHandler.h">
+    <ClInclude Include="src\Mystic\Events\MouseEvent.h">
       <Filter>src\Mystic\Events</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Events\RenderEvent.h">
-      <Filter>src\Mystic\Events</Filter>
+    <ClInclude Include="src\Mystic\GameCode\GameCodeSystem.h">
+      <Filter>src\Mystic\GameCode</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Events\UpdateEvent.h">
-      <Filter>src\Mystic\Events</Filter>
+    <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h">
+      <Filter>src\Mystic\ImGui</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\GFX\Camera.h">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClInclude Include="src\Mystic\Logging\Log.h">
+      <Filter>src\Mystic\Logging</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\GFX\Renderer3D.h">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClInclude Include="src\Mystic\Render\Buffer.h">
+      <Filter>src\Mystic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\GFX\Shader.h">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClInclude Include="src\Mystic\Render\Camera.h">
+      <Filter>src\Mystic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\GFX\Window.h">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClInclude Include="src\Mystic\Render\EditorCamera.h">
+      <Filter>src\Mystic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\GFX\primitives.h">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClInclude Include="src\Mystic\Render\Framebuffer.h">
+      <Filter>src\Mystic\Render</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Game.h">
-      <Filter>src\Mystic</Filter>
+    <ClInclude Include="src\Mystic\Render\GraphicsContext.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Material.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Mesh.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\OrthographicCamera.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\OrthographicCameraController.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\PerspectiveCamera.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\RenderCommand.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Renderer.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Renderer2D.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Renderer3D.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\RendererAPI.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Shader.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\Texture.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\UniformBuffer.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\VertexArray.h">
+      <Filter>src\Mystic\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Render\primitives.h">
+      <Filter>src\Mystic\Render</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Scene\ProjectScene.h">
+      <Filter>src\Mystic\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Scene\ProjectSerializer.h">
       <Filter>src\Mystic\Scene</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Scene\RuntimeScene.h">
@@ -135,11 +282,14 @@
     <ClInclude Include="src\Mystic\Scene\Scene.h">
       <Filter>src\Mystic\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Mystic\Scene\SceneSerializer.h">
+    <ClInclude Include="src\Mystic\Scene\SceneCamera.h">
       <Filter>src\Mystic\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\GLFWEditor.h">
-      <Filter>src\Platform\OpenGL</Filter>
+    <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h">
+      <Filter>src\Mystic\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Utility\utilities.h">
+      <Filter>src\Mystic\Utility</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLFWRenderer.h">
       <Filter>src\Platform\OpenGL</Filter>
@@ -150,13 +300,28 @@
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRendererLoader.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\Mesh.h">
+    <ClInclude Include="src\Platform\OpenGL\OpenGLBuffer.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLRenderer3D.h">
+    <ClInclude Include="src\Platform\OpenGL\OpenGLContext.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Platform\OpenGL\OpenGLWindow.h">
+    <ClInclude Include="src\Platform\OpenGL\OpenGLFramebuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLRendererAPI.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLShader.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLTexture.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLUniformBuffer.h">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Platform\OpenGL\OpenGLVertexArray.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
     <ClInclude Include="src\Platform\OpenGL\RenderJob.h">
@@ -168,11 +333,14 @@
     <ClInclude Include="src\Platform\OpenGL\stb_image.h">
       <Filter>src\Platform\OpenGL</Filter>
     </ClInclude>
-    <ClInclude Include="src\Utility\utilities.h">
-      <Filter>src\Utility</Filter>
+    <ClInclude Include="src\Platform\Windows\WindowsWindow.h">
+      <Filter>src\Platform\Windows</Filter>
     </ClInclude>
     <ClInclude Include="src\mystpch.h">
       <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="vendor\ImGuizmo\ImGuizmo.h">
+      <Filter>vendor\ImGuizmo</Filter>
     </ClInclude>
     <ClInclude Include="vendor\glm\glm\common.hpp">
       <Filter>vendor\glm\glm</Filter>
@@ -1424,31 +1592,106 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\Mystic\Application.cpp">
-      <Filter>src\Mystic</Filter>
+    <ClCompile Include="src\Mystic\Assets\AssetLibrary.cpp">
+      <Filter>src\Mystic\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Assets\FBXImporter.cpp">
+      <Filter>src\Mystic\Assets</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Core\Application.cpp">
+      <Filter>src\Mystic\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Core\LayerStack.cpp">
+      <Filter>src\Mystic\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Core\Window.cpp">
+      <Filter>src\Mystic\Core</Filter>
     </ClCompile>
     <ClCompile Include="src\Mystic\ECS\ComponentRegistry.cpp">
       <Filter>src\Mystic\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\ECS\Entity.cpp">
+    <ClCompile Include="src\Mystic\ECS\SystemRegistry.cpp">
       <Filter>src\Mystic\ECS</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\Editor\Editor.cpp">
-      <Filter>src\Mystic\Editor</Filter>
+    <ClCompile Include="src\Mystic\ECS\Systems\AccelerationSystem.cpp">
+      <Filter>src\Mystic\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\Events\EventSystem.cpp">
-      <Filter>src\Mystic\Events</Filter>
+    <ClCompile Include="src\Mystic\ECS\Systems\CharacterMovementSystem.cpp">
+      <Filter>src\Mystic\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\GFX\Camera.cpp">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClCompile Include="src\Mystic\ECS\Systems\ThrusterMovementSystem.cpp">
+      <Filter>src\Mystic\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\GFX\Renderer3D.cpp">
-      <Filter>src\Mystic\GFX</Filter>
+    <ClCompile Include="src\Mystic\ECS\Systems\VelocitySystem.cpp">
+      <Filter>src\Mystic\ECS\Systems</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\Game.cpp">
-      <Filter>src\Mystic</Filter>
+    <ClCompile Include="src\Mystic\GameCode\GameCodeSystem.cpp">
+      <Filter>src\Mystic\GameCode</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\ImGui\ImGuiLayer.cpp">
+      <Filter>src\Mystic\ImGui</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Logging\Log.cpp">
+      <Filter>src\Mystic\Logging</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Buffer.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\EditorCamera.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Framebuffer.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\GraphicsContext.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Material.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Mesh.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\OrthographicCamera.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\OrthographicCameraController.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\PerspectiveCamera.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\RenderCommand.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Renderer.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Renderer2D.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Renderer3D.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\RendererAPI.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Shader.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\Texture.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\UniformBuffer.cpp">
+      <Filter>src\Mystic\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Render\VertexArray.cpp">
+      <Filter>src\Mystic\Render</Filter>
     </ClCompile>
     <ClCompile Include="src\Mystic\Scene\ProjectScene.cpp">
+      <Filter>src\Mystic\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Scene\ProjectSerializer.cpp">
       <Filter>src\Mystic\Scene</Filter>
     </ClCompile>
     <ClCompile Include="src\Mystic\Scene\RuntimeScene.cpp">
@@ -1457,11 +1700,11 @@
     <ClCompile Include="src\Mystic\Scene\Scene.cpp">
       <Filter>src\Mystic\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Mystic\Scene\SceneSerializer.cpp">
+    <ClCompile Include="src\Mystic\Scene\SceneCamera.cpp">
       <Filter>src\Mystic\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\GLFWEditor.cpp">
-      <Filter>src\Platform\OpenGL</Filter>
+    <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp">
+      <Filter>src\Mystic\Scripting</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
@@ -1469,11 +1712,38 @@
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLRenderer3D.cpp">
+    <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp">
       <Filter>src\Platform\OpenGL</Filter>
     </ClCompile>
-    <ClCompile Include="src\Platform\OpenGL\OpenGLWindow.cpp">
+    <ClCompile Include="src\Platform\OpenGL\OpenGLContext.cpp">
       <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLFramebuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLRendererAPI.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLShader.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLTexture.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLUniformBuffer.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\OpenGL\OpenGLVertexArray.cpp">
+      <Filter>src\Platform\OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsInput.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Platform\Windows\WindowsWindow.cpp">
+      <Filter>src\Platform\Windows</Filter>
+    </ClCompile>
+    <ClCompile Include="vendor\ImGuizmo\ImGuizmo.cpp">
+      <Filter>vendor\ImGuizmo</Filter>
     </ClCompile>
     <ClCompile Include="vendor\stb_image\stb_image.cpp">
       <Filter>vendor\stb_image</Filter>

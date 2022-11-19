@@ -1,28 +1,29 @@
-#pragma once
-
-#include "Scene.h"
-#include "../Core.h"
-
-#include "../ECS/Components/Renderable.h"
-#include "../ECS/Components/Transform.h"
-
-namespace Mystic
-{
-	struct Renderable;
-	struct Transform;
-
-	class MYSTIC_API RuntimeScene : public Scene
-	{
-	public:
-		RuntimeScene();
-		~RuntimeScene() override;
-
-		void RenderScene() override;
-
-
-		friend class ProjectScene;
-
-	};
-}
-
-
+//#pragma once
+//
+//#include "Scene.h"
+//#include "../Core/Core.h"
+//
+//namespace Mystic
+//{
+//	class AssetLibrary;
+//	struct Renderable;
+//	struct TransformComponent;
+//
+//	class MYSTIC_API RuntimeScene : public Scene
+//	{
+//	public:
+//		RuntimeScene();
+//		~RuntimeScene() override;
+//
+//		void OnUpdate(float deltaTime);
+//		void OnRender();
+//
+//	private:
+//		Ref<AssetLibrary> _assetLibrary;
+//
+//		friend class ProjectScene;
+//
+//	};
+//}
+//
+//

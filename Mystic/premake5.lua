@@ -4,8 +4,8 @@ project "Mystic"
 	cppdialect "C++latest"
 	staticruntime "off"
 
-	targetdir ("bin/" .. outputdir .. "/%{prj.name}")
-	objdir ("bin-int/" .. outputdir .. "/%{prj.name}")
+	targetdir ("%{wks.location}/bin/" .. outputdir .. "/%{prj.name}")
+	objdir ("%{wks.location}/bin-int/" .. outputdir .. "/%{prj.name}")
 
 	pchheader "mystpch.h"
 	pchsource "src/mystpch.cpp"
@@ -18,6 +18,9 @@ project "Mystic"
 		"vendor/stb_image/**.cpp",
 		"vendor/glm/glm/**.hpp",
 		"vendor/glm/glm/**.inl",
+
+		"vendor/ImGuizmo/ImGuizmo.h",
+		"vendor/ImGuizmo/ImGuizmo.cpp"
 	}
 
 	defines
@@ -36,6 +39,9 @@ project "Mystic"
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.entt}",
 		"%{IncludeDir.yaml_cpp}",
+		"%{IncludeDir.ImGuizmo}",
+		"%{IncludeDir.OpenFBX}",
+		"%{IncludeDir.singleton_cpp}",
 	}
 
 	links
@@ -44,10 +50,19 @@ project "Mystic"
 		"Glad",
 		"ImGui",
 		"yaml-cpp",
-		"opengl32.lib"
+		"opengl32.lib",
+		"OpenFBX",
+		"singleton-cpp"
 	}
 
 	flags { "NoPCH" }
+
+	--postbuildmessage "Copying DLL to MysticEditor & Game bin location"
+	--postbuildcommands
+	--{
+	--	"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\Mystic.dll\"",
+	--	"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\Mystic\\Mystic.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\Game\\Mystic.dll\"",
+	--}
 
 	filter "system:windows"
 		systemversion "latest"

@@ -1,7 +1,7 @@
 #pragma once
 #include "Components/GUIDComponent.h"
 #include "entt.hpp"
-#include "../Core.h"
+#include "../Core/Core.h"
 
 namespace Mystic
 {
