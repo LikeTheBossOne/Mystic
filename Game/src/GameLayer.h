@@ -17,6 +17,6 @@ namespace Game
 
 		void OnUpdate(float deltaTime) override;
 	private:
-		Mystic::Ref<Mystic::RuntimeScene> _scene;
+		Mystic::Ref<Mystic::Scene> _scene;
 	};
 }

@@ -17,25 +17,21 @@ namespace Game
 	{
 		Mystic::Application& app = Mystic::Application::Get();
 
-		Mystic::Ref<Mystic::ProjectScene> projScene = std::make_shared<Mystic::ProjectScene>();
+		_scene = std::make_shared<Mystic::Scene>();
 
 		auto commandLineArgs = app.GetCommandLineArgs();
 		if (commandLineArgs.Count > 1)
 		{
 			std::string sceneFilePath = commandLineArgs[1];
-			Mystic::ProjectSerializer serializer(projScene);
+			Mystic::ProjectSerializer serializer(_scene);
 			serializer.DeserializeProject(sceneFilePath);
 		}
 
-		projScene->ReloadGameCode();
-
-		_scene = projScene->CreateRuntimeScene();
-		//_scene->ReloadGameCode();
+		_scene->ReloadGameCode();
+		
 		_scene->OnViewportResize(app.GetWindow().GetWidth(),app.GetWindow().GetHeight());
 		Mystic::Entity ent = _scene->CreateEntity("NewEnt");
 		_scene->EntityAddComponentByName(ent.EntId, "LaserComponent");
-
-		
 	}
 
 	void GameLayer::OnDetach()
