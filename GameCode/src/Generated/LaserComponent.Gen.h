@@ -6,6 +6,7 @@
 
 #include "Components/LaserComponent.h"
 #include "imgui/imgui_internal.h"
+#include "yaml-cpp/emitter.h"
 #include "yaml-cpp/node/iterator.h"
 
 namespace Mystic
@@ -34,7 +35,7 @@ namespace Mystic
 			{ "LaserComponent", entt::type_id<LaserComponent>().hash()}
 		};
 
-		inline void Init(entt::registry& registryRef)
+		inline void Init()
 		{
 			if (initialized) return;
 			initialized = true;
@@ -53,13 +54,27 @@ namespace Mystic
 			}
 		}
 
+		inline void SerializeEntity(entt::registry& registryRef, YAML::Emitter& out, entt::entity entity)
+		{
+			LaserComponent* component = registryRef.try_get<LaserComponent>(entity);
+			if (component)
+			{
+				out << YAML::Key << "LaserComponent" << YAML::Value << YAML::BeginMap;
+
+				out << YAML::Key << "Damage" << YAML::Value << component->Damage;
+				out << YAML::Key << "TestInt" << YAML::Value << component->TestInt;
+
+				out << YAML::EndMap;
+			}
+		}
+
 		inline void DeserializeEntity(entt::registry& registryRef, YAML::detail::iterator_value& entityNode, entt::entity entity, Scene* scene)
 		{
-			auto laserComponentNode = entityNode["LaserComponent"];
-			if (laserComponentNode)
+			auto componentNode = entityNode["LaserComponent"];
+			if (componentNode)
 			{
 				LaserComponent laserComponent(entity, scene);
-				laserComponent.Damage = laserComponentNode["Damage"].as<float>();
+				laserComponent.Damage = componentNode["Damage"].as<float>();
 
 				registryRef.emplace<LaserComponent>(entity, laserComponent);
 			}
@@ -137,9 +152,6 @@ namespace Mystic
 
 		inline void DeleteComponents(entt::registry& registryRef)
 		{
-			{
-				registryRef.clear<LaserComponent>();
-			}
 		}
 	}
 }

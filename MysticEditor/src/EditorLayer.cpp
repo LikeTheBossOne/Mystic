@@ -5,14 +5,16 @@
 //#include <glm/gtc/matrix_transform.hpp>
 //#include <glm/gtc/type_ptr.hpp>
 
-#include "Mystic/Scene/ProjectSerializer.h"
 #include "Mystic/Scene/RuntimeScene.h"
 #include "Mystic/Scene/ProjectScene.h"
+
+#include <windows.h>
+#include <filesystem>
 
 #include "ImGuizmo.h"
 #include "singleton.h"
 #include "glm/gtc/type_ptr.hpp"
-#include "Mystic/Assets/FBXImporter.h"
+#include "HotReload/LoadEnvDTE.h"
 #include "Mystic/Core/Application.h"
 #include "Mystic/Core/Input.h"
 #include "Mystic/ECS/Components/TagComponent.h"
@@ -20,8 +22,6 @@
 #include "Mystic/Render/RenderCommand.h"
 #include "Mystic/Render/Renderer2D.h"
 #include "Mystic/ImGui/ImGuiLayer.h"
-#include "Mystic/Render/Mesh.h"
-#include "Mystic/Render/Renderer3D.h"
 #include "Mystic/GameCode/GameCodeSystem.h"
 
 namespace Mystic {
@@ -35,6 +35,13 @@ namespace Mystic {
 
 	void EditorLayer::OnAttach()
 	{
+		// Static Inits
+		VSEnv::Init();
+		VSEnv::DetachVS(true);
+		VSEnv::AttachVS();
+
+
+		// fields
 		_iconPlay = Texture2D::Create("PlayButton", "Resources/Icons/PlayButton.png");
 		_iconStop = Texture2D::Create("StopButton", "Resources/Icons/StopButton.png");
 
@@ -43,25 +50,27 @@ namespace Mystic {
 		fbSpec.Width = 1280;
 		fbSpec.Height = 720;
 		_framebuffer = Framebuffer::Create(fbSpec);
+		_editorCamera = EditorCamera(30.0f, 1.778f, 0.001f, 1000.0f);
 
-		_activeProjectScene = std::make_shared<ProjectScene>();
-		_activeScene = _activeProjectScene;
-		_activeProjectScene->ReloadGameCode();
+		_activeScene = std::make_shared<Scene>();
 
+
+		// Start GameCode
+		_activeScene->ReloadGameCode();
+		GameCodeSystem::InitImGui(ImGui::GetCurrentContext());
+
+
+		// Load Scene
 		auto commandLineArgs = Application::Get().GetCommandLineArgs();
+		_projectSerializer = std::make_shared<ProjectSerializer>(_activeScene);
 		if (commandLineArgs.Count > 1)
 		{
 			std::string sceneFilePath = commandLineArgs[1];
-			ProjectSerializer serializer(_activeProjectScene);
-			serializer.DeserializeProject(sceneFilePath);
+			_projectSerializer->DeserializeProject(sceneFilePath);
 		}
 
-		
-		GameCodeSystem::InitImGui(ImGui::GetCurrentContext());
-
-		_editorCamera = EditorCamera(30.0f, 1.778f, 0.001f, 1000.0f);
-
 		_sceneHierarchyPanel.SetContext(_activeScene);
+
 
 		/*std::unordered_map<FBXAssetType, std::unordered_map<std::string, std::string>> map;
 		FBXImporter::Import("../Sandbox/assets/fbx/BaseCharacter.fbx", map);
@@ -106,14 +115,14 @@ namespace Mystic {
 
 				_editorCamera.OnUpdate(deltaTime);
 
-				_activeProjectScene->OnUpdate(deltaTime);
-				_activeProjectScene->OnRender(_editorCamera);
+				_activeScene->OnEditorUpdate(deltaTime);
+				_activeScene->OnRender(_editorCamera);
 				break;
 			}
 			case SceneState::Play:
 			{
-				_activeRuntimeScene->OnUpdate(deltaTime);
-				_activeRuntimeScene->OnRender();
+				_activeScene->OnUpdate(deltaTime);
+				_activeScene->OnRender();
 				break;
 			}
 		}
@@ -205,6 +214,9 @@ namespace Mystic {
 
 				if (ImGui::MenuItem("Save As...", "Ctrl+Shift+S"))
 					SaveSceneAs();
+
+				if (ImGui::MenuItem("Reload", "Ctrl+R"))
+					Reload();
 
 				if (ImGui::MenuItem("Exit"))
 					Application::Get().Close();
@@ -456,7 +468,7 @@ namespace Mystic {
 		//	return;
 		//}
 		
-		Ref<ProjectScene> newScene = std::make_shared<ProjectScene>();
+		Ref<Scene> newScene = std::make_shared<Scene>();
 		ProjectSerializer serializer(newScene);
 		if (serializer.DeserializeProject(path))
 		{
@@ -479,22 +491,164 @@ namespace Mystic {
 			sceneFilePath = "UntitledScene.myst";
 		}
 
-		ProjectSerializer serializer(_activeProjectScene);
+		ProjectSerializer serializer(_activeScene);
 		serializer.SerializeProject(sceneFilePath);
 		
+	}
+
+	static void startup(std::string& commandLine)
+	{
+		// additional information
+		STARTUPINFO si;
+		PROCESS_INFORMATION pi;
+
+		// set the size of the structures
+		ZeroMemory(&si, sizeof(si));
+		si.cb = sizeof(si);
+		ZeroMemory(&pi, sizeof(pi));
+
+		size_t len = 0;
+
+		wchar_t* wCommandLine = (wchar_t*)malloc(commandLine.length() * sizeof(wchar_t));
+		mbstowcs_s(&len, wCommandLine, commandLine.length() + 1, commandLine.c_str(), commandLine.length());//includes null
+		LPWSTR lpCommandLine = wCommandLine;
+
+		// start the program up
+		if (CreateProcess(NULL,   // the path
+			lpCommandLine,        // Command line
+			NULL,           // Process handle not inheritable
+			NULL,           // Thread handle not inheritable
+			FALSE,          // Set handle inheritance to FALSE
+			0,              // No creation flags
+			NULL,           // Use parent's environment block
+			NULL,           // Use parent's starting directory 
+			&si,            // Pointer to STARTUPINFO structure
+			&pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
+		))
+		{
+			//TODO: make this wait not stop the whole app
+			WaitForSingleObject(pi.hProcess, 100000);
+			// Close process and thread handles. 
+			CloseHandle(pi.hProcess);
+			CloseHandle(pi.hThread);
+		}
+		else
+		{
+			Log::MError("CreateProcess failed: %d", GetLastError());
+		}
+	}
+
+	static std::wstring ConvertAnsiToWide(const std::string& str)
+	{
+		int count = MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), NULL, 0);
+		std::wstring wstr(count, 0);
+		MultiByteToWideChar(CP_ACP, 0, str.c_str(), str.length(), &wstr[0], count);
+		return wstr;
+	}
+
+	static std::string getMSBuildPath()
+	{
+		std::wstring key = ConvertAnsiToWide("SOFTWARE\\Microsoft\\MSBuild\\4.0");
+		std::wstring value = ConvertAnsiToWide("MSBuildOverrideTasksPath");
+
+		wchar_t outPath[256];
+		DWORD dataSize = sizeof(outPath);
+
+		LONG retCode = ::RegGetValue(
+			HKEY_LOCAL_MACHINE,
+			key.c_str(),
+			value.c_str(),
+			RRF_RT_REG_DWORD,
+			nullptr,
+			&outPath,
+			&dataSize
+		);
+		
+		Log::Assert(retCode == ERROR_SUCCESS || retCode == ERROR_UNSUPPORTED_TYPE, "Error trying to find MSBuild path");
+
+		std::wstring outPathStr(outPath);
+		return std::string(outPathStr.begin(), outPathStr.end());
+	}
+
+	static bool doCopy(std::string& fromPath, std::string& toPath)
+	{
+		wchar_t* wFromPath = (wchar_t*)malloc(fromPath.length() * sizeof(wchar_t));
+		size_t lenFrom;
+		mbstowcs_s(&lenFrom, wFromPath, fromPath.length() + 1, fromPath.c_str(), fromPath.length());//includes null
+
+		wchar_t* wToPath = (wchar_t*)malloc(toPath.length() * sizeof(wchar_t));
+		size_t lenTo;
+		mbstowcs_s(&lenTo, wToPath, toPath.length() + 1, toPath.c_str(), toPath.length());//includes null
+
+
+		return CopyFile(wFromPath, wToPath, true);
+	}
+
+	void EditorLayer::Reload()
+	{
+		// Get strings
+		static WCHAR pBuf[256];
+		static DWORD len = sizeof(pBuf);
+		static int bytes = GetModuleFileName(NULL, pBuf, len);
+		static std::wstring ws(pBuf);
+		static std::string path(ws.begin(), ws.end());
+		static std::string editorBin = path.substr(0, path.find_last_of("\\/"));
+		static std::string typeBin = editorBin.substr(0, editorBin.find_last_of("\\/"));
+		static std::string baseBin = typeBin.substr(0, typeBin.find_last_of("\\/"));
+		static std::string repoRoot = baseBin.substr(0, baseBin.find_last_of("\\/"));
+		static std::string intermediateDir = repoRoot + "\\Intermediate";
+		static std::string immediateEditorDir = intermediateDir + "\\EditorRaw";
+
+		//GameCodeSystem::Save
+		static std::string serializePath = immediateEditorDir + "\\gameCode.mysta";
+
+		_projectSerializer->SerializeGameCodeEnts(serializePath);
+		_activeScene->ClearGameCode();
+
+		VSEnv::DetachVS(true);
+
+		// Delete PDB
+		static std::string pdbPath = typeBin + "\\GameCode\\GameCode.pdb";
+		remove(pdbPath.c_str());
+
+		// Delete DLL
+		static std::string dllPath = editorBin + "\\GameCode.dll";
+		remove(dllPath.c_str());
+		
+		// Run mystic header tool
+		static std::string mysticHeaderTool = typeBin + "\\MysticHeaderTool\\MysticHeaderTool.exe";
+		static std::string headerToolCL = mysticHeaderTool + " \"" + repoRoot + "\\GameCode\\src\\Components\" \"" + repoRoot + "\" \""
+			+ repoRoot + "\\GameCode\\src\\Generated\" \"" + "18/08/2015-06:30:15.006542\""; // Eventually read this from internal DB
+		startup(headerToolCL);
+		
+		static std::string hardCodedMSBuild = "\"C:\\Program Files\\Microsoft Visual Studio\\2022\\Enterprise\\MSBuild\\Current\\Bin\\amd64\\msbuild.exe\"";
+		static std::string gameCodeProj = "\"" + repoRoot + "\\GameCode\\GameCode.vcxproj\"";
+		static std::string msBuildArgs = "-t:build -p:Configuration=Debug -p:Platform=x64 -p:PreBuildEventUseInBuild=false -p:PostBuildEventUseInBuild=false";
+		static std::string msBuildCommand = hardCodedMSBuild + " " + gameCodeProj + " " + msBuildArgs;
+		startup(msBuildCommand);
+		
+		// Now need to copy dll to here
+		static std::string copyFromPath = typeBin + "\\GameCode\\GameCode.dll";
+		static std::string copyToPath = typeBin + "\\MysticEditor\\GameCode.dll";
+		doCopy(copyFromPath, copyToPath);
+
+
+		// Reattach VS
+		VSEnv::AttachVS();
+
+		_activeScene->ReloadGameCode();
+		GameCodeSystem::InitImGui(ImGui::GetCurrentContext());
+		_projectSerializer->DeserializeGameCodeEnts(serializePath);
 	}
 
 	void EditorLayer::OnScenePlay()
 	{
 		_sceneState = SceneState::Play;
-		_activeRuntimeScene = _activeProjectScene->CreateRuntimeScene();
-		_activeScene = _activeRuntimeScene;
 	}
 
 	void EditorLayer::OnSceneStop()
 	{
 		_sceneState = SceneState::Edit;
-		_activeScene = _activeProjectScene;
 	}
 
 }

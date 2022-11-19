@@ -24,7 +24,8 @@ project "MysticHeaderTool"
 
 	nuget
 	{
-		"System.Text.RegularExpressions:4.3.1"
+		"System.Text.RegularExpressions:4.3.1",
+		"Microsoft.VisualStudio.Interop:17.3.32804.24"
 	}
 
 	filter "system:windows"

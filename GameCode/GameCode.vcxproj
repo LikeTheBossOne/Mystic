@@ -92,9 +92,12 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ImportLibrary>..\bin\Debug-windows-x86_64\GameCode\GameCode.lib</ImportLibrary>
     </Link>
+    <PreBuildEvent>
+      <Command>"$(SolutionDir)bin\Debug-windows-x86_64\MysticHeaderTool\MysticHeaderTool.exe" "$(SolutionDir)GameCode\src\Components" "../../Mysti" "$(SolutionDir)GameCode\src\Generated" "18/08/2015-06:30:15.006542"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy /b "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Debug-windows-x86_64\MysticEditor\GameCode.dll"
-copy /b "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Debug-windows-x86_64\Game\GameCode.dll"</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Debug-windows-x86_64\Game\GameCode.dll"
+copy /B /Y "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Debug-windows-x86_64\MysticEditor\GameCode.dll"</Command>
       <Message>Copying DLL to MysticEditor bin location</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -119,9 +122,12 @@ copy /b "$(SolutionDir)bin\Debug-windows-x86_64\GameCode\GameCode.dll" "$(Soluti
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>..\bin\Release-windows-x86_64\GameCode\GameCode.lib</ImportLibrary>
     </Link>
+    <PreBuildEvent>
+      <Command>"$(SolutionDir)bin\Release-windows-x86_64\MysticHeaderTool\MysticHeaderTool.exe" "$(SolutionDir)GameCode\src\Components" "../../Mysti" "$(SolutionDir)GameCode\src\Generated" "18/08/2015-06:30:15.006542"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy /b "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Release-windows-x86_64\MysticEditor\GameCode.dll"
-copy /b "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Release-windows-x86_64\Game\GameCode.dll"</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Release-windows-x86_64\Game\GameCode.dll"
+copy /B /Y "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Release-windows-x86_64\MysticEditor\GameCode.dll"</Command>
       <Message>Copying DLL to MysticEditor bin location</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -146,9 +152,12 @@ copy /b "$(SolutionDir)bin\Release-windows-x86_64\GameCode\GameCode.dll" "$(Solu
       <OptimizeReferences>true</OptimizeReferences>
       <ImportLibrary>..\bin\Dist-windows-x86_64\GameCode\GameCode.lib</ImportLibrary>
     </Link>
+    <PreBuildEvent>
+      <Command>"$(SolutionDir)bin\Dist-windows-x86_64\MysticHeaderTool\MysticHeaderTool.exe" "$(SolutionDir)GameCode\src\Components" "../../Mysti" "$(SolutionDir)GameCode\src\Generated" "18/08/2015-06:30:15.006542"</Command>
+    </PreBuildEvent>
     <PostBuildEvent>
-      <Command>copy /b "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Dist-windows-x86_64\MysticEditor\GameCode.dll"
-copy /b "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Dist-windows-x86_64\Game\GameCode.dll"</Command>
+      <Command>copy /B /Y "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Dist-windows-x86_64\Game\GameCode.dll"
+copy /B /Y "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(SolutionDir)bin\Dist-windows-x86_64\MysticEditor\GameCode.dll"</Command>
       <Message>Copying DLL to MysticEditor bin location</Message>
     </PostBuildEvent>
   </ItemDefinitionGroup>
@@ -160,6 +169,7 @@ copy /b "$(SolutionDir)bin\Dist-windows-x86_64\GameCode\GameCode.dll" "$(Solutio
     <ClInclude Include="src\Generated\Init.h" />
     <ClInclude Include="src\Generated\LaserComponent.Gen.h" />
     <ClInclude Include="src\Generated\NativeScriptTemplates.h" />
+    <ClInclude Include="src\Generated\ReflectLaserComponent.generated.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Components\LaserComponent.cpp" />

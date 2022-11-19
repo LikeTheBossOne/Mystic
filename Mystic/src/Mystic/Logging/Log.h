@@ -4,7 +4,7 @@
 #define Log(format, ...) _Log(__FILE__, __LINE__, format, __VA_ARGS__)
 #define Info(format, ...) _Info(__FILE__, __LINE__, format, __VA_ARGS__)
 #define Warning(format, ...) _Warning(__FILE__, __LINE__, format, __VA_ARGS__)
-#define Error(format, ...) _Error(__FILE__, __LINE__, format, __VA_ARGS__)
+#define MError(format, ...) _Error(__FILE__, __LINE__, format, __VA_ARGS__)
 #define Assert(condition, format, ...) _Assert(__FILE__, __LINE__, condition, format, __VA_ARGS__)
 
 namespace Mystic

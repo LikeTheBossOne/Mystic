@@ -7,11 +7,10 @@
 namespace Mystic
 {
     typedef void (*DeleteComponentsFn)(entt::registry&);
-    typedef void (*InitComponentsFn)(entt::registry&);
+    typedef void (*InitComponentsFn)(Scene*);
     typedef void (*InitImGuiFn)(ImGuiContext*);
+    typedef void (*SerializeEntityFn)(entt::registry&, YAML::Emitter&, entt::entity);
     typedef void (*DeserializeEntityFn)(entt::registry&, YAML::detail::iterator_value&, entt::entity, Scene*);
-    //typedef void (*SaveScriptFn)(json&);
-    //typedef void (*LoadScriptFn)(json&, Entity);
     typedef void (*ImGuiFn)(entt::registry&, entt::entity);
     typedef void (*UpdateComponentsFn)(entt::registry& ,float);
     //typedef void (*EditorUpdateScriptFn)(float, Scene*);
@@ -20,11 +19,12 @@ namespace Mystic
 	class MYSTIC_API GameCodeSystem
 	{
 	public:
-        static void Start(entt::registry& registry);
-        static void Reload(entt::registry& registry);
+        static void Start(Scene* scene);
+        static void Reload(Scene* scene);
         
 		static void Update(float dt, Scene* scene);
 
+        static void SerializeEntity(entt::registry& registryRef, YAML::Emitter& outEmitter, entt::entity entity);
         static void DeserializeEntity(entt::registry& registryRef, YAML::detail::iterator_value& entityNode, entt::entity entity, Scene* scene);
 
         static void InitImGui(ImGuiContext* context);
@@ -32,9 +32,9 @@ namespace Mystic
         
         static void AddComponentFromString(std::string className, entt::entity entity, entt::registry& registry, Scene* scene);
 
-	private:
         static bool FreeGameCodeLibrary(entt::registry& registry);
-         
+
+	private:
 
         inline static InitImGuiFn s_initImGuiFn = nullptr;
         inline static ImGuiFn s_imGuiFn = nullptr;
@@ -43,6 +43,7 @@ namespace Mystic
         inline static UpdateComponentsFn s_updateComponentsFn = nullptr;
         inline static AddComponentFromStringFn s_addComponentFromStringFn = nullptr;
         inline static DeleteComponentsFn s_deleteComponentsFn = nullptr;
+        inline static SerializeEntityFn s_serializeEntityFn = nullptr;
         inline static DeserializeEntityFn s_deserializeEntityFn = nullptr;
 
         inline static bool s_isLoaded = false;

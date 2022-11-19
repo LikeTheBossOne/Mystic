@@ -11,6 +11,7 @@
 #include "Mystic/Render/Texture.h"
 #include "Mystic/Render/VertexArray.h"
 #include "Mystic/Scene/ProjectScene.h"
+#include "Mystic/Scene/ProjectSerializer.h"
 #include "Panels/SceneHierarchyPanel.h"
 
 namespace Mystic {
@@ -34,6 +35,7 @@ namespace Mystic {
 		void OpenScene();
 		void OpenScene(const std::string& path);
 		void SaveSceneAs();
+		void Reload();
 
 		void OnScenePlay();
 		void OnSceneStop();
@@ -50,8 +52,7 @@ namespace Mystic {
 		Ref<Shader> _flatColorShader;
 		Ref<Framebuffer> _framebuffer;
 
-		Ref<ProjectScene> _activeProjectScene;
-		Ref<RuntimeScene> _activeRuntimeScene;
+		Ref<ProjectSerializer> _projectSerializer;
 		Ref<Scene> _activeScene;
 
 		Entity _squareEntity;

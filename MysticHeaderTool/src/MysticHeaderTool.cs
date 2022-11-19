@@ -28,6 +28,8 @@ namespace MysticHeaderTool
          */
         static void Main(string[] args)
         {
+            Console.Out.WriteLine("Starting Mystic Header Tool");
+            Console.Out.WriteLine(args[0] + " " + args[1] + " " + args[2] + " " + args[3]);
             if (args.Length < 4)
             {
                 throw new ArgumentException("usage: MysticHeaderTool.exe <path-to-parse> <path-to-root> <path-to-output> <last-build(YYYY-MM-DD:hh-mm-ss)>");
@@ -43,6 +45,7 @@ namespace MysticHeaderTool
             string format = "dd/MM/yyyy-HH:mm:ss.ffffff";
             DateTime lastBuildTime = DateTime.ParseExact(lastBuildStr, format, CultureInfo.CurrentCulture);
 
+            Console.Out.WriteLine("Got past start");
 
             // DO HEADER PARSING
 

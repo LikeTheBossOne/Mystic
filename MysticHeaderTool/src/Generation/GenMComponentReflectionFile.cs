@@ -122,7 +122,7 @@ namespace MysticHeaderTool.Generation
         {
             StringBuilder init = new StringBuilder();
             init.AppendLine(@$"
-    inline void Init(entt::registry & registryRef)
+    inline void Init()
     {{
         if (initialized) return;
         initialized = true;
@@ -135,7 +135,7 @@ namespace MysticHeaderTool.Generation
             foreach (MProperty prop in ReflectedComponent.Properties)
             {
                 init.AppendLine(
-                    $"            .data()<&{ReflectedComponent.Name}::{prop.Name}, entt::as_ref_t>(ids[{idx}])");
+                    $"            .data<&{ReflectedComponent.Name}::{prop.Name}, entt::as_ref_t>(ids[{idx}])");
                 idx++;
             }
 
@@ -167,12 +167,38 @@ namespace MysticHeaderTool.Generation
             string delete = $@"
     inline void DeleteComponents(entt::registry& registryRef)
     {{
-        {{
-            registryRef.clear<{ReflectedComponent.Name}>();
-        }}
+        
     }}
 ";
             Writer.WriteLine(delete);
+        }
+
+        private void WriteSerializeComponent()
+        {
+            StringBuilder serialize = new StringBuilder();
+            serialize.AppendLine($@"
+    inline void SerializeEntity(entt::registry& registryRef, YAML::Emitter& out, entt::entity entity)
+    {{
+        {ReflectedComponent.Name}* component = registryRef.try_get<{ReflectedComponent.Name}>(entity);
+        if (component)
+        {{
+            out << YAML::Key << ""{ReflectedComponent.Name}"" << YAML::Value << YAML::BeginMap;
+"
+            );
+
+            foreach (MProperty prop in ReflectedComponent.Properties)
+            {
+                serialize.AppendLine($"            out << YAML::Key << \"{prop.Name}\" << YAML::Value << component->{prop.Name};");
+            }
+
+            serialize.AppendLine(@$"
+            out << YAML::EndMap;
+        }}
+    }}
+"
+            );
+
+            Writer.Write(serialize.ToString());
         }
 
         private void WriteDeserializeComponent()
@@ -190,22 +216,23 @@ namespace MysticHeaderTool.Generation
 
             foreach (MProperty prop in ReflectedComponent.Properties)
             {
-                deserialize.AppendLine($"            component.{prop.Name} = componentNode[\"{prop.Name}\"].as<{prop.Type.GetTypeDef()}>();");
+                deserialize.Append(@$"
+            if (componentNode[""{prop.Name}""])
+            {{
+                component.{prop.Name} = componentNode[""{ prop.Name}""].as<{prop.Type.GetTypeDef()}>();
+            }}
+"
+                );
             }
             
             deserialize.AppendLine(@$"
+            registryRef.emplace<{ReflectedComponent.Name}>(entity, component);
         }}
-        registryRef.emplace<{ReflectedComponent.Name}>(entity, component);
     }}
 "
             );
 
             Writer.Write(deserialize.ToString());
-        }
-
-        private void WriteSerializeComponent()
-        {
-
         }
 
         private void WriteImGuiFuncs()

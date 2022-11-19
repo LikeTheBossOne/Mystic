@@ -33,6 +33,12 @@ project "MysticEditor"
 		"singleton-cpp",
 	}
 
+	filter "files:src/HotReload/*.cpp"
+		buildoptions
+		{
+			"/MP1"
+		}
+
 	filter "system:windows"
 		postbuildmessage "Copying singleton-cpp.dll to MysticEditor bin location"
 		postbuildcommands

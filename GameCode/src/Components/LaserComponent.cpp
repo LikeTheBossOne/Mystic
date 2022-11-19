@@ -15,5 +15,5 @@ void LaserComponent::Update()
 {
 	auto& position = GetComponent<Mystic::TransformComponent>();
 	auto& me = GetComponent<LaserComponent>();
-	Mystic::Log::Log("GameCode::LaserComponent::Update");
+	//Mystic::Log::Log("GameCode::LaserComponent::Update");
 }

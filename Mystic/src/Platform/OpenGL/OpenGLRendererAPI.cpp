@@ -17,7 +17,7 @@ namespace Mystic {
 		switch (severity)
 		{
 		case GL_DEBUG_SEVERITY_HIGH:         Log::Assert(false, message); return;
-		case GL_DEBUG_SEVERITY_MEDIUM:       Log::Error(message); return;
+		case GL_DEBUG_SEVERITY_MEDIUM:       Log::MError(message); return;
 		case GL_DEBUG_SEVERITY_LOW:          Log::Warning(message); return;
 		case GL_DEBUG_SEVERITY_NOTIFICATION: Log::Info(message); return;
 		}

@@ -9,15 +9,30 @@
 
 namespace Mystic
 {
+	class AssetLibrary;
+	class EditorCamera;
 	class Camera;
 
 	class MYSTIC_API Scene
 	{
 	public:
-		virtual ~Scene();
+		Scene();
+		~Scene();
 
 		void SetName(const std::string& name);
 		[[nodiscard]] std::string GetName() const;
+
+		void ReloadGameCode();
+		void SerializeGameCodeEnts();
+		void DeserializeGameCodeEnts();
+		void GameCodeImGui(entt::entity entity);
+		void ClearGameCode();
+		void Clear();
+
+		void OnUpdate(float deltaTime);
+		void OnEditorUpdate(float deltaTime);
+		void OnRender();
+		void OnRender(EditorCamera& editorCamera);
 
 		[[nodiscard]] Entity CreateEntity(std::string name);
 		[[nodiscard]] Entity CreateEntity(std::string name, GUID guid);
@@ -27,6 +42,12 @@ namespace Mystic
 		void DestroyEntity(Entity& entity);
 
 		Ref<Camera> GetMainCamera() { return _mainCamera; }
+
+		template <typename T>
+		void RegisterComponentType()
+		{
+			_registry.storage<T>();
+		}
 
 		template <typename T>
 		bool EntityHasComponent(entt::entity e)
@@ -74,20 +95,19 @@ namespace Mystic
 			return _registry.get<T>(e);
 		}
 
-		void ReloadGameCode();
-		void GameCodeImGui(entt::entity entity);
-
 		void OnViewportResize(uint32_t width, uint32_t height);
 
 	protected:
 		entt::registry _registry;
 		Ref<Camera> _mainCamera;
+		Ref<AssetLibrary> _assetLibrary;
 
 		std::string _name;
 
 		uint32_t _viewportWidth = 0;
 		uint32_t _viewportHeight = 0;
 
+		friend class ProjectSerializer;
 		friend class SceneHierarchyPanel;
 		friend class EditorLayer;
 		friend class GameCodeSystem;

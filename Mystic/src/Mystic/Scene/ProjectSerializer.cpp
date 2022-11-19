@@ -174,7 +174,7 @@ namespace Mystic
 		return out;
 	}
 
-	ProjectSerializer::ProjectSerializer(Ref<ProjectScene> scene)
+	ProjectSerializer::ProjectSerializer(Ref<Scene> scene)
 	{
 		_scene = scene;
 		_strCount = 0;
@@ -253,99 +253,59 @@ namespace Mystic
 		{
 			for (auto entity : entities)
 			{
-				auto guidStr = entity["Entity"].as<std::string>();
-				GUID guid = StringToGuid(guidStr);
-
-				auto tag = entity["TagComponent"]["Tag"].as<std::string>();
-
-				Entity deserializedEntity = _scene->CreateEntity(tag, guid);
-
-				auto transformComponent = entity["TransformComponent"];
-				if (transformComponent)
-				{
-					// Entities always have transforms
-					TransformComponent& tc = _scene->EntityGetComponent<TransformComponent>(deserializedEntity.EntId);
-					tc.Position = transformComponent["Position"].as<glm::vec3>();
-					tc.Rotation = transformComponent["Rotation"].as<glm::quat>();
-					tc.Scale = transformComponent["Scale"].as<glm::vec3>();
-				}
-
-				auto cameraComponent = entity["CameraComponent"];
-				if (cameraComponent)
-				{
-					CameraComponent cc;
-
-					YAML::Node cameraProps = cameraComponent["Camera"];
-					cc.Camera.SetProjectionType((SceneCamera::ProjectionType)cameraProps["ProjectionType"].as<int>());
-
-					cc.Camera.SetPerspectiveVerticalFOV(cameraProps["PerspectiveFOV"].as<float>());
-					cc.Camera.SetPerspectiveNearClip(cameraProps["PerspectiveNear"].as<float>());
-					cc.Camera.SetPerspectiveFarClip(cameraProps["PerspectiveFar"].as<float>());
-
-					cc.Camera.SetOrthographicSize(cameraProps["OrthographicSize"].as<float>());
-					cc.Camera.SetOrthographicNearClip(cameraProps["OrthographicNear"].as<float>());
-					cc.Camera.SetOrthographicFarClip(cameraProps["OrthographicFar"].as<float>());
-
-					cc.Primary = cameraComponent["Primary"].as<bool>();
-					cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
-
-					_scene->_registry.emplace<CameraComponent>(deserializedEntity.EntId, cc);
-				}
-
-				auto spriteRendererComponent = entity["SpriteRendererComponent"];
-				if (spriteRendererComponent)
-				{
-					SpriteRendererComponent src;
-					src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
-
-					_scene->_registry.emplace<SpriteRendererComponent>(deserializedEntity.EntId, src);
-				}
-
-				auto renderableComponent = entity["Renderable"];
-				if (renderableComponent)
-				{
-					Renderable rc;
-					rc.MeshKey = renderableComponent["Mesh"].as<std::string>();
-
-					_scene->_registry.emplace<Renderable>(deserializedEntity.EntId, rc);
-				}
-
-				auto velocityComponent = entity["VelocityComponent"];
-				if (velocityComponent)
-				{
-					VelocityComponent vc;
-					vc.Velocity = velocityComponent["Velocity"].as<glm::vec3>();
-
-					_scene->_registry.emplace<VelocityComponent>(deserializedEntity.EntId, vc);
-				}
-
-				auto characterComponent = entity["CharacterComponent"];
-				if (characterComponent)
-				{
-					CharacterComponent cc;
-					cc.Active = characterComponent["Active"].as<bool>();
-
-					_scene->_registry.emplace<CharacterComponent>(deserializedEntity.EntId, cc);
-				}
-
-				auto meshRendererComponent = entity["MeshRendererComponent"];
-				if (meshRendererComponent)
-				{
-					MeshRendererComponent mrc;
-					mrc.MeshName = meshRendererComponent["MeshName"].as<std::string>();
-					mrc.ShaderName = meshRendererComponent["ShaderName"].as<std::string>();
-					mrc.TextureName = meshRendererComponent["TextureName"].as<std::string>();
-					mrc.Color = meshRendererComponent["Color"].as<glm::vec4>();
-
-					_scene->_registry.emplace<MeshRendererComponent>(deserializedEntity.EntId, mrc);
-				}
-
-				GameCodeSystem::DeserializeEntity(_scene->_registry, entity, deserializedEntity.EntId, _scene.get());
+				DeserializeEntity(entity);
 			}
 		}
 
 		DeserializeAssets(sceneRoot);
 		
+		return true;
+	}
+
+	void ProjectSerializer::SerializeGameCodeEnts(std::string& filePath)
+	{
+		YAML::Emitter out;
+		out << YAML::BeginMap;
+		
+		out << YAML::Key << "Entities";
+		out << YAML::Value << YAML::BeginSeq;
+
+		_scene->_registry.each([this, &out](const entt::entity ent)
+			{
+				SerializeEntity(out, ent);
+			});
+
+		out << YAML::EndSeq;
+
+		out << YAML::EndMap;
+
+		std::ofstream fOut(filePath);
+		fOut << out.c_str();
+	}
+
+	bool ProjectSerializer::DeserializeGameCodeEnts(std::string& filePath)
+	{
+		YAML::Node gameCodeRoot;
+		try
+		{
+			gameCodeRoot = YAML::LoadFile(filePath);
+		}
+		catch (YAML::BadFile& ex)
+		{
+			Log::Assert(false, "could not load yaml file: %s", filePath.c_str());
+			return false;
+		}
+
+		YAML::Node entities = gameCodeRoot["Entities"];
+
+		if (entities)
+		{
+			for (auto entity : entities)
+			{
+				DeserializeEntity(entity);
+			}
+		}
+
 		return true;
 	}
 
@@ -527,6 +487,8 @@ namespace Mystic
 			out << YAML::EndMap;
 		}
 
+		GameCodeSystem::SerializeEntity(_scene->_registry, out, entity);
+
 		out << YAML::EndMap;
 	}
 
@@ -580,5 +542,97 @@ namespace Mystic
 					);
 			}
 		}
+	}
+
+	void ProjectSerializer::DeserializeEntity(YAML::detail::iterator_value& entity)
+	{
+		auto guidStr = entity["Entity"].as<std::string>();
+		GUID guid = StringToGuid(guidStr);
+
+		auto tag = entity["TagComponent"]["Tag"].as<std::string>();
+
+		Entity deserializedEntity = _scene->CreateEntity(tag, guid);
+
+		auto transformComponent = entity["TransformComponent"];
+		if (transformComponent)
+		{
+			// Entities always have transforms
+			TransformComponent& tc = _scene->EntityGetComponent<TransformComponent>(deserializedEntity.EntId);
+			tc.Position = transformComponent["Position"].as<glm::vec3>();
+			tc.Rotation = transformComponent["Rotation"].as<glm::quat>();
+			tc.Scale = transformComponent["Scale"].as<glm::vec3>();
+		}
+
+		auto cameraComponent = entity["CameraComponent"];
+		if (cameraComponent)
+		{
+			CameraComponent cc;
+
+			YAML::Node cameraProps = cameraComponent["Camera"];
+			cc.Camera.SetProjectionType((SceneCamera::ProjectionType)cameraProps["ProjectionType"].as<int>());
+
+			cc.Camera.SetPerspectiveVerticalFOV(cameraProps["PerspectiveFOV"].as<float>());
+			cc.Camera.SetPerspectiveNearClip(cameraProps["PerspectiveNear"].as<float>());
+			cc.Camera.SetPerspectiveFarClip(cameraProps["PerspectiveFar"].as<float>());
+
+			cc.Camera.SetOrthographicSize(cameraProps["OrthographicSize"].as<float>());
+			cc.Camera.SetOrthographicNearClip(cameraProps["OrthographicNear"].as<float>());
+			cc.Camera.SetOrthographicFarClip(cameraProps["OrthographicFar"].as<float>());
+
+			cc.Primary = cameraComponent["Primary"].as<bool>();
+			cc.FixedAspectRatio = cameraComponent["FixedAspectRatio"].as<bool>();
+
+			_scene->_registry.emplace<CameraComponent>(deserializedEntity.EntId, cc);
+		}
+
+		auto spriteRendererComponent = entity["SpriteRendererComponent"];
+		if (spriteRendererComponent)
+		{
+			SpriteRendererComponent src;
+			src.Color = spriteRendererComponent["Color"].as<glm::vec4>();
+
+			_scene->_registry.emplace<SpriteRendererComponent>(deserializedEntity.EntId, src);
+		}
+
+		auto renderableComponent = entity["Renderable"];
+		if (renderableComponent)
+		{
+			Renderable rc;
+			rc.MeshKey = renderableComponent["Mesh"].as<std::string>();
+
+			_scene->_registry.emplace<Renderable>(deserializedEntity.EntId, rc);
+		}
+
+		auto velocityComponent = entity["VelocityComponent"];
+		if (velocityComponent)
+		{
+			VelocityComponent vc;
+			vc.Velocity = velocityComponent["Velocity"].as<glm::vec3>();
+
+			_scene->_registry.emplace<VelocityComponent>(deserializedEntity.EntId, vc);
+		}
+
+		auto characterComponent = entity["CharacterComponent"];
+		if (characterComponent)
+		{
+			CharacterComponent cc;
+			cc.Active = characterComponent["Active"].as<bool>();
+
+			_scene->_registry.emplace<CharacterComponent>(deserializedEntity.EntId, cc);
+		}
+
+		auto meshRendererComponent = entity["MeshRendererComponent"];
+		if (meshRendererComponent)
+		{
+			MeshRendererComponent mrc;
+			mrc.MeshName = meshRendererComponent["MeshName"].as<std::string>();
+			mrc.ShaderName = meshRendererComponent["ShaderName"].as<std::string>();
+			mrc.TextureName = meshRendererComponent["TextureName"].as<std::string>();
+			mrc.Color = meshRendererComponent["Color"].as<glm::vec4>();
+
+			_scene->_registry.emplace<MeshRendererComponent>(deserializedEntity.EntId, mrc);
+		}
+
+		GameCodeSystem::DeserializeEntity(_scene->_registry, entity, deserializedEntity.EntId, _scene.get());
 	}
 }

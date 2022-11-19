@@ -31,11 +31,21 @@ project "GameCode"
 		"yaml-cpp"
 	}
 
+	prebuildcommands
+	{
+		"\"%{wks.location}bin\\" .. outputdir .. "\\MysticHeaderTool\\MysticHeaderTool.exe\"" ..
+		" \"%{wks.location}GameCode\\src\\Components\"" ..
+		" \"%{wks.location:sub(1, -2)}\"" ..
+		" \"%{wks.location}GameCode\\src\\Generated\"" ..
+		" \"18/08/2015-06:30:15.006542\""
+
+	}
+
 	postbuildmessage "Copying DLL to MysticEditor bin location"
 	postbuildcommands
 	{
-		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\GameCode\\GameCode.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\GameCode.dll\"",
-		"copy /b \"%{wks.location}bin\\" .. outputdir .. "\\GameCode\\GameCode.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\Game\\GameCode.dll\"",
+		"{COPYFILE} \"%{wks.location}bin\\" .. outputdir .. "\\GameCode\\GameCode.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\Game\\GameCode.dll\"",
+		"{COPYFILE} \"%{wks.location}bin\\" .. outputdir .. "\\GameCode\\GameCode.dll\" \"%{wks.location}bin\\" .. outputdir .. "\\MysticEditor\\GameCode.dll\"",
 	}
 
 	filter "system:windows"

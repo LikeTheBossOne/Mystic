@@ -10,10 +10,13 @@ class LaserComponent : Mystic::NativeScriptComponent
 
 public:
 	MPROPERTY()
-	float Damage = 0.0f;
+	float Damage = 10.0f;
 
 	MPROPERTY()
-	int TestInt = 10;
+	float Range = 5.0f;
+
+	MPROPERTY()
+	int TestInt = 12;
 
 	void Start();
 	void Update();

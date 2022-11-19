@@ -44,6 +44,7 @@ extern ""C"" namespace Mystic
             WriteInitComponents();
             WriteUpdateComponents();
 
+            WriteSerializeEntity();
             WriteDeserializeEntity();
 
             WriteInitImGui();
@@ -67,6 +68,7 @@ extern ""C"" namespace Mystic
             includes.AppendLine(@"#include <yaml-cpp/node/iterator.h>");
             includes.AppendLine(@"#include ""Mystic/Scene/Scene.h""");
             includes.AppendLine(@"#include ""Mystic/Logging/Log.h""");
+            includes.AppendLine(@"#include ""yaml-cpp/emitter.h""");
             foreach (var pair in GenFileNameToComponents)
             {
                 includes.AppendLine($"#include \"{pair.Key}\"");
@@ -123,13 +125,18 @@ extern ""C"" namespace Mystic
         {
             StringBuilder initComponents = new StringBuilder();
             initComponents.Append(@"
-        extern ""C"" __declspec(dllexport) void InitComponents(entt::registry& registryRef)
+        extern ""C"" __declspec(dllexport) void InitComponents(Scene* scene)
         {
 ");
 
             foreach (var pair in GenFileNameToComponents)
             {
-                initComponents.AppendLine($"            Reflect{pair.Value.Name}::Init(registryRef);");
+                initComponents.AppendLine($"            scene->RegisterComponentType<{pair.Value.Name}>();");
+            }
+
+            foreach (var pair in GenFileNameToComponents)
+            {
+                initComponents.AppendLine($"            Reflect{pair.Value.Name}::Init();");
             }
 
             initComponents.Append("        }");
@@ -158,6 +165,38 @@ extern ""C"" namespace Mystic
 
             updateComponents.Append("        }");
             Writer.WriteLine(updateComponents.ToString());
+        }
+
+        private void WriteSerializeEntity()
+        {
+            StringBuilder serializeEntity = new StringBuilder();
+            serializeEntity.Append(@"
+        extern ""C"" __declspec(dllexport) void SerializeEntity(entt::registry& registryRef, YAML::Emitter& out, entt::entity entity)
+        {
+            if (registryRef.any_of<");
+
+            if (GenFileNameToComponents.Count > 0)
+            {
+                serializeEntity.Append(GenFileNameToComponents[0].Value.Name);
+            }
+            
+            for (int i = 1; i < GenFileNameToComponents.Count; i++)
+            {
+                serializeEntity.Append($", {GenFileNameToComponents[i].Value.Name}");
+            }
+
+            serializeEntity.Append(@">(entity))
+            {
+");
+            foreach (var pair in GenFileNameToComponents)
+            {
+                serializeEntity.AppendLine($"                Reflect{pair.Value.Name}::SerializeEntity(registryRef, out, entity);");
+            }
+
+            serializeEntity.Append(@"
+            }
+        }");
+            Writer.WriteLine(serializeEntity.ToString());
         }
 
         private void WriteDeserializeEntity()

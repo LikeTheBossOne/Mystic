@@ -163,8 +163,8 @@ namespace Mystic {
 		if (!success)
 		{
 			glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-			Log::Error("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
-			Log::Error("%s", infoLog);
+			Log::MError("ERROR::SHADER::VERTEX::COMPILATION_FAILED");
+			Log::MError("%s", infoLog);
 		}
 
 		// fragment Shader
@@ -177,8 +177,8 @@ namespace Mystic {
 		if (!success)
 		{
 			glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-			Log::Error("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED");
-			Log::Error("%s", infoLog);
+			Log::MError("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED");
+			Log::MError("%s", infoLog);
 		}
 
 
@@ -193,8 +193,8 @@ namespace Mystic {
 		if (!success)
 		{
 			glGetProgramInfoLog(program, 512, NULL, infoLog);
-			Log::Error("ERROR::SHADER::PROGRAM::LINKING_FAILED");
-			Log::Error("%s", infoLog);
+			Log::MError("ERROR::SHADER::PROGRAM::LINKING_FAILED");
+			Log::MError("%s", infoLog);
 		}
 
 		// Delete Shaders
