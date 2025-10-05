@@ -24,10 +24,13 @@
     <ClInclude Include="src\Generated\Init.h">
       <Filter>Generated</Filter>
     </ClInclude>
-    <ClInclude Include="src\Generated\LaserComponent.Gen.h">
+    <ClInclude Include="src\Generated\NativeScriptTemplates.h">
       <Filter>Generated</Filter>
     </ClInclude>
-    <ClInclude Include="src\Generated\NativeScriptTemplates.h">
+    <ClInclude Include="src\Generated\ReflectAsteroidComponent.generated.h">
+      <Filter>Generated</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Generated\ReflectDefaultComponent.generated.h">
       <Filter>Generated</Filter>
     </ClInclude>
     <ClInclude Include="src\Generated\ReflectLaserComponent.generated.h">
@@ -35,6 +38,9 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="src\Components\AsteroidComponent.cpp">
+      <Filter>Components</Filter>
+    </ClCompile>
     <ClCompile Include="src\Components\LaserComponent.cpp">
       <Filter>Components</Filter>
     </ClCompile>

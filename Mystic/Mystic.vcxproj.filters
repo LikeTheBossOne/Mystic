@@ -43,6 +43,9 @@
     <Filter Include="src\Mystic\Scripting">
       <UniqueIdentifier>{97D9D45D-8368-5E27-2C87-722218F56ECD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="src\Mystic\Scripting\Utilities">
+      <UniqueIdentifier>{C2267B05-AE4C-456C-9792-CA3783576A38}</UniqueIdentifier>
+    </Filter>
     <Filter Include="src\Mystic\Utility">
       <UniqueIdentifier>{98F9BCE5-84DD-7D3B-ED3D-788ED94068BD}</UniqueIdentifier>
     </Filter>
@@ -210,6 +213,9 @@
     <ClInclude Include="src\Mystic\Logging\Log.h">
       <Filter>src\Mystic\Logging</Filter>
     </ClInclude>
+    <ClInclude Include="src\Mystic\Logging\OutputSystem.h">
+      <Filter>src\Mystic\Logging</Filter>
+    </ClInclude>
     <ClInclude Include="src\Mystic\Render\Buffer.h">
       <Filter>src\Mystic\Render</Filter>
     </ClInclude>
@@ -287,6 +293,9 @@
     </ClInclude>
     <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h">
       <Filter>src\Mystic\Scripting</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Mystic\Scripting\Utilities\Random.h">
+      <Filter>src\Mystic\Scripting\Utilities</Filter>
     </ClInclude>
     <ClInclude Include="src\Mystic\Utility\utilities.h">
       <Filter>src\Mystic\Utility</Filter>
@@ -1705,6 +1714,9 @@
     </ClCompile>
     <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp">
       <Filter>src\Mystic\Scripting</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Mystic\Scripting\Utilities\Random.cpp">
+      <Filter>src\Mystic\Scripting\Utilities</Filter>
     </ClCompile>
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp">
       <Filter>src\Platform\OpenGL</Filter>

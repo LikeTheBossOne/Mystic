@@ -28,17 +28,24 @@ namespace MysticHeaderTool.Parsing
             {"float", MPropertyType.Float},
             {"double", MPropertyType.Double},
 
+            {"unsigned char", MPropertyType.UInt8},
+            {"unsigned short", MPropertyType.UInt16},
+            {"unsigned int", MPropertyType.UInt32},
+            {"unsigned long long", MPropertyType.UInt64},
             {"uint8_t", MPropertyType.UInt8},
             {"uint16_t", MPropertyType.UInt16},
             {"uint32_t", MPropertyType.UInt32},
             {"uint", MPropertyType.UInt32},
             {"uint64_t", MPropertyType.UInt64},
 
-            {"int8_t", MPropertyType.Int8},
-            {"int16_t", MPropertyType.UInt16},
-            {"int32_t", MPropertyType.UInt32},
+            {"char", MPropertyType.Int8},
+            {"short", MPropertyType.Int16},
             {"int", MPropertyType.Int32},
-            {"int64_t", MPropertyType.UInt64},
+            {"long long", MPropertyType.Int64},
+            {"int8_t", MPropertyType.Int8},
+            {"int16_t", MPropertyType.Int16},
+            {"int32_t", MPropertyType.Int32},
+            {"int64_t", MPropertyType.Int64},
 
             {"bool", MPropertyType.Bool},
 
@@ -55,8 +62,14 @@ namespace MysticHeaderTool.Parsing
         private static readonly Regex MGeneratedInfoLineFinder = new(@"^\s*MGENERATED_INFO\((.*?)\)\s*$");
 
         private static readonly Regex MPropertyClassifier = new(@"MPROPERTY\((?'meta'.*?)\)\s*(?'declaration'.*?);\s");
+        //private static readonly Regex MPropertyDeclarationParser =
+        //    new(@"^\s*(?'isConst'const)?\s*(?'type'[\w\d:_*]+)\s*(?'name'[\w\d_*]+)\{?(?:.*?)\}?$");
+        //private static readonly Regex MPropertyDeclarationParser =
+        //    new(@"^\s*(?'isConst'const)?\s*(?'type'[\w\d:_\s\*]+?)\s+(?'name'[\w\d_*]+)\s*\{?(?:.*?)\}?$");
         private static readonly Regex MPropertyDeclarationParser =
-            new(@"^\s*(?'isConst'const)?\s*(?'type'[\w\d:_*]+)\s*(?'name'[\w\d_*]+)\{?(?:.*?)\}?$");
+            new(@"^\s*(?'isConst'const)?\s*(?'type'(?:[\w:]+(?:\s+[\w:]+)*\s*[*&]*)+)\s+(?'name'[\w\d_]+)\s*\{?(?:.*?)\}?$");
+
+
         #endregion
 
         public HeaderParser(HeaderParserSettings settings, MReflectionContext mReflectionContext)

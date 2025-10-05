@@ -35,7 +35,7 @@ project "GameCode"
 	{
 		"\"%{wks.location}bin\\" .. outputdir .. "\\MysticHeaderTool\\MysticHeaderTool.exe\"" ..
 		" \"%{wks.location}GameCode\\src\\Components\"" ..
-		" \"%{wks.location:sub(1, -2)}\"" ..
+		" \"%{wks.location:sub(1, -1)}\"" ..
 		" \"%{wks.location}GameCode\\src\\Generated\"" ..
 		" \"18/08/2015-06:30:15.006542\""
 

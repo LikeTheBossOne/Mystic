@@ -24,6 +24,7 @@ namespace Mystic {
 		bool IsLoaded() const override { return _isLoaded; }
 
 		const std::string& GetName() const override { return _name; }
+		const std::string& GetPath() const override { return _path; }
 
 		bool operator==(const Texture& other) const override
 		{

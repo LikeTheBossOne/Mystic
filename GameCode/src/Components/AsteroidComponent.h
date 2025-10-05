@@ -1,12 +1,24 @@
 #pragma once
 #include <cstdint>
 
-struct AsteroidComponent
+#include "Mystic/Core/MMacros.h"
+#include "Mystic/Scripting/NativeScriptComponent.h"
+#include "AsteroidComponent.generated.h"
+
+MCOMPONENT()
+class AsteroidComponent : Mystic::NativeScriptComponent
 {
+	MGENERATED_INFO()
+
+public:
+	MPROPERTY()
 	uint8_t SplitsLeft;
 
-	AsteroidComponent() : SplitsLeft(2) {}
-	AsteroidComponent(uint8_t splitsLeft) : SplitsLeft(splitsLeft) {}
+	void Start();
+
+	void Update(float dt);
+
+
 	AsteroidComponent(const AsteroidComponent&) = default;
 };
 
