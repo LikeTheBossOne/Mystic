@@ -7,7 +7,7 @@
 namespace Mystic {
 
 	OpenGLTexture2D::OpenGLTexture2D(const std::string& name, uint32_t width, uint32_t height)
-		: _name(name), _width(width), _height(height)
+		: _name(name), _width(width), _height(height), _path("")
 	{
 		_internalFormat = GL_RGBA8;
 		_dataFormat = GL_RGBA;

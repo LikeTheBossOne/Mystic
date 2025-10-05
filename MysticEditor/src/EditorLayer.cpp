@@ -496,15 +496,63 @@ namespace Mystic {
 		
 	}
 
+	HANDLE stdoutRead = NULL;
+	HANDLE stdoutWrite = NULL;
+	HANDLE extProgramRead = NULL;
+
+	DWORD __stdcall readDataFromExtProgram(void* argh)
+	{
+		DWORD dwRead;
+		CHAR chBuf[2048];
+		BOOL bSuccess = FALSE;
+
+		for (;;)
+		{
+			bSuccess = ReadFile(stdoutRead, chBuf, 2048, &dwRead, NULL);
+			if (!bSuccess || dwRead == 0) continue;
+
+			// Log chBuf
+			Log::Log("%.*s", dwRead, chBuf);
+
+			if (!bSuccess) break;
+		}
+		return 0;
+	}
+
+
 	static void startup(std::string& commandLine)
 	{
 		// additional information
 		STARTUPINFO si;
 		PROCESS_INFORMATION pi;
+		SECURITY_ATTRIBUTES saAttr;
+
+		ZeroMemory(&saAttr, sizeof(saAttr));
+		saAttr.nLength = sizeof(SECURITY_ATTRIBUTES);
+		saAttr.bInheritHandle = TRUE;
+		saAttr.lpSecurityDescriptor = NULL;
+
+		// Create a pipe for the child process's STDOUT
+		if (!CreatePipe(&stdoutRead, &stdoutWrite, &saAttr, 0))
+		{
+			// log error
+			Log::MError("CreatePipe failed: %d", GetLastError());
+		}
+
+		// Ensure the read handle to the pipe for STDOUT is not inherited
+		if (!SetHandleInformation(stdoutRead, HANDLE_FLAG_INHERIT, 0))
+		{
+			// log error
+			Log::MError("SetHandleInformation failed: %d", GetLastError());
+		}
+
 
 		// set the size of the structures
 		ZeroMemory(&si, sizeof(si));
 		si.cb = sizeof(si);
+		si.hStdError = stdoutWrite;
+		si.hStdOutput = stdoutWrite;
+		si.dwFlags |= STARTF_USESTDHANDLES;
 		ZeroMemory(&pi, sizeof(pi));
 
 		size_t len = 0;
@@ -518,7 +566,7 @@ namespace Mystic {
 			lpCommandLine,        // Command line
 			NULL,           // Process handle not inheritable
 			NULL,           // Thread handle not inheritable
-			FALSE,          // Set handle inheritance to FALSE
+			TRUE,          // Set handle inheritance to FALSE
 			0,              // No creation flags
 			NULL,           // Use parent's environment block
 			NULL,           // Use parent's starting directory 
@@ -526,6 +574,7 @@ namespace Mystic {
 			&pi             // Pointer to PROCESS_INFORMATION structure (removed extra parentheses)
 		))
 		{
+			extProgramRead = CreateThread(0, 0, readDataFromExtProgram, NULL, 0, NULL);
 			//TODO: make this wait not stop the whole app
 			WaitForSingleObject(pi.hProcess, 100000);
 			// Close process and thread handles. 

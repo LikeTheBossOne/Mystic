@@ -157,7 +157,7 @@ extern ""C"" namespace Mystic
                 auto view = registryRef.view<{pair.Value.Name}>();
                 for (auto [entity, comp] : view.each())
                 {{
-                    comp.Update();
+                    comp.Update(dt);
                 }}
             }}
 ");

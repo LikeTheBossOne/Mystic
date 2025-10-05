@@ -46,6 +46,11 @@ namespace MysticHeaderTool.Generation
         {
             foreach (MComponent component in Components)
             {
+                Writer.WriteLine($@"#include ""Components/{component.Name}.h""");
+            }
+
+            foreach (MComponent component in Components)
+            {
                 Writer.WriteLine($@"
 template<> {component.Name}& Mystic::NativeScriptComponent::GetComponent<{component.Name}>() const
 {{

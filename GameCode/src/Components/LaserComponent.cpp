@@ -11,7 +11,7 @@ void LaserComponent::Start()
 {
 }
 
-void LaserComponent::Update()
+void LaserComponent::Update(float dt)
 {
 	auto& position = GetComponent<Mystic::TransformComponent>();
 	auto& me = GetComponent<LaserComponent>();

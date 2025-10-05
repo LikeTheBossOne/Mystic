@@ -321,7 +321,7 @@ namespace Mystic
 			out << YAML::BeginMap;
 
 			out << YAML::Key << "Path";
-			out << YAML::Value << pair.first;
+			out << YAML::Value << pair.second->GetPath();
 
 			out << YAML::Key << "Name";
 			out << YAML::Value << pair.second->GetName();
@@ -338,7 +338,7 @@ namespace Mystic
 			out << YAML::BeginMap;
 
 			out << YAML::Key << "Path";
-			out << YAML::Value << pair.first;
+			out << YAML::Value << pair.second->GetPath();
 
 			out << YAML::Key << "Name";
 			out << YAML::Value << pair.second->GetName();
@@ -357,7 +357,7 @@ namespace Mystic
 			out << YAML::BeginMap;
 
 			out << YAML::Key << "Path";
-			out << YAML::Value << pair.first;
+			out << YAML::Value << pair.second->GetPath();
 
 			out << YAML::Key << "Name";
 			out << YAML::Value << pair.second->GetName();
@@ -518,6 +518,7 @@ namespace Mystic
 				if (!shader["Path"] || !shader["Name"] || !shader["BufferLayout"])
 					continue;
 
+				//TODO: put path in Shader
 				BufferLayout bf = shader["BufferLayout"].as<BufferLayout>();
 				_scene->_assetLibrary->Shaders[shader["Name"].as<std::string>()] =
 					Shader::Create(

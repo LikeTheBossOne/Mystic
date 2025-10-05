@@ -19,7 +19,7 @@ public:
 	int TestInt = 12;
 
 	void Start();
-	void Update();
+	void Update(float dt);
 
 	LaserComponent(const LaserComponent&) = default;
 	

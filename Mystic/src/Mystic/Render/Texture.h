@@ -20,6 +20,7 @@ namespace Mystic {
 		virtual bool IsLoaded() const = 0;
 
 		virtual const std::string& GetName() const = 0;
+		virtual const std::string& GetPath() const = 0;
 
 		virtual bool operator==(const Texture& other) const = 0;
 	};

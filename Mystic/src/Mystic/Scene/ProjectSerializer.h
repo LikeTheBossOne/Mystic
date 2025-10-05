@@ -1,6 +1,7 @@
 #pragma once
 #include "../Core/Core.h"
 #include <entt.hpp>
+#include <string>
 
 namespace YAML
 {

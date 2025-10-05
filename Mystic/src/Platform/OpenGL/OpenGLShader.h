@@ -27,6 +27,7 @@ namespace Mystic {
 		virtual void SetMat4(const std::string& name, const glm::mat4& value) override;
 
 		virtual const std::string& GetName() const override { return _name; }
+		virtual const std::string& GetPath() const override { return _filePath; }
 		virtual const BufferLayout& GetBufferLayout() const override { return _bufferLayout; }
 
 		void UploadUniformInt(const std::string& name, int value);

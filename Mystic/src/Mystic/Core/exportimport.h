@@ -4,18 +4,6 @@
 
 namespace Mystic
 {
-
-	//template __declspec(dllexport) TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	/*template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);
-	template TransformComponent& Scene::EntityGetComponent<TransformComponent>(Entity& e);*/
-
 	template<> TransformComponent& NativeScriptComponent::GetComponent<TransformComponent>() const
 	{
 		return _owningScene->EntityGetComponent<TransformComponent>(_ent);

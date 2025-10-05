@@ -183,6 +183,7 @@
     <ClInclude Include="src\Mystic\GameCode\GameCodeSystem.h" />
     <ClInclude Include="src\Mystic\ImGui\ImGuiLayer.h" />
     <ClInclude Include="src\Mystic\Logging\Log.h" />
+    <ClInclude Include="src\Mystic\Logging\OutputSystem.h" />
     <ClInclude Include="src\Mystic\Render\Buffer.h" />
     <ClInclude Include="src\Mystic\Render\Camera.h" />
     <ClInclude Include="src\Mystic\Render\EditorCamera.h" />
@@ -209,6 +210,7 @@
     <ClInclude Include="src\Mystic\Scene\Scene.h" />
     <ClInclude Include="src\Mystic\Scene\SceneCamera.h" />
     <ClInclude Include="src\Mystic\Scripting\NativeScriptComponent.h" />
+    <ClInclude Include="src\Mystic\Scripting\Utilities\Random.h" />
     <ClInclude Include="src\Mystic\Utility\utilities.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiGLFWRenderer.h" />
     <ClInclude Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.h" />
@@ -683,6 +685,7 @@
     <ClCompile Include="src\Mystic\Scene\Scene.cpp" />
     <ClCompile Include="src\Mystic\Scene\SceneCamera.cpp" />
     <ClCompile Include="src\Mystic\Scripting\NativeScriptComponent.cpp" />
+    <ClCompile Include="src\Mystic\Scripting\Utilities\Random.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiGLFWRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\ImGuiOpenGLRenderer.cpp" />
     <ClCompile Include="src\Platform\OpenGL\OpenGLBuffer.cpp" />

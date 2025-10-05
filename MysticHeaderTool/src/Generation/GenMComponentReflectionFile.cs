@@ -65,6 +65,7 @@ namespace MysticHeaderTool.Generation
 
 #include ""Components/{ReflectedComponent.Name}.h""
 #include ""yaml-cpp/node/iterator.h""
+#include ""yaml-cpp/node/convert.h""
 ";
             Writer.WriteLine(includes);
         }
